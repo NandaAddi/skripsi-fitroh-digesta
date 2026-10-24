@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -8,10 +9,16 @@ import MenuMateriScreen from './components/MenuMateriScreen/MenuMateriScreen';
 import MenuMateriGangguanScreen from './components/MenuMateriGangguanScreen/MenuMateriGangguanScreen';
 import MenuPengantarScreen from './components/MenuPengantarScreen/MenuPengantarScreen';
 import NotFoundScreen from './components/NotFound/NotFoundScreen';
+import AssetPreloader from './components/AssetPreloader/AssetPreloader';
 
 function App() {
+  const [isPreloadDone, setIsPreloadDone] = useState(false);
+
   return (
     <AuthProvider>
+      {!isPreloadDone && (
+        <AssetPreloader onComplete={() => setIsPreloadDone(true)} />
+      )}
       <BrowserRouter>
         <main style={{ width: '100%', height: '100%' }}>
           <Routes>

@@ -28,6 +28,7 @@
 | **Sistem Styling** | **Pure Vanilla CSS** | **DILARANG MENGGUNAKAN TAILWIND CSS**. Styling murni CSS modular per komponen dengan container queries. |
 | **Tipografi** | Google Fonts (*Fredoka*, *Outfit*) | Font kartun game tebal dengan ukuran font besar & terbaca jelas (`clamp`). |
 | **Efek Suara Audio** | Native Web Audio API | Sintesis prosedural langsung di browser (`pop`, `chime`, `soft`) tanpa dependensi berkas mp3 eksternal. |
+| **Preloader Aset Game** | `AssetPreloader` + `assetManifest.ts` | Pemuatan awal paralel seluruh 32 aset WebP + Font sebelum panggung game dibuka. |
 | **Linter & Code Quality** | Oxlint + TypeScript (`tsc -b`) | Wajib lolos verifikasi `0 error & 0 warning`. |
 
 ---
