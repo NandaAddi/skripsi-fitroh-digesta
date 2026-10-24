@@ -2,18 +2,32 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>DIGESTA - Digital Interactive Gastrointestinal Education System</title>
+    
+    <!-- Title: 53 characters (optimal 50-60 range) -->
+    <title>DIGESTA - Edukasi Sistem Pencernaan Manusia Interaktif</title>
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://digesta.webenzelabs.id/" />
+
+    <!-- Standard SEO Meta Tags -->
     <meta name="description" content="Aplikasi edukasi interaktif berbasis game untuk pembelajaran sistem pencernaan manusia secara visual, seru, dan menyenangkan." />
     <meta name="keywords" content="DIGESTA, sistem pencernaan, edukasi biologi, gamifikasi, media pembelajaran interaktif" />
-    <meta name="author" content="DIGESTA Team" />
+    <meta name="author" content="DIGESTA - Webenze Labs" />
     <meta name="theme-color" content="#0f172a" />
+
+    <!-- Favicon & Touch Icons for All Devices & Google Search -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://digesta.webenzelabs.id/" />
-    <meta property="og:title" content="DIGESTA - Digital Interactive Gastrointestinal Education System" />
+    <meta property="og:title" content="DIGESTA - Edukasi Sistem Pencernaan Manusia Interaktif" />
     <meta property="og:description" content="Media pembelajaran interaktif berbasis game untuk memahami sistem pencernaan manusia secara visual, seru, dan menyenangkan." />
     <meta property="og:image" content="https://digesta.webenzelabs.id/og-image.jpg" />
     <meta property="og:image:secure_url" content="https://digesta.webenzelabs.id/og-image.jpg" />
@@ -26,18 +40,45 @@
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@webenzelabs" />
+    <meta name="twitter:creator" content="@webenzelabs" />
     <meta name="twitter:url" content="https://digesta.webenzelabs.id/" />
-    <meta name="twitter:title" content="DIGESTA - Digital Interactive Gastrointestinal Education System" />
+    <meta name="twitter:title" content="DIGESTA - Edukasi Sistem Pencernaan Manusia Interaktif" />
     <meta name="twitter:description" content="Media pembelajaran interaktif berbasis game untuk memahami sistem pencernaan manusia secara visual, seru, dan menyenangkan." />
     <meta name="twitter:image" content="https://digesta.webenzelabs.id/og-image.jpg" />
     <meta name="twitter:image:alt" content="DIGESTA - Media Pembelajaran Sistem Pencernaan Manusia" />
 
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "DIGESTA",
+      "alternateName": "Digital Interactive Gastrointestinal Education System",
+      "url": "https://digesta.webenzelabs.id/",
+      "description": "Aplikasi edukasi interaktif berbasis game untuk pembelajaran sistem pencernaan manusia secara visual, seru, dan menyenangkan.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "inLanguage": "id",
+      "image": "https://digesta.webenzelabs.id/og-image.jpg",
+      "author": {
+        "@type": "Organization",
+        "name": "Webenze Labs",
+        "url": "https://webenzelabs.id"
+      }
+    }
+    </script>
+
+    <!-- Google Fonts Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Fallback semantic H1 for non-JS crawlers & SEO audit tools -->
+      <h1 class="sr-only">DIGESTA - Edukasi Sistem Pencernaan Manusia Interaktif</h1>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

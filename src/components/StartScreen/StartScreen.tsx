@@ -89,6 +89,9 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
     <div className="startscreen-viewport">
       {/* 16:9 Aspect Ratio Locked Stage */}
       <div className="startscreen-stage" ref={stageRef}>
+        {/* Semantic H1 for SEO & Accessibility */}
+        <h1 className="sr-only">DIGESTA - Edukasi Sistem Pencernaan Manusia Interaktif</h1>
+
         {/* Layer 1: Background Brick Wall */}
         <img
           src={bgImg}
