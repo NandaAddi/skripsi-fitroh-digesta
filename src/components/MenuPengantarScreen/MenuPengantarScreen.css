@@ -1,0 +1,344 @@
+/* ==========================================================================
+   MenuPengantarScreen.css - DIGESTA Pengantar Screen (16:9 Locked Stage)
+   ========================================================================== */
+
+.pengantar-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f141c;
+  overflow: hidden;
+  user-select: none;
+  font-family: 'Fredoka', 'Outfit', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* 16:9 Strictly Locked Stage */
+.pengantar-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  width: min(100dvw, calc(100dvh * 16 / 9));
+  height: min(100dvh, calc(100dvw * 9 / 16));
+  max-width: 100vw;
+  max-height: 100vh;
+  max-width: 100dvw;
+  max-height: 100dvh;
+  overflow: hidden;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45);
+  background-color: #f8f9fa;
+  container-type: size;
+  container-name: pengantarstage;
+}
+
+/* Layer 1: Background Ruang Belajar & Card Putih */
+.pengantar-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Layer 2: Slide Konten (Slide 1, 2, 3) */
+.pengantar-content-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pengantar-slide-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.pengantar-slide-img.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Layer 3: Interactive Corner Action Buttons */
+
+/* Tombol Pengaturan (Top-Left) */
+.pengantar-btn-setting {
+  position: absolute;
+  top: 3.2%;
+  left: 2%;
+  width: clamp(48px, 6.2cqw, 84px);
+  height: clamp(48px, 6.2cqw, 84px);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.22s ease;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18));
+}
+
+.pengantar-btn-setting:hover {
+  transform: scale(1.09) rotate(15deg);
+  filter: drop-shadow(0 6px 16px rgba(51, 154, 240, 0.4));
+}
+
+.pengantar-btn-setting:active {
+  transform: scale(0.95);
+}
+
+/* Tombol Home (Top-Right) */
+.pengantar-btn-home {
+  position: absolute;
+  top: 3.2%;
+  right: 2%;
+  width: clamp(52px, 6.6cqw, 88px);
+  height: clamp(52px, 6.6cqw, 88px);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.22s ease;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18));
+}
+
+.pengantar-btn-home:hover {
+  transform: scale(1.09);
+  filter: drop-shadow(0 6px 16px rgba(51, 154, 240, 0.4));
+}
+
+.pengantar-btn-home:active {
+  transform: scale(0.95);
+}
+
+/* Tombol Navigasi Kiri / Previous (Bottom-Left di atas gelombang oranye) */
+.pengantar-btn-left {
+  position: absolute;
+  bottom: 5.8%;
+  left: 2.2%;
+  width: clamp(44px, 5.5cqw, 76px);
+  height: clamp(44px, 5.5cqw, 76px);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.22s ease;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18));
+}
+
+.pengantar-btn-left:hover {
+  transform: scale(1.1) translateX(-3px);
+  filter: drop-shadow(0 6px 16px rgba(247, 103, 7, 0.4));
+}
+
+.pengantar-btn-left:active {
+  transform: scale(0.95);
+}
+
+/* Tombol Navigasi Kanan / Next (Bottom-Right di atas gelombang kuning) */
+.pengantar-btn-right {
+  position: absolute;
+  bottom: 5.8%;
+  right: 2.2%;
+  width: clamp(44px, 5.5cqw, 76px);
+  height: clamp(44px, 5.5cqw, 76px);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.22s ease;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18));
+}
+
+.pengantar-btn-right:hover {
+  transform: scale(1.1) translateX(3px);
+  filter: drop-shadow(0 6px 16px rgba(245, 159, 0, 0.4));
+}
+
+.pengantar-btn-right:active {
+  transform: scale(0.95);
+}
+
+.pengantar-btn-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+/* Indikator Halaman Slide di Bawah */
+.pengantar-dots {
+  position: absolute;
+  bottom: 3.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 4px 14px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.pengantar-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ced4da;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pengantar-dot:hover {
+  background: #adb5bd;
+}
+
+.pengantar-dot.active {
+  background: #e03131;
+  width: 24px;
+  border-radius: 6px;
+}
+
+/* Settings Modal Dialog */
+.pengantar-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  animation: pengantar-fade-in 0.2s ease;
+}
+
+@keyframes pengantar-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pengantar-modal-card {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 480px;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  animation: pengantar-pop-up 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pengantar-pop-up {
+  from {
+    transform: scale(0.9) translateY(15px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.pengantar-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #f1f3f5;
+  padding-bottom: 12px;
+  margin-bottom: 18px;
+}
+
+.pengantar-modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #212529;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pengantar-modal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.pengantar-modal-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #343a40;
+}
+
+.pengantar-modal-sub {
+  font-size: 0.8rem;
+  color: #868e96;
+}
+
+.pengantar-switch {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #ced4da;
+  background: #f8f9fa;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pengantar-switch.active {
+  background: #ebfbee;
+  border-color: #40c057;
+  color: #2b8a3e;
+}
+
+.pengantar-modal-btn-close {
+  width: 100%;
+  margin-top: 18px;
+  padding: 11px 0;
+  background: #1c7ed6;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pengantar-modal-btn-close:hover {
+  background: #1864ab;
+}
