@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import digestaLogo from '../../assets/logo-digiesta.webp';
+import logoAnimation from '../../assets/logo-animation/logo-animation.webp';
 import { preloadAllAssets, BIOLOGY_TRIVIA } from '../../services/assetManifest';
 import './AssetPreloader.css';
 
@@ -102,10 +102,10 @@ export const AssetPreloader: React.FC<AssetPreloaderProps> = ({ onComplete }) =>
 
         {/* Konten Utama Preloader */}
         <div className="preloader-content">
-          {/* Logo DIGESTA dengan denyut lembut */}
+          {/* Logo Animasi Interaktif DIGESTA */}
           <div className="preloader-logo-wrapper">
             <img
-              src={digestaLogo}
+              src={logoAnimation}
               alt="DIGESTA - Digital Interactive Gastrointestinal Education System"
               className="preloader-logo-img"
               draggable={false}

@@ -14,6 +14,7 @@ import teacherMotion from '../assets/teacher-motion/teacher-motion.webp';
 import menuBg from '../assets/menu-screen/bg-menuscreen.webp';
 import menuLogo from '../assets/menu-screen/logo-menuscreen.webp';
 import digestaLogo from '../assets/logo-digiesta.webp';
+import logoAnimation from '../assets/logo-animation/logo-animation.webp';
 import btnMateri from '../assets/menu-screen/button-materi.webp';
 import btnPengantar from '../assets/menu-screen/button-pengantar.webp';
 import btnSimulasi from '../assets/menu-screen/button-simulasi.webp';
@@ -62,6 +63,7 @@ export const ASSETS_TO_PRELOAD: PreloadItem[] = [
   { url: startBtn, label: 'Tombol Start Interaktif' },
 
   // Prioritas 2: Menu Utama & Navigasi
+  { url: logoAnimation, label: 'Animasi Logo DIGESTA' },
   { url: menuLogo, label: 'Latar Ilustrasi Menu DIGESTA' },
   { url: digestaLogo, label: 'Logo Resmi DIGESTA' },
   { url: menuBg, label: 'Latar Belakang Menu' },
