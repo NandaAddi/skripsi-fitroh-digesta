@@ -47,14 +47,14 @@
 /* Background Animated Glow & Particles */
 .preloader-ambient-glow {
   position: absolute;
-  top: 40%;
+  top: 36%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(280px, 45cqw, 600px);
-  height: clamp(280px, 45cqw, 600px);
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.16) 0%, rgba(217, 119, 6, 0.04) 50%, transparent 70%);
+  width: clamp(380px, 48cqw, 750px);
+  height: clamp(380px, 48cqw, 750px);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.06) 50%, transparent 70%);
   border-radius: 50%;
-  filter: blur(40px);
+  filter: blur(50px);
   pointer-events: none;
   animation: preloader-ambient-pulse 4s infinite ease-in-out;
 }
@@ -78,7 +78,7 @@
   align-items: center;
   width: 100%;
   z-index: 2;
-  gap: clamp(14px, 1.8cqw, 24px);
+  gap: clamp(10px, 1.3cqw, 18px);
 }
 
 /* Pulsing Logo */
@@ -86,25 +86,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: clamp(6px, 1cqw, 12px);
+  margin-bottom: clamp(2px, 0.4cqw, 6px);
 }
 
 .preloader-logo-img {
-  width: clamp(160px, 24cqw, 310px);
+  width: clamp(200px, 22cqw, 350px);
+  max-width: 80%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.65));
   animation: preloader-logo-pulse 2.4s infinite ease-in-out;
 }
 
 @keyframes preloader-logo-pulse {
   0%, 100% {
     transform: scale(1);
-    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.55));
+    filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.65));
   }
   50% {
     transform: scale(1.04);
-    filter: drop-shadow(0 14px 34px rgba(245, 158, 11, 0.35));
+    filter: drop-shadow(0 16px 38px rgba(245, 158, 11, 0.45));
   }
 }
 
