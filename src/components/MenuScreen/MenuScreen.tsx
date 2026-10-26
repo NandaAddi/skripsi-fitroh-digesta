@@ -246,7 +246,13 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
                   <div className="menuscreen-setting-row">
                     <div>
                       <div className="menuscreen-setting-label">Pengguna Aktif</div>
-                      <div className="menuscreen-setting-sub">{activeUser.email}</div>
+                      <div className="menuscreen-setting-sub">
+                        {activeUser.attendanceNumber
+                          ? `No. Absen: ${activeUser.attendanceNumber}`
+                          : activeUser.role === 'guest'
+                            ? 'Siswa Tamu (Tanpa Absen)'
+                            : activeUser.email || 'Siswa DIGESTA'}
+                      </div>
                     </div>
                     <span className="menuscreen-user-tag">
                       {activeUser.fullName} ({activeUser.role === 'guest' ? 'Tamu' : 'Siswa'})

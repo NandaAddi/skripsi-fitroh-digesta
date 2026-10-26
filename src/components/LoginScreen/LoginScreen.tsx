@@ -17,15 +17,12 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, signUp, loginAsGuest, isAuthenticated } = useAuth();
+  const { loginAsStudent, loginAsGuest, isAuthenticated } = useAuth();
 
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/menu';
 
-  const [tab, setTab] = useState<'login' | 'register'>('login');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [attendanceNumber, setAttendanceNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -94,46 +91,43 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
     }
   };
 
-  const handleTabSwitch = (newTab: 'login' | 'register') => {
-    playSound('pop');
-    setTab(newTab);
-    setErrorMsg(null);
-    setSuccessMsg(null);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
     setSuccessMsg(null);
+
+    const trimmedName = fullName.trim();
+    if (!trimmedName || trimmedName.length < 2) {
+      playSound('error');
+      setErrorMsg('Nama lengkap minimal 2 karakter.');
+      return;
+    }
+
+    const absNum = parseInt(attendanceNumber, 10);
+    if (!attendanceNumber || isNaN(absNum) || absNum < 1 || absNum > 99) {
+      playSound('error');
+      setErrorMsg('Nomor absen harus berupa angka antara 1 sampai 99.');
+      return;
+    }
+
     setLoading(true);
 
     try {
-      if (tab === 'login') {
-        const res = await login({ email, password });
-        if (res.error) {
-          playSound('error');
-          setErrorMsg(res.error);
-        } else if (res.user) {
-          playSound('success');
-          setSuccessMsg(`Selamat datang, ${res.user.fullName}!`);
-          setTimeout(() => {
-            if (onLoginSuccess) onLoginSuccess(res.user!);
-            navigate(from, { replace: true });
-          }, 600);
-        }
-      } else {
-        const res = await signUp({ email, password, fullName });
-        if (res.error) {
-          playSound('error');
-          setErrorMsg(res.error);
-        } else if (res.user) {
-          playSound('success');
-          setSuccessMsg(`Pendaftaran berhasil! Selamat datang, ${res.user.fullName}!`);
-          setTimeout(() => {
-            if (onLoginSuccess) onLoginSuccess(res.user!);
-            navigate(from, { replace: true });
-          }, 600);
-        }
+      const res = await loginAsStudent({
+        fullName: trimmedName,
+        attendanceNumber: absNum,
+      });
+
+      if (res.error) {
+        playSound('error');
+        setErrorMsg(res.error);
+      } else if (res.user) {
+        playSound('success');
+        setSuccessMsg(`Selamat datang, ${res.user.fullName}! (No. Absen: ${res.user.attendanceNumber})`);
+        setTimeout(() => {
+          if (onLoginSuccess) onLoginSuccess(res.user!);
+          navigate(from, { replace: true });
+        }, 550);
       }
     } catch {
       playSound('error');
@@ -262,31 +256,18 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           </div>
         </div>
 
-        {/* Layer 3: Mockup Panel Login di Bagian Bawah Dinding Bata */}
+        {/* Layer 3: Panel Kartu Form Siswa */}
         <div className="loginscreen-card-wrapper">
           <div className="loginscreen-card">
-            {/* Tab: Masuk / Daftar */}
-            <div className="loginscreen-tabs">
-              <button
-                type="button"
-                className={`loginscreen-tab ${tab === 'login' ? 'active' : ''}`}
-                onClick={() => handleTabSwitch('login')}
-              >
-                Masuk
-              </button>
-              <button
-                type="button"
-                className={`loginscreen-tab ${tab === 'register' ? 'active' : ''}`}
-                onClick={() => handleTabSwitch('register')}
-              >
-                Daftar Akun
-              </button>
+            {/* Header Judul Game */}
+            <div className="loginscreen-card-header">
+              <h2 className="loginscreen-title">Identitas Siswa</h2>
             </div>
 
             {/* Alert Notifikasi Error / Sukses */}
             {errorMsg && (
               <div className="loginscreen-alert error">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10"></circle>
                   <line x1="12" y1="8" x2="12" y2="12"></line>
                   <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -297,84 +278,53 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 
             {successMsg && (
               <div className="loginscreen-alert success">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <span>{successMsg}</span>
               </div>
             )}
 
-            {/* Form Input */}
+            {/* Form Input: Nama & Nomor Absen */}
             <form className="loginscreen-form" onSubmit={handleSubmit}>
-              {tab === 'register' && (
-                <div className="loginscreen-input-group">
-                  <span className="loginscreen-input-icon">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                      <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                  </span>
-                  <input
-                    type="text"
-                    className="loginscreen-input"
-                    placeholder="Nama Lengkap Siswa / Guru"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    required
-                  />
-                </div>
-              )}
-
               <div className="loginscreen-input-group">
                 <span className="loginscreen-input-icon">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
                   </svg>
                 </span>
                 <input
-                  type="email"
+                  type="text"
                   className="loginscreen-input"
-                  placeholder="Email (misal: siswa@sekolah.id)"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Nama Lengkap Siswa"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  maxLength={50}
                   required
+                  autoFocus
                 />
               </div>
 
               <div className="loginscreen-input-group">
                 <span className="loginscreen-input-icon">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="4" y1="9" x2="20" y2="9"></line>
+                    <line x1="4" y1="15" x2="20" y2="15"></line>
+                    <line x1="10" y1="3" x2="8" y2="21"></line>
+                    <line x1="16" y1="3" x2="14" y2="21"></line>
                   </svg>
                 </span>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type="number"
                   className="loginscreen-input"
-                  placeholder="Kata Sandi (min. 6 karakter)"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Nomor Absen (1 - 99)"
+                  value={attendanceNumber}
+                  onChange={(e) => setAttendanceNumber(e.target.value)}
+                  min={1}
+                  max={99}
                   required
                 />
-                <button
-                  type="button"
-                  className="loginscreen-toggle-pwd"
-                  onClick={() => setShowPassword(!showPassword)}
-                  title={showPassword ? 'Sembunyikan sandi' : 'Tampilkan sandi'}
-                >
-                  {showPassword ? (
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                      <line x1="1" y1="1" x2="23" y2="23"></line>
-                    </svg>
-                  ) : (
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                      <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                  )}
-                </button>
               </div>
 
               <button
@@ -384,15 +334,19 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               >
                 {loading ? (
                   <span>Memproses...</span>
-                ) : tab === 'login' ? (
-                  <span>Masuk ke DIGESTA</span>
                 ) : (
-                  <span>Daftar Akun Baru</span>
+                  <>
+                    <span>Mulai Belajar</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </>
                 )}
               </button>
             </form>
 
-            {/* Pemisah Antara Login Form & Tamu */}
+            {/* Pemisah Antara Form Siswa & Tamu */}
             <div className="loginscreen-divider">
               <span>atau</span>
             </div>
@@ -404,8 +358,30 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               onClick={handleGuestLogin}
               disabled={loading}
             >
-              <span>🚀 Masuk sebagai Siswa Tamu</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+                <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+                <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+                <path d="M12 9v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+              </svg>
+              <span>Masuk sebagai Siswa Tamu</span>
             </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Indikator Mode Lanskap untuk Perangkat Mobile (Tampil Otomatis saat Layar Vertikal/Portrait) */}
+      <div className="loginscreen-orientation-hint" aria-hidden="true">
+        <div className="loginscreen-orientation-card">
+          <div className="loginscreen-phone-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="3" />
+              <path d="M12 18h.01" />
+            </svg>
+          </div>
+          <div className="loginscreen-orientation-text">
+            <span className="loginscreen-orientation-title">Putar ke Mode Lanskap</span>
+            <span className="loginscreen-orientation-sub">Miringkan HP untuk tampilan pembelajaran penuh</span>
           </div>
         </div>
       </div>

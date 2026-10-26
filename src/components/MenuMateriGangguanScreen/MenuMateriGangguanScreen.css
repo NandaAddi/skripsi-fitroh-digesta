@@ -107,17 +107,17 @@
   pointer-events: none;
 }
 
-/* 5 Left Overlapping Tabs (Balanced Gap & Larger Buttons) */
+/* 5 Left Overlapping Tabs (Comfortable balanced vertical gap) */
 .gangguan-pill-tabs {
   position: absolute;
-  left: 2%;
+  left: 6%;
   width: clamp(160px, 19cqw, 245px);
-  top: 15.5%;
-  bottom: 10%;
+  top: 15%;
+  bottom: 9.5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: clamp(11px, 1.25cqw, 18px);
+  gap: clamp(18px, 2.3cqw, 32px);
   z-index: 25;
   pointer-events: auto;
 }
@@ -207,7 +207,7 @@
   border-radius: 36px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22), inset 0 2px 0 #ffffff;
   padding: clamp(16px, 2.2cqw, 28px) clamp(20px, 2.8cqw, 36px);
-  padding-left: 15.5%;
+  padding-left: 23%;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -216,6 +216,59 @@
   box-sizing: border-box;
   pointer-events: auto;
   z-index: 10;
+}
+
+/* Whiteboard Main Panel in Video Embed or Image Mode */
+.gangguan-board-panel.has-video,
+.gangguan-board-panel.has-image {
+  overflow: hidden;
+  padding: clamp(10px, 1.4cqw, 18px);
+  padding-left: clamp(170px, 20.5cqw, 245px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gangguan-video-wrapper,
+.gangguan-image-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: clamp(16px, 2cqw, 24px);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gangguan-video-wrapper {
+  background: #000000;
+}
+
+.gangguan-image-wrapper {
+  background: #ffffff;
+  padding: clamp(8px, 1cqw, 16px);
+  box-sizing: border-box;
+}
+
+.gangguan-video-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  border-radius: clamp(16px, 2cqw, 24px);
+}
+
+.gangguan-image-media {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  pointer-events: none;
 }
 
 /* Custom Webkit Scrollbar */

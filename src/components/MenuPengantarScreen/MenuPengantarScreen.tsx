@@ -289,7 +289,13 @@ export const MenuPengantarScreen: React.FC = () => {
                 <div className="pengantar-modal-row">
                   <div>
                     <div className="pengantar-modal-label">Pengguna Aktif</div>
-                    <div className="pengantar-modal-sub">{user.email}</div>
+                    <div className="pengantar-modal-sub">
+                      {user.attendanceNumber
+                        ? `No. Absen: ${user.attendanceNumber}`
+                        : user.role === 'guest'
+                          ? 'Siswa Tamu (Tanpa Absen)'
+                          : user.email || 'Siswa DIGESTA'}
+                    </div>
                   </div>
                   <span style={{ fontWeight: 700, color: '#1971c2', fontSize: '0.85rem' }}>
                     {user.fullName}

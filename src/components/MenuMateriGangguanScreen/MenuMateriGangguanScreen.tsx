@@ -4,6 +4,7 @@ import bgImg from '../../assets/menu-materi-gangguan-pencernaan-screen/bg-menu-m
 import btnHome from '../../assets/menu-materi-gangguan-pencernaan-screen/button-home.webp';
 import btnSetting from '../../assets/menu-materi-gangguan-pencernaan-screen/button-setting.webp';
 import btnRight from '../../assets/menu-materi-gangguan-pencernaan-screen/button-right.webp';
+import gastritisImg from '../../assets/menu-materi-gangguan-pencernaan-screen/gastritis.webp';
 import { useAuth } from '../../context/AuthContext';
 import './MenuMateriGangguanScreen.css';
 
@@ -19,6 +20,8 @@ interface GangguanDetail {
   causes: string[];
   symptoms: string[];
   prevention: string[];
+  youtubeVideoId?: string;
+  imageSrc?: string;
 }
 
 const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
@@ -28,6 +31,7 @@ const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
     title: 'Penyakit Maag (Dispepsia)',
     subtitle: 'Rasa tidak nyaman atau perih pada perut bagian atas akibat asam lambung.',
     organ: 'Lambung',
+    youtubeVideoId: 'rHnvtmmLh44',
     description:
       'Maag adalah kumpulan gejala rasa tidak nyaman, panas, atau perih pada perut bagian atas (ulu hati) yang biasanya dipicu oleh asam lambung yang mengikis lapisan dinding lambung.',
     causes: [
@@ -52,6 +56,7 @@ const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
     title: 'Gastritis (Radang Lambung)',
     subtitle: 'Peradangan dan iritasi pada selaput mukosa pelindung dinding lambung.',
     organ: 'Lapisan Dinding Lambung',
+    imageSrc: gastritisImg,
     description:
       'Gastritis terjadi saat lapisan pelindung dinding lambung mengalami peradangan. Jika tidak ditangani, gastritis dapat berkembang menjadi luka terbuka (tukak lambung) yang lebih serius.',
     causes: [
@@ -76,6 +81,7 @@ const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
     title: 'Diare (Mencret)',
     subtitle: 'Kondisi buang air besar encer dan sering akibat gangguan penyerapan usus.',
     organ: 'Usus Halus & Usus Besar',
+    youtubeVideoId: 'cE3hijxgGm4',
     description:
       'Diare adalah kondisi ketika buang air besar terjadi lebih dari 3 kali sehari dengan konsistensi feses cair. Hal ini terjadi karena dinding usus mengalami iritasi sehingga tidak sempat menyerap cairan makanan.',
     causes: [
@@ -100,6 +106,7 @@ const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
     title: 'Sembelit (Konstipasi)',
     subtitle: 'Kondisi buang air besar keras dan tidak teratur akibat kekurangan serat.',
     organ: 'Usus Besar & Rektum',
+    youtubeVideoId: 'WhTlp45g5hU',
     description:
       'Sembelit adalah kesulitan buang air besar karena feses menjadi kering, keras, dan padat. Hal ini terjadi saat usus besar menyerap air terlalu banyak akibat sisa makanan bergerak terlalu lambat.',
     causes: [
@@ -124,6 +131,7 @@ const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
     title: 'Apendisitis (Radang Usus Buntu)',
     subtitle: 'Peradangan akut pada umbai cacing (apendiks) yang membutuhkan penanganan medis.',
     organ: 'Umbai Cacing (Apendiks)',
+    youtubeVideoId: 'Av2xUNHjOCQ',
     description:
       'Apendisitis adalah peradangan parah pada usus buntu (umbai cacing), yaitu kantung kecil seukuran jari yang menempel di pangkal usus besar sebelah kanan bawah perut.',
     causes: [
@@ -297,62 +305,91 @@ export const MenuMateriGangguanScreen: React.FC = () => {
           </div>
 
           {/* Whiteboard Main Panel */}
-          <div className="gangguan-board-panel">
-            {/* Header Content */}
-            <div className="gangguan-content-header">
-              <div className="gangguan-header-meta">
-                <span className="gangguan-organ-badge">Organ: {currentData.organ}</span>
-                <h1 className="gangguan-content-title">{currentData.title}</h1>
+          <div
+            className={`gangguan-board-panel ${
+              currentData.youtubeVideoId ? 'has-video' : currentData.imageSrc ? 'has-image' : ''
+            }`}
+          >
+            {currentData.youtubeVideoId ? (
+              <div className="gangguan-video-wrapper">
+                <iframe
+                  key={currentData.id}
+                  className="gangguan-video-iframe"
+                  src={`https://www.youtube.com/embed/${currentData.youtubeVideoId}?rel=0&modestbranding=1`}
+                  title={currentData.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
               </div>
-              <p className="gangguan-content-subtitle">{currentData.subtitle}</p>
-            </div>
-
-            {/* Description Box */}
-            <div className="gangguan-desc-box">
-              <p className="gangguan-desc-text">{currentData.description}</p>
-            </div>
-
-            {/* 3 Game Info Columns: Penyebab, Gejala, Pencegahan */}
-            <div className="gangguan-cards-grid">
-              {/* Card 1: Penyebab */}
-              <div className="gangguan-card-box card-cause">
-                <div className="gangguan-card-header">
-                  <span className="gangguan-card-icon">⚡</span>
-                  <h3 className="gangguan-card-title">Penyebab Umum</h3>
+            ) : currentData.imageSrc ? (
+              <div className="gangguan-image-wrapper">
+                <img
+                  src={currentData.imageSrc}
+                  alt={currentData.title}
+                  className="gangguan-image-media"
+                  draggable={false}
+                />
+              </div>
+            ) : (
+              <>
+                {/* Header Content */}
+                <div className="gangguan-content-header">
+                  <div className="gangguan-header-meta">
+                    <span className="gangguan-organ-badge">Organ: {currentData.organ}</span>
+                    <h1 className="gangguan-content-title">{currentData.title}</h1>
+                  </div>
+                  <p className="gangguan-content-subtitle">{currentData.subtitle}</p>
                 </div>
-                <ul className="gangguan-points-list">
-                  {currentData.causes.map((c, i) => (
-                    <li key={i}>{c}</li>
-                  ))}
-                </ul>
-              </div>
 
-              {/* Card 2: Gejala */}
-              <div className="gangguan-card-box card-symptom">
-                <div className="gangguan-card-header">
-                  <span className="gangguan-card-icon">🩺</span>
-                  <h3 className="gangguan-card-title">Gejala Klinis</h3>
+                {/* Description Box */}
+                <div className="gangguan-desc-box">
+                  <p className="gangguan-desc-text">{currentData.description}</p>
                 </div>
-                <ul className="gangguan-points-list">
-                  {currentData.symptoms.map((s, i) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
-              </div>
 
-              {/* Card 3: Pencegahan */}
-              <div className="gangguan-card-box card-prevention">
-                <div className="gangguan-card-header">
-                  <span className="gangguan-card-icon">🛡️</span>
-                  <h3 className="gangguan-card-title">Pencegahan & Tips</h3>
+                {/* 3 Game Info Columns: Penyebab, Gejala, Pencegahan */}
+                <div className="gangguan-cards-grid">
+                  {/* Card 1: Penyebab */}
+                  <div className="gangguan-card-box card-cause">
+                    <div className="gangguan-card-header">
+                      <span className="gangguan-card-icon">⚡</span>
+                      <h3 className="gangguan-card-title">Penyebab Umum</h3>
+                    </div>
+                    <ul className="gangguan-points-list">
+                      {currentData.causes.map((c, i) => (
+                        <li key={i}>{c}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Card 2: Gejala */}
+                  <div className="gangguan-card-box card-symptom">
+                    <div className="gangguan-card-header">
+                      <span className="gangguan-card-icon">🩺</span>
+                      <h3 className="gangguan-card-title">Gejala Klinis</h3>
+                    </div>
+                    <ul className="gangguan-points-list">
+                      {currentData.symptoms.map((s, i) => (
+                        <li key={i}>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Card 3: Pencegahan */}
+                  <div className="gangguan-card-box card-prevention">
+                    <div className="gangguan-card-header">
+                      <span className="gangguan-card-icon">🛡️</span>
+                      <h3 className="gangguan-card-title">Pencegahan & Tips</h3>
+                    </div>
+                    <ul className="gangguan-points-list">
+                      {currentData.prevention.map((p, i) => (
+                        <li key={i}>{p}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <ul className="gangguan-points-list">
-                  {currentData.prevention.map((p, i) => (
-                    <li key={i}>{p}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -421,7 +458,13 @@ export const MenuMateriGangguanScreen: React.FC = () => {
                   <div className="menuscreen-setting-row">
                     <div>
                       <div className="menuscreen-setting-label">Pengguna Aktif</div>
-                      <div className="menuscreen-setting-sub">{user.email}</div>
+                      <div className="menuscreen-setting-sub">
+                        {user.attendanceNumber
+                          ? `No. Absen: ${user.attendanceNumber}`
+                          : user.role === 'guest'
+                            ? 'Siswa Tamu (Tanpa Absen)'
+                            : user.email || 'Siswa DIGESTA'}
+                      </div>
                     </div>
                     <span className="menuscreen-user-tag">
                       {user.fullName} ({user.role === 'guest' ? 'Tamu' : 'Siswa'})

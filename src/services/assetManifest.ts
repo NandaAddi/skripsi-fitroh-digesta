@@ -49,6 +49,7 @@ import gangguanBg from '../assets/menu-materi-gangguan-pencernaan-screen/bg-menu
 import gangguanBtnHome from '../assets/menu-materi-gangguan-pencernaan-screen/button-home.webp';
 import gangguanBtnRight from '../assets/menu-materi-gangguan-pencernaan-screen/button-right.webp';
 import gangguanBtnSetting from '../assets/menu-materi-gangguan-pencernaan-screen/button-setting.webp';
+import gastritisImg from '../assets/menu-materi-gangguan-pencernaan-screen/gastritis.webp';
 
 export interface PreloadItem {
   url: string;
@@ -99,6 +100,7 @@ export const ASSETS_TO_PRELOAD: PreloadItem[] = [
   { url: gangguanBtnHome, label: 'Navigasi Menu Gangguan' },
   { url: gangguanBtnRight, label: 'Tombol Aksi Gangguan' },
   { url: gangguanBtnSetting, label: 'Pengaturan Suara Gangguan' },
+  { url: gastritisImg, label: 'Infografis Materi Gastritis' },
 ];
 
 export const BIOLOGY_TRIVIA = [

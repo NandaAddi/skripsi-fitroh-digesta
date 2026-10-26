@@ -8,6 +8,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   login: (credentials: { email: string; password: string }) => Promise<AuthResponse>;
   signUp: (data: { email: string; password: string; fullName: string }) => Promise<AuthResponse>;
+  loginAsStudent: (data: { fullName: string; attendanceNumber: number }) => Promise<AuthResponse>;
   loginAsGuest: (guestName?: string) => Promise<AuthResponse>;
   logout: () => Promise<void>;
 }
@@ -50,6 +51,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const loginAsStudent = async (data: { fullName: string; attendanceNumber: number }): Promise<AuthResponse> => {
+    setIsLoading(true);
+    try {
+      const res = await authService.signInWithStudentProfile(data);
+      if (res.user) {
+        setUser(res.user);
+      }
+      return res;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const loginAsGuest = async (guestName?: string): Promise<AuthResponse> => {
     setIsLoading(true);
     try {
@@ -79,6 +93,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     isAuthenticated: Boolean(user),
     login,
     signUp,
+    loginAsStudent,
     loginAsGuest,
     logout,
   };

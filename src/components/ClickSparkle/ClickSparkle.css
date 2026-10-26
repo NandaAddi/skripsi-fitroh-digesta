@@ -1,0 +1,80 @@
+/* ==========================================================================
+   ClickSparkle.css - Game-Themed Cartoon Click Burst Particles
+   ========================================================================== */
+
+.click-sparkles-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999999;
+  overflow: hidden;
+  user-select: none;
+}
+
+.click-burst {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Central Ripple Ring */
+.click-ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  margin-left: -16px;
+  border-radius: 50%;
+  border: 2.5px solid #fbbf24;
+  opacity: 0.9;
+  transform: scale(0.2);
+  animation: click-ripple-expand 0.35s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes click-ripple-expand {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.95;
+    border-color: #fef08a;
+  }
+  60% {
+    opacity: 0.7;
+    border-color: #f59e0b;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+    border-color: #38bdf8;
+  }
+}
+
+/* Flying Cartoon Stars & Spheres */
+.click-particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: click-particle-fly 0.42s cubic-bezier(0.12, 0.8, 0.32, 1) forwards;
+}
+
+@keyframes click-particle-fly {
+  0% {
+    transform: translate(0, 0) scale(0.3) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 0.7), calc(var(--dy) * 0.7)) scale(1.1) rotate(var(--rot));
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) scale(0) rotate(calc(var(--rot) * 2));
+    opacity: 0;
+  }
+}

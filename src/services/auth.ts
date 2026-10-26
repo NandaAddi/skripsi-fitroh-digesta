@@ -11,8 +11,9 @@ import { supabaseConfig } from './supabaseClient';
 
 export interface User {
   id: string;
-  email: string;
   fullName: string;
+  attendanceNumber?: number | null;
+  email?: string;
   role: 'student' | 'teacher' | 'guest';
   createdAt: string;
 }
@@ -23,6 +24,35 @@ export interface AuthResponse {
 }
 
 const STORAGE_KEY = 'digesta_auth_session';
+
+/**
+ * Sinkronisasi data profil siswa ke tabel Supabase (jika terhubung).
+ * Berjalan non-blocking di background agar mode offline/tanpa backend tetap instan.
+ */
+async function syncToSupabase(user: User): Promise<void> {
+  if (!supabaseConfig.isConfigured()) return;
+  try {
+    const endpoint = `${supabaseConfig.url}/rest/v1/students`;
+    await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'apikey': supabaseConfig.anonKey || '',
+        'Authorization': `Bearer ${supabaseConfig.anonKey || ''}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify({
+        id: user.id,
+        full_name: user.fullName,
+        attendance_number: user.attendanceNumber ?? null,
+        role: user.role,
+        last_login: user.createdAt,
+      }),
+    });
+  } catch (err) {
+    console.warn('[DIGESTA Supabase Sync] Fallback lokal aktif (gagal sinkronisasi Supabase):', err);
+  }
+}
 
 export const authService = {
   /**
@@ -42,6 +72,46 @@ export const authService = {
     } catch {
       return null;
     }
+  },
+
+  /**
+   * Masuk langsung dengan Nama Lengkap dan Nomor Absen Siswa
+   */
+  async signInWithStudentProfile({
+    fullName,
+    attendanceNumber,
+  }: {
+    fullName: string;
+    attendanceNumber: number;
+  }): Promise<AuthResponse> {
+    // Simulasi delay realistis untuk feedback visual
+    await new Promise((resolve) => setTimeout(resolve, 400));
+
+    const trimmedName = fullName.trim();
+    if (!trimmedName || trimmedName.length < 2) {
+      return { user: null, error: 'Nama lengkap minimal 2 karakter.' };
+    }
+
+    const absNum = Number(attendanceNumber);
+    if (!attendanceNumber || isNaN(absNum) || absNum < 1 || absNum > 99) {
+      return { user: null, error: 'Nomor absen harus berupa angka antara 1 sampai 99.' };
+    }
+
+    const user: User = {
+      id: 'std_' + Math.random().toString(36).substring(2, 9),
+      fullName: trimmedName,
+      attendanceNumber: absNum,
+      email: `absen${absNum}@digesta.local`,
+      role: 'student',
+      createdAt: new Date().toISOString(),
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+
+    // Sinkronisasi non-blocking di latar belakang
+    syncToSupabase(user).catch(() => {});
+
+    return { user, error: null };
   },
 
   /**
@@ -134,6 +204,7 @@ export const authService = {
       id: 'guest_' + Math.random().toString(36).substring(2, 8),
       email: 'tamu@digesta.edu',
       fullName: name,
+      attendanceNumber: null,
       role: 'guest',
       createdAt: new Date().toISOString(),
     };

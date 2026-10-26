@@ -10,12 +10,14 @@ import MenuMateriGangguanScreen from './components/MenuMateriGangguanScreen/Menu
 import MenuPengantarScreen from './components/MenuPengantarScreen/MenuPengantarScreen';
 import NotFoundScreen from './components/NotFound/NotFoundScreen';
 import AssetPreloader from './components/AssetPreloader/AssetPreloader';
+import ClickSparkle from './components/ClickSparkle/ClickSparkle';
 
 function App() {
   const [isPreloadDone, setIsPreloadDone] = useState(false);
 
   return (
     <AuthProvider>
+      <ClickSparkle />
       {!isPreloadDone && (
         <AssetPreloader onComplete={() => setIsPreloadDone(true)} />
       )}

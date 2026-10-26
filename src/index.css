@@ -39,3 +39,67 @@ html, body {
   border-width: 0;
 }
 
+/* ==========================================================================
+   DIGESTA 3D Cartoon Game Cursors (Hardware Accelerated)
+   ========================================================================== */
+
+/* State 1: Default 3D Cartoon Glove Cursor */
+html, body, *, *::before, *::after {
+  cursor: url('./assets/cursors/cursor-default.svg') 3 2, auto;
+}
+
+/* State 2: Pointer Glove on Clickable & Interactive Elements */
+button,
+a,
+select,
+summary,
+[role="button"],
+[role="tab"],
+[tabindex]:not([tabindex="-1"]),
+.game-btn,
+.clickable,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+.loginscreen-submit-btn,
+.loginscreen-guest-btn,
+.loginscreen-btn-round,
+.loginscreen-icon-btn,
+.menuscreen-round-btn,
+.menuscreen-switch,
+.menuscreen-btn-action,
+.menuscreen-game-btn,
+.menuscreen-card-btn,
+.menu-materi-card-btn,
+.pengantar-nav-btn,
+.pengantar-btn-round,
+.pengantar-icon-btn,
+.materi-gangguan-tab-btn,
+.materi-gangguan-icon-btn,
+.materi-gangguan-btn-round {
+  cursor: url('./assets/cursors/cursor-pointer.svg') 3 2, pointer !important;
+}
+
+/* State 3: Active Mouse Down / Click Pressed */
+*:active,
+button:active,
+a:active,
+[role="button"]:active,
+.game-btn:active,
+.loginscreen-submit-btn:active,
+.loginscreen-guest-btn:active,
+.menuscreen-card-btn:active,
+.menu-materi-card-btn:active {
+  cursor: url('./assets/cursors/cursor-active.svg') 4 4, pointer !important;
+}
+
+/* Text Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+  cursor: text !important;
+}
