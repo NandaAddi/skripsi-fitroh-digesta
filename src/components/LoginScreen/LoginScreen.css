@@ -270,6 +270,7 @@
 
 .loginscreen-input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .loginscreen-input:hover {

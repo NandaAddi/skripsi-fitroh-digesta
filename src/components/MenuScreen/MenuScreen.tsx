@@ -7,6 +7,7 @@ import btnExit from '../../assets/menu-screen/button-exit.webp';
 import { useAuth } from '../../context/AuthContext';
 import { MENU_ITEMS, type MenuItem } from '../../data/modules';
 import type { User } from '../../services/auth';
+import { playSound as playSoundEffect } from '../../services/soundService';
 import './MenuScreen.css';
 
 export interface MenuScreenProps {
@@ -31,56 +32,9 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  // Sintesis audio interaktif Web Audio API
+  // Efek suara interaktif terpusat
   const playSound = (type: 'pop' | 'chime' | 'soft') => {
-    if (!soundEnabled) return;
-    try {
-      const AudioCtx =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-
-      if (type === 'pop') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(420, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(740, ctx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.2, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.12);
-      } else if (type === 'chime') {
-        // Nada ceria dua tingkat
-        const osc1 = ctx.createOscillator();
-        const gain1 = ctx.createGain();
-        osc1.type = 'triangle';
-        osc1.frequency.setValueAtTime(520, ctx.currentTime);
-        osc1.frequency.setValueAtTime(780, ctx.currentTime + 0.08);
-        gain1.gain.setValueAtTime(0.25, ctx.currentTime);
-        gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-        osc1.connect(gain1);
-        gain1.connect(ctx.destination);
-        osc1.start();
-        osc1.stop(ctx.currentTime + 0.25);
-      } else if (type === 'soft') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(320, ctx.currentTime);
-        gain.gain.setValueAtTime(0.15, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.1);
-      }
-    } catch {
-      // Browser audio context policy fallback
-    }
+    playSoundEffect(type, soundEnabled);
   };
 
   const handleMenuClick = (item: MenuItem) => {
@@ -96,6 +50,12 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
         onSelectMenu(item.id);
       }
       navigate('/menu/pengantar');
+    } else if (item.id === '3d') {
+      playSound('chime');
+      if (onSelectMenu) {
+        onSelectMenu(item.id);
+      }
+      navigate('/menu/3d');
     } else {
       playSound('soft');
       if (onSelectMenu) {

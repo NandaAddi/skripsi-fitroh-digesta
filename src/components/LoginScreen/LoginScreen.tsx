@@ -4,6 +4,7 @@ import bgImg from '../../assets/login-screen/bg-loginscreen.webp';
 import logoImg from '../../assets/login-screen/assets-loginscreen.webp';
 import { useAuth } from '../../context/AuthContext';
 import type { User } from '../../services/auth';
+import { playSound as playSoundEffect } from '../../services/soundService';
 import './LoginScreen.css';
 
 export interface LoginScreenProps {
@@ -38,57 +39,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
     }
   }, [isAuthenticated, navigate, from]);
 
-  // Sintesis efek suara ceria berbasis Web Audio API
+  // Efek suara ceria berbasis centralized soundService
   const playSound = (type: 'pop' | 'success' | 'error') => {
-    if (!soundEnabled) return;
-    try {
-      const AudioCtx =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-
-      if (type === 'pop') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(450, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(720, ctx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.25, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.12);
-      } else if (type === 'success') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(400, ctx.currentTime);
-        osc.frequency.setValueAtTime(520, ctx.currentTime + 0.08);
-        osc.frequency.setValueAtTime(680, ctx.currentTime + 0.16);
-        gain.gain.setValueAtTime(0.3, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.32);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.32);
-      } else if (type === 'error') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(280, ctx.currentTime);
-        osc.frequency.setValueAtTime(200, ctx.currentTime + 0.12);
-        gain.gain.setValueAtTime(0.2, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.22);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.22);
-      }
-    } catch {
-      // Fallback diam jika audio context dibatasi oleh browser policy
-    }
+    playSoundEffect(type, soundEnabled);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

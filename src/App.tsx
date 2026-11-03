@@ -6,8 +6,12 @@ import StartScreen from './components/StartScreen/StartScreen';
 import LoginScreen from './components/LoginScreen/LoginScreen';
 import MenuScreen from './components/MenuScreen/MenuScreen';
 import MenuMateriScreen from './components/MenuMateriScreen/MenuMateriScreen';
+import MenuMateriProsesScreen from './components/MenuMateriProsesScreen/MenuMateriProsesScreen';
+import MenuMateriOrganScreen from './components/MenuMateriOrganScreen/MenuMateriOrganScreen';
+import MenuMateriOrganIsiScreen from './components/MenuMateriOrganIsiScreen/MenuMateriOrganIsiScreen';
 import MenuMateriGangguanScreen from './components/MenuMateriGangguanScreen/MenuMateriGangguanScreen';
 import MenuPengantarScreen from './components/MenuPengantarScreen/MenuPengantarScreen';
+import Menu3DScreen from './components/Menu3DScreen/Menu3DScreen';
 import NotFoundScreen from './components/NotFound/NotFoundScreen';
 import AssetPreloader from './components/AssetPreloader/AssetPreloader';
 import ClickSparkle from './components/ClickSparkle/ClickSparkle';
@@ -58,6 +62,52 @@ function App() {
               }
             />
 
+            {/* Halaman Khusus Proses Pencernaan */}
+            <Route
+              path="/menu/materi/proses"
+              element={
+                <ProtectedRoute>
+                  <MenuMateriProsesScreen />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Halaman Khusus Organ Pencernaan: Menu Pemilihan Organ */}
+            <Route
+              path="/menu/materi/organ"
+              element={
+                <ProtectedRoute>
+                  <MenuMateriOrganScreen />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Halaman Khusus Isi Materi Organ Pencernaan (Ruang Kelas Bu Rini) */}
+            <Route
+              path="/menu/materi/organ/isi"
+              element={
+                <ProtectedRoute>
+                  <MenuMateriOrganIsiScreen />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/menu/materi/organ/isi/:organId"
+              element={
+                <ProtectedRoute>
+                  <MenuMateriOrganIsiScreen />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/menu/materi/organ/:organId"
+              element={
+                <ProtectedRoute>
+                  <MenuMateriOrganIsiScreen />
+                </ProtectedRoute>
+              }
+            />
+
             {/* Halaman Khusus Gangguan Pencernaan */}
             <Route
               path="/menu/materi/gangguan"
@@ -68,11 +118,37 @@ function App() {
               }
             />
 
+            {/* Halaman Khusus Menu 3D Organ Pencernaan (Sketchfab Embed) */}
+            <Route
+              path="/menu/3d"
+              element={
+                <ProtectedRoute>
+                  <Menu3DScreen />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/menu/3d/:organId"
+              element={
+                <ProtectedRoute>
+                  <Menu3DScreen />
+                </ProtectedRoute>
+              }
+            />
+
             {/* Alias kemudahan akses rute */}
             <Route path="/pengantar" element={<Navigate to="/menu/pengantar" replace />} />
             <Route path="/materi" element={<Navigate to="/menu/materi" replace />} />
+            <Route path="/proses" element={<Navigate to="/menu/materi/proses" replace />} />
+            <Route path="/materi/proses" element={<Navigate to="/menu/materi/proses" replace />} />
+            <Route path="/organ" element={<Navigate to="/menu/materi/organ" replace />} />
+            <Route path="/materi/organ" element={<Navigate to="/menu/materi/organ" replace />} />
+            <Route path="/organ/isi" element={<Navigate to="/menu/materi/organ/isi" replace />} />
+            <Route path="/materi/organ/isi" element={<Navigate to="/menu/materi/organ/isi" replace />} />
             <Route path="/gangguan" element={<Navigate to="/menu/materi/gangguan" replace />} />
             <Route path="/materi/gangguan" element={<Navigate to="/menu/materi/gangguan" replace />} />
+            <Route path="/3d" element={<Navigate to="/menu/3d" replace />} />
+            <Route path="/3d/:organId" element={<Navigate to="/menu/3d" replace />} />
 
             {/* Rute 404 Not Found Catch-All */}
             <Route path="*" element={<NotFoundScreen />} />

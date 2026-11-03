@@ -147,9 +147,11 @@ Seluruh rute telah dikonfigurasi menggunakan React Router DOM v7 di [`src/App.ts
 | `/menu/pengantar` | `MenuPengantarScreen` | Terproteksi | 3 slide materi pengantar interaktif dengan tombol navigasi panah kiri/kanan. |
 | `/menu/materi` | `MenuMateriScreen` | Terproteksi | Pilihan 3 topik materi utama (Proses Pencernaan, Organ Pencernaan, Gangguan). |
 | `/menu/materi/gangguan` | `MenuMateriGangguanScreen`| Terproteksi | Layar papan tulis ruang kelas dengan 5 tab vertikal (Maag, Gastritis, Diare, Sembelit, Apendisitis). |
+| `/menu/3d` | `Menu3DScreen` | Terproteksi | Layar interaktif model 3D anatomi organ pencernaan Sketchfab (Mulut, Kerongkongan, Lambung, Usus Halus, Usus Besar). |
 | `/pengantar` | *Redirect Alias* | Publik | Otomatis dialihkan (*redirect*) ke `/menu/pengantar`. |
 | `/materi` | *Redirect Alias* | Publik | Otomatis dialihkan (*redirect*) ke `/menu/materi`. |
 | `/gangguan` | *Redirect Alias* | Publik | Otomatis dialihkan (*redirect*) ke `/menu/materi/gangguan`. |
+| `/3d` | *Redirect Alias* | Publik | Otomatis dialihkan (*redirect*) ke `/menu/3d`. |
 | `*` | `NotFoundScreen` | Publik | Halaman 404 game-themed jika rute tidak ditemukan. |
 
 ---

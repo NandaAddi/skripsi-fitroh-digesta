@@ -5,6 +5,7 @@ import btnProses from '../../assets/menu-materi-screen/buton-proses-pencernaan.w
 import btnOrgan from '../../assets/menu-materi-screen/button-organ-pencernaan.webp';
 import btnGangguan from '../../assets/menu-materi-screen/button-gangguan-pencernaan.webp';
 import { useAuth } from '../../context/AuthContext';
+import { playSound as playSoundEffect } from '../../services/soundService';
 import './MenuMateriScreen.css';
 
 type MateriTopicKey = 'proses' | 'organ' | 'gangguan';
@@ -186,61 +187,19 @@ export const MenuMateriScreen: React.FC = () => {
   const topicParam = searchParams.get('topik') as MateriTopicKey | null;
   const activeTopic = topicParam && TOPIC_DETAILS[topicParam] ? TOPIC_DETAILS[topicParam] : null;
 
-  // Sintesis audio interaktif Web Audio API
+  // Sintesis audio interaktif Web Audio API terpusat & aman
   const playSound = (type: 'pop' | 'chime' | 'soft') => {
-    if (!soundEnabled) return;
-    try {
-      const AudioCtx =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-
-      if (type === 'pop') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(450, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(740, ctx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.25, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.12);
-      } else if (type === 'chime') {
-        const osc1 = ctx.createOscillator();
-        const gain1 = ctx.createGain();
-        osc1.type = 'triangle';
-        osc1.frequency.setValueAtTime(540, ctx.currentTime);
-        osc1.frequency.setValueAtTime(820, ctx.currentTime + 0.08);
-        gain1.gain.setValueAtTime(0.25, ctx.currentTime);
-        gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-        osc1.connect(gain1);
-        gain1.connect(ctx.destination);
-        osc1.start();
-        osc1.stop(ctx.currentTime + 0.25);
-      } else if (type === 'soft') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(320, ctx.currentTime);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.1);
-      }
-    } catch {
-      // AudioContext policy fallback
-    }
+    playSoundEffect(type, soundEnabled);
   };
 
   const handleTopicClick = (key: MateriTopicKey) => {
     playSound('chime');
     if (key === 'gangguan') {
       navigate('/menu/materi/gangguan');
+    } else if (key === 'proses') {
+      navigate('/menu/materi/proses');
+    } else if (key === 'organ') {
+      navigate('/menu/materi/organ');
     } else {
       setSearchParams({ topik: key });
     }

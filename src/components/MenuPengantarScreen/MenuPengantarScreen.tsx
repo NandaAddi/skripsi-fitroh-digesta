@@ -9,6 +9,7 @@ import slide1 from '../../assets/pangantar-screen/konten-slide-1.webp';
 import slide2 from '../../assets/pangantar-screen/konten-slide-2.webp';
 import slide3 from '../../assets/pangantar-screen/konten-slide-3.webp';
 import { useAuth } from '../../context/AuthContext';
+import { playSound as playSoundEffect } from '../../services/soundService';
 import './MenuPengantarScreen.css';
 
 const SLIDES = [
@@ -27,55 +28,9 @@ export const MenuPengantarScreen: React.FC = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  // Sintesis audio interaktif Web Audio API
+  // Efek suara interaktif terpusat
   const playSound = (type: 'pop' | 'chime' | 'soft') => {
-    if (!soundEnabled) return;
-    try {
-      const AudioCtx =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-
-      if (type === 'pop') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(450, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(750, ctx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.25, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.12);
-      } else if (type === 'chime') {
-        const osc1 = ctx.createOscillator();
-        const gain1 = ctx.createGain();
-        osc1.type = 'triangle';
-        osc1.frequency.setValueAtTime(540, ctx.currentTime);
-        osc1.frequency.setValueAtTime(820, ctx.currentTime + 0.08);
-        gain1.gain.setValueAtTime(0.25, ctx.currentTime);
-        gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-        osc1.connect(gain1);
-        gain1.connect(ctx.destination);
-        osc1.start();
-        osc1.stop(ctx.currentTime + 0.25);
-      } else if (type === 'soft') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(320, ctx.currentTime);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.1);
-      }
-    } catch {
-      // AudioContext policy fallback
-    }
+    playSoundEffect(type, soundEnabled);
   };
 
   const handlePrev = () => {

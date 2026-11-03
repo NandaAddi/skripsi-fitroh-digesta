@@ -6,6 +6,7 @@ import btnSetting from '../../assets/menu-materi-gangguan-pencernaan-screen/butt
 import btnRight from '../../assets/menu-materi-gangguan-pencernaan-screen/button-right.webp';
 import gastritisImg from '../../assets/menu-materi-gangguan-pencernaan-screen/gastritis.webp';
 import { useAuth } from '../../context/AuthContext';
+import { playSound as playSoundEffect } from '../../services/soundService';
 import './MenuMateriGangguanScreen.css';
 
 export type GangguanKey = 'maag' | 'gastritis' | 'diare' | 'sembelit' | 'apendisitis';
@@ -163,55 +164,9 @@ export const MenuMateriGangguanScreen: React.FC = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  // Synthesize cheerful cartoon pop sounds using Web Audio API
+  // Efek suara ceria menggunakan centralized soundService
   const playSound = (type: 'pop' | 'chime' | 'soft' = 'pop') => {
-    if (!soundEnabled) return;
-    try {
-      const AudioCtx =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-
-      if (type === 'pop') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(440, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12);
-        gain.gain.setValueAtTime(0.3, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.15);
-      } else if (type === 'chime') {
-        const osc1 = ctx.createOscillator();
-        const gain1 = ctx.createGain();
-        osc1.type = 'triangle';
-        osc1.frequency.setValueAtTime(523.25, ctx.currentTime);
-        osc1.frequency.exponentialRampToValueAtTime(1046.5, ctx.currentTime + 0.2);
-        gain1.gain.setValueAtTime(0.25, ctx.currentTime);
-        gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-        osc1.connect(gain1);
-        gain1.connect(ctx.destination);
-        osc1.start();
-        osc1.stop(ctx.currentTime + 0.25);
-      } else {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(320, ctx.currentTime);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.1);
-      }
-    } catch {
-      // AudioContext policy fallback
-    }
+    playSoundEffect(type, soundEnabled);
   };
 
   const handleTabChange = (key: GangguanKey) => {

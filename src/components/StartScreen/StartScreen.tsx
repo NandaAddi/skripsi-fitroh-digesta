@@ -5,6 +5,7 @@ import bgImg from '../../assets/start-screen/bg-startscreen.webp';
 import assetImg from '../../assets/start-screen/asset-startscreen.webp';
 import btnImg from '../../assets/start-screen/button-startscreen.webp';
 import teacherMotionImg from '../../assets/teacher-motion/teacher-motion.webp';
+import { playSound } from '../../services/soundService';
 import './StartScreen.css';
 
 export interface StartScreenProps {
@@ -20,46 +21,8 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  // Synthesize cheerful cartoon pop sound using Web Audio API
   const playPopSound = () => {
-    if (!soundEnabled) return;
-    try {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      
-      // Main chime
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(340, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(680, ctx.currentTime + 0.16);
-      
-      gain.gain.setValueAtTime(0.35, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
-      
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.22);
-
-      // Harmony chime
-      const osc2 = ctx.createOscillator();
-      const gain2 = ctx.createGain();
-      osc2.type = 'triangle';
-      osc2.frequency.setValueAtTime(520, ctx.currentTime + 0.05);
-      osc2.frequency.exponentialRampToValueAtTime(1040, ctx.currentTime + 0.22);
-
-      gain2.gain.setValueAtTime(0.2, ctx.currentTime + 0.05);
-      gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
-
-      osc2.connect(gain2);
-      gain2.connect(ctx.destination);
-      osc2.start(ctx.currentTime + 0.05);
-      osc2.stop(ctx.currentTime + 0.28);
-    } catch {
-      // AudioContext policy fallback
-    }
+    playSound('chime', soundEnabled);
   };
 
   const handleStartClick = () => {

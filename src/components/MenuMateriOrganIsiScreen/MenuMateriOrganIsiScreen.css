@@ -1,0 +1,322 @@
+/* ==========================================================================
+   DIGESTA - ISI MATERI ORGAN PENCERNAAN
+   Layout Ruang Kelas Interaktif Berdasarkan Desain Guru Bu Rini & Panggung 16:9
+   ========================================================================== */
+
+/* Container Layar Penuh */
+.organ-isi-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #090e17;
+  overflow: hidden;
+  user-select: none;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+}
+
+/* Panggung Terkunci Rasio Aspek 16:9 */
+.organ-isi-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+  container-type: inline-size;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Layer 1: Background Ruang Kelas */
+.organ-isi-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Layer 2: Slide Materi Transparan */
+.organ-isi-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 5;
+  pointer-events: none;
+  animation: slideFadeIn 0.22s ease-out forwards;
+}
+
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Layer 3: Top Bar Navigasi */
+.organ-isi-topbar {
+  position: absolute;
+  top: clamp(12px, 2.2cqw, 32px);
+  left: clamp(12px, 2.2cqw, 32px);
+  right: clamp(12px, 2.2cqw, 32px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 25;
+  pointer-events: none;
+}
+
+.organ-isi-topbar-left,
+.organ-isi-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1cqw, 14px);
+  pointer-events: auto;
+}
+
+/* Tombol Sudut (Kembali Materi & Home) */
+.organ-isi-corner-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(48px, 5.2cqw, 76px);
+  height: clamp(48px, 5.2cqw, 76px);
+  transition: transform 0.14s ease, filter 0.14s ease;
+  outline: none;
+}
+
+.organ-isi-corner-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+}
+
+.organ-isi-corner-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.08);
+}
+
+.organ-isi-corner-btn:active {
+  transform: translateY(2px) scale(0.96);
+  filter: brightness(0.95);
+}
+
+/* Tombol Utilitas (Suara & Fullscreen) */
+.organ-isi-util-btn {
+  background: rgba(15, 23, 42, 0.72);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  border-radius: 999px;
+  width: clamp(34px, 3.2cqw, 46px);
+  height: clamp(34px, 3.2cqw, 46px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(14px, 1.3cqw, 19px);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+}
+
+.organ-isi-util-btn:hover {
+  background: rgba(30, 41, 59, 0.92);
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+.organ-isi-util-btn:active {
+  transform: translateY(1px);
+}
+
+/* Badge Pengguna Aktif */
+.organ-isi-user-tag {
+  background: rgba(15, 23, 42, 0.78);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  color: #e2e8f0;
+  padding: clamp(4px, 0.5cqw, 7px) clamp(10px, 1.1cqw, 16px);
+  border-radius: 999px;
+  font-size: clamp(11px, 1cqw, 14px);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Layer 4: Tombol Next Interaktif (Sudut Kanan Bawah Balon Dialog) */
+.organ-isi-btn-next {
+  position: absolute;
+  right: 12.6%;
+  bottom: 14.2%;
+  width: clamp(44px, 4.8cqw, 74px);
+  height: clamp(44px, 4.8cqw, 74px);
+  z-index: 15;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  transition: transform 0.14s ease, filter 0.14s ease;
+  animation: pulseNextBtn 2.4s ease-in-out infinite;
+}
+
+.organ-isi-btn-next img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.42));
+}
+
+.organ-isi-btn-next:hover {
+  transform: scale(1.12);
+  filter: brightness(1.15) drop-shadow(0 0 16px rgba(56, 189, 248, 0.75));
+  animation-play-state: paused;
+}
+
+.organ-isi-btn-next:active {
+  transform: scale(0.95);
+  filter: brightness(0.95);
+}
+
+@keyframes pulseNextBtn {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+
+
+/* Layer 5: Barisan 5 Tombol Organ Horizontal di Bagian Bawah (Ukuran Proporsional Panggung 16:9) */
+.organ-isi-bottombar {
+  position: absolute;
+  bottom: clamp(10px, 1.8cqw, 24px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(12px, 2.93cqw, 34px);
+  padding: 0 clamp(12px, 2.83cqw, 32px);
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.organ-isi-tab-btn {
+  flex: 1;
+  width: 16.7cqw;
+  max-width: 16.7cqw;
+  height: 5.76cqw;
+  min-height: 5.76cqw;
+  max-height: 5.76cqw;
+  background: #be1931;
+  background-image: linear-gradient(180deg, #c71b35 0%, #b2142b 100%);
+  border: clamp(3px, 0.42cqw, 5px) solid #780214;
+  border-radius: 999px;
+  box-shadow: 0 clamp(3px, 0.38cqw, 5px) 0 #4a000a, 0 clamp(4px, 0.55cqw, 10px) rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(4px, 0.6cqw, 12px);
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+  outline: none;
+  position: relative;
+}
+
+.organ-isi-tab-label {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+/* Penyesuaian ukuran teks per tombol agar seimbang dan proporsional */
+.organ-isi-label-mulut,
+.organ-isi-label-lambung {
+  font-size: clamp(15px, 1.9cqw, 32px);
+}
+
+.organ-isi-label-kerongkongan {
+  font-size: clamp(11px, 1.3cqw, 23px);
+  letter-spacing: 0.2px;
+}
+
+.organ-isi-label-usus-halus,
+.organ-isi-label-usus-besar {
+  font-size: clamp(12.5px, 1.55cqw, 26px);
+}
+
+/* Efek Hover: Warna tombol berubah menjadi Merah Cerah / Oranye Menyala tanpa glow luar */
+.organ-isi-tab-btn:hover {
+  background: #ea580c;
+  background-image: linear-gradient(180deg, #f97316 0%, #dc2626 100%);
+  border-color: #9a3412;
+  box-shadow: 0 clamp(3px, 0.38cqw, 5px) 0 #7c2d12, 0 clamp(4px, 0.55cqw, 10px) rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+.organ-isi-tab-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #4a000a, 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+/* Tab Aktif / Sedang Dipilih: Warna Kuning/Oranye Emas Solid dengan Teks Merah Tua Pekat (Tanpa Glow Luar) */
+.organ-isi-tab-btn.is-active {
+  background: #f59e0b;
+  background-image: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+  border-color: #b45309;
+  box-shadow: 0 clamp(3px, 0.38cqw, 5px) 0 #78350f, 0 clamp(4px, 0.55cqw, 10px) rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.organ-isi-tab-btn.is-active .organ-isi-tab-label {
+  color: #780214;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.organ-isi-tab-btn.is-active:hover {
+  background: #fbbf24;
+  background-image: linear-gradient(180deg, #fcd34d 0%, #fbbf24 100%);
+  border-color: #92400e;
+  box-shadow: 0 clamp(3px, 0.38cqw, 5px) 0 #78350f, 0 clamp(4px, 0.55cqw, 10px) rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+}
+
+.organ-isi-tab-btn.is-active:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #78350f, 0 2px 4px rgba(0, 0, 0, 0.3);
+}

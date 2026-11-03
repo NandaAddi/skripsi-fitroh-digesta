@@ -51,6 +51,23 @@ import gangguanBtnRight from '../assets/menu-materi-gangguan-pencernaan-screen/b
 import gangguanBtnSetting from '../assets/menu-materi-gangguan-pencernaan-screen/button-setting.webp';
 import gastritisImg from '../assets/menu-materi-gangguan-pencernaan-screen/gastritis.webp';
 
+// Proses Pencernaan Screen Assets
+import btnBackMateri from '../assets/menu-materi-proses-pencernaan/button-back-menu-materi.webp';
+import btnNextProses from '../assets/menu-materi-proses-pencernaan/button-next.webp';
+import btnMekanik from '../assets/menu-materi-proses-pencernaan/button-mekanik.webp';
+import btnKimiawi from '../assets/menu-materi-proses-pencernaan/button-kimiawi.webp';
+import slide1Intro from '../assets/menu-materi-proses-pencernaan/slide-1.webp';
+import slide2Choice from '../assets/menu-materi-proses-pencernaan/slide-2.webp';
+
+import bgOrganPencernaan from '../assets/menu-materi-organ-pencernaan/bg-materi-organ-pencernaan.webp';
+import bgClassroomOrgan from '../assets/menu-materi-organ-pencernaan/isi/bg-isi-materi-organ-pencernaan.webp';
+import btnNextOrgan from '../assets/menu-materi-organ-pencernaan/isi/button-next.webp';
+import btnMulut from '../assets/menu-materi-organ-pencernaan/button-mulut.webp';
+import btnKerongkongan from '../assets/menu-materi-organ-pencernaan/button-kerongkongan.webp';
+import btnLambung from '../assets/menu-materi-organ-pencernaan/button-lambung.webp';
+import btnUsusHalus from '../assets/menu-materi-organ-pencernaan/button-usus-halus.webp';
+import btnUsusBesar from '../assets/menu-materi-organ-pencernaan/button-usus-besar.webp';
+
 export interface PreloadItem {
   url: string;
   label: string;
@@ -101,6 +118,24 @@ export const ASSETS_TO_PRELOAD: PreloadItem[] = [
   { url: gangguanBtnRight, label: 'Tombol Aksi Gangguan' },
   { url: gangguanBtnSetting, label: 'Pengaturan Suara Gangguan' },
   { url: gastritisImg, label: 'Infografis Materi Gastritis' },
+
+  // Prioritas 6: Materi Proses Pencernaan
+  { url: slide1Intro, label: 'Pengantar Proses Pencernaan' },
+  { url: slide2Choice, label: 'Menu Pilihan Proses Pencernaan' },
+  { url: btnBackMateri, label: 'Tombol Kembali Materi' },
+  { url: btnNextProses, label: 'Tombol Lanjut Balon Dialog' },
+  { url: btnMekanik, label: 'Tombol Pilihan Mekanik' },
+  { url: btnKimiawi, label: 'Tombol Pilihan Kimiawi' },
+
+  // Prioritas 7: Materi Organ Pencernaan
+  { url: bgOrganPencernaan, label: 'Latar Materi Organ Pencernaan' },
+  { url: bgClassroomOrgan, label: 'Latar Ruang Kelas Organ Pencernaan' },
+  { url: btnNextOrgan, label: 'Tombol Lanjut Organ Pencernaan' },
+  { url: btnMulut, label: 'Tombol Organ Mulut' },
+  { url: btnKerongkongan, label: 'Tombol Organ Kerongkongan' },
+  { url: btnLambung, label: 'Tombol Organ Lambung' },
+  { url: btnUsusHalus, label: 'Tombol Organ Usus Halus' },
+  { url: btnUsusBesar, label: 'Tombol Organ Usus Besar' },
 ];
 
 export const BIOLOGY_TRIVIA = [
