@@ -46,6 +46,14 @@ import slide2UsusBesar from '../../assets/menu-materi-organ-pencernaan/isi/slide
 import slide3UsusBesar from '../../assets/menu-materi-organ-pencernaan/isi/slide3-usus-besar.webp';
 import slide4UsusBesar from '../../assets/menu-materi-organ-pencernaan/isi/slide4-usus-besar.webp';
 
+// Video Animasi Pembelajaran 5 Organ Pencernaan
+import videoMulut from '../../assets/menu-materi-organ-pencernaan/isi/video-mulut.mp4';
+import videoKerongkongan from '../../assets/menu-materi-organ-pencernaan/isi/video-kerongkongan.mp4';
+import videoLambung from '../../assets/menu-materi-organ-pencernaan/isi/video-lambung.mp4';
+import videoUsusHalus from '../../assets/menu-materi-organ-pencernaan/isi/video-usus-halus.mp4';
+import videoUsusBesar from '../../assets/menu-materi-organ-pencernaan/isi/video-usus-besar.mp4';
+
+import OrganVideoPlayer from './OrganVideoPlayer';
 import './MenuMateriOrganIsiScreen.css';
 
 interface OrganTopicData {
@@ -56,6 +64,8 @@ interface OrganTopicData {
   slides: {
     src: string;
     alt: string;
+    isVideoSlide?: boolean;
+    videoSrc?: string;
   }[];
 }
 
@@ -69,7 +79,7 @@ const ORGAN_TOPICS: OrganTopicData[] = [
       { src: slide1Mulut, alt: 'Materi Mulut - Pertanyaan Bu Rini' },
       { src: slide2Mulut, alt: 'Materi Mulut - Penjelasan Pencernaan Mekanik dan Kimiawi' },
       { src: slide3Mulut, alt: 'Materi Mulut - Struktur Gigi, Lidah, dan Kelenjar Ludah' },
-      { src: slide4Mulut, alt: 'Materi Mulut - Video Animasi Pembelajaran' },
+      { src: slide4Mulut, alt: 'Materi Mulut - Video Animasi Pembelajaran', isVideoSlide: true, videoSrc: videoMulut },
     ],
   },
   {
@@ -81,7 +91,7 @@ const ORGAN_TOPICS: OrganTopicData[] = [
       { src: slide1Kerongkongan, alt: 'Materi Kerongkongan - Pertanyaan Bu Rini' },
       { src: slide2Kerongkongan, alt: 'Materi Kerongkongan - Fungsi Mendorong Makanan' },
       { src: slide3Kerongkongan, alt: 'Materi Kerongkongan - Gerak Peristaltik' },
-      { src: slide4Kerongkongan, alt: 'Materi Kerongkongan - Video Animasi Pembelajaran' },
+      { src: slide4Kerongkongan, alt: 'Materi Kerongkongan - Video Animasi Pembelajaran', isVideoSlide: true, videoSrc: videoKerongkongan },
     ],
   },
   {
@@ -94,7 +104,7 @@ const ORGAN_TOPICS: OrganTopicData[] = [
       { src: slide2Lambung, alt: 'Materi Lambung - Proses Mekanik dan Kimiawi di Lambung' },
       { src: slide3Lambung, alt: 'Materi Lambung - Enzim LaPAR (Pepsin, Asam Klorida/HCl, Renin)' },
       { src: slide4Lambung, alt: 'Materi Lambung - Bagian Kardiak, Fundus, dan Pilorus' },
-      { src: slide5Lambung, alt: 'Materi Lambung - Video Animasi Pembelajaran' },
+      { src: slide5Lambung, alt: 'Materi Lambung - Video Animasi Pembelajaran', isVideoSlide: true, videoSrc: videoLambung },
     ],
   },
   {
@@ -106,7 +116,7 @@ const ORGAN_TOPICS: OrganTopicData[] = [
       { src: slide1UsusHalus, alt: 'Materi Usus Halus - Pertanyaan Bu Rini' },
       { src: slide2UsusHalus, alt: 'Materi Usus Halus - Penyerapan Zat Gizi Makanan' },
       { src: slide3UsusHalus, alt: 'Materi Usus Halus - Struktur Usus Halus' },
-      { src: slide4UsusHalus, alt: 'Materi Usus Halus - Video Animasi Pembelajaran' },
+      { src: slide4UsusHalus, alt: 'Materi Usus Halus - Video Animasi Pembelajaran', isVideoSlide: true, videoSrc: videoUsusHalus },
     ],
   },
   {
@@ -118,7 +128,7 @@ const ORGAN_TOPICS: OrganTopicData[] = [
       { src: slide1UsusBesar, alt: 'Materi Usus Besar - Pertanyaan Bu Rini' },
       { src: slide2UsusBesar, alt: 'Materi Usus Besar - Penyerapan Air dan Pembentukan Feses' },
       { src: slide3UsusBesar, alt: 'Materi Usus Besar - Bagian Kolon dan Rektum' },
-      { src: slide4UsusBesar, alt: 'Materi Usus Besar - Video Animasi Pembelajaran' },
+      { src: slide4UsusBesar, alt: 'Materi Usus Besar - Video Animasi Pembelajaran', isVideoSlide: true, videoSrc: videoUsusBesar },
     ],
   },
 ];
@@ -236,7 +246,7 @@ export const MenuMateriOrganIsiScreen: React.FC = () => {
           draggable={false}
         />
 
-        {/* Layer 2: Slide Materi Transparan (Bu Rini + Balon Dialog / Ilustrasi) */}
+        {/* Layer 2: Slide Materi Transparan (Bu Rini + Balon Dialog / Ilustrasi / Frame Video) */}
         <img
           key={`${currentOrgan.id}-${currentSlideIndex}`}
           src={currentSlide.src}
@@ -244,6 +254,18 @@ export const MenuMateriOrganIsiScreen: React.FC = () => {
           className="organ-isi-slide"
           draggable={false}
         />
+
+        {/* Layer 2.5: Video Player Interaktif pada Slide Video */}
+        {currentSlide.isVideoSlide && currentSlide.videoSrc && (
+          <div className="organ-video-player-container">
+            <OrganVideoPlayer
+              key={`video-${currentOrgan.id}-${currentSlideIndex}`}
+              src={currentSlide.videoSrc}
+              title={currentOrgan.name}
+              soundEnabled={soundEnabled}
+            />
+          </div>
+        )}
 
         {/* Layer 3: Top Bar Navigasi (Kembali Materi & Menu Utama) */}
         <div className="organ-isi-topbar">

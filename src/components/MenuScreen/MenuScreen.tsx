@@ -56,6 +56,12 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
         onSelectMenu(item.id);
       }
       navigate('/menu/3d');
+    } else if (item.id === 'kuis') {
+      playSound('chime');
+      if (onSelectMenu) {
+        onSelectMenu(item.id);
+      }
+      navigate('/menu/kuis');
     } else {
       playSound('soft');
       if (onSelectMenu) {

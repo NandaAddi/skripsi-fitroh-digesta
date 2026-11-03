@@ -5,6 +5,11 @@ import btnHome from '../../assets/menu-materi-gangguan-pencernaan-screen/button-
 import btnSetting from '../../assets/menu-materi-gangguan-pencernaan-screen/button-setting.webp';
 import btnRight from '../../assets/menu-materi-gangguan-pencernaan-screen/button-right.webp';
 import gastritisImg from '../../assets/menu-materi-gangguan-pencernaan-screen/gastritis.webp';
+import videoMaag from '../../assets/menu-materi-gangguan-pencernaan-screen/video-maag.mp4';
+import videoDiare from '../../assets/menu-materi-gangguan-pencernaan-screen/video-diare.mp4';
+import videoSembelit from '../../assets/menu-materi-gangguan-pencernaan-screen/video-sembelit.mp4';
+import videoApendisitis from '../../assets/menu-materi-gangguan-pencernaan-screen/video-apendisitis.mp4';
+import { GangguanVideoPlayer } from './GangguanVideoPlayer';
 import { useAuth } from '../../context/AuthContext';
 import { playSound as playSoundEffect } from '../../services/soundService';
 import './MenuMateriGangguanScreen.css';
@@ -21,7 +26,7 @@ interface GangguanDetail {
   causes: string[];
   symptoms: string[];
   prevention: string[];
-  youtubeVideoId?: string;
+  videoSrc?: string;
   imageSrc?: string;
 }
 
@@ -32,7 +37,7 @@ const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
     title: 'Penyakit Maag (Dispepsia)',
     subtitle: 'Rasa tidak nyaman atau perih pada perut bagian atas akibat asam lambung.',
     organ: 'Lambung',
-    youtubeVideoId: 'rHnvtmmLh44',
+    videoSrc: videoMaag,
     description:
       'Maag adalah kumpulan gejala rasa tidak nyaman, panas, atau perih pada perut bagian atas (ulu hati) yang biasanya dipicu oleh asam lambung yang mengikis lapisan dinding lambung.',
     causes: [
@@ -82,7 +87,7 @@ const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
     title: 'Diare (Mencret)',
     subtitle: 'Kondisi buang air besar encer dan sering akibat gangguan penyerapan usus.',
     organ: 'Usus Halus & Usus Besar',
-    youtubeVideoId: 'cE3hijxgGm4',
+    videoSrc: videoDiare,
     description:
       'Diare adalah kondisi ketika buang air besar terjadi lebih dari 3 kali sehari dengan konsistensi feses cair. Hal ini terjadi karena dinding usus mengalami iritasi sehingga tidak sempat menyerap cairan makanan.',
     causes: [
@@ -107,7 +112,7 @@ const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
     title: 'Sembelit (Konstipasi)',
     subtitle: 'Kondisi buang air besar keras dan tidak teratur akibat kekurangan serat.',
     organ: 'Usus Besar & Rektum',
-    youtubeVideoId: 'WhTlp45g5hU',
+    videoSrc: videoSembelit,
     description:
       'Sembelit adalah kesulitan buang air besar karena feses menjadi kering, keras, dan padat. Hal ini terjadi saat usus besar menyerap air terlalu banyak akibat sisa makanan bergerak terlalu lambat.',
     causes: [
@@ -132,7 +137,7 @@ const GANGGUAN_DATA: Record<GangguanKey, GangguanDetail> = {
     title: 'Apendisitis (Radang Usus Buntu)',
     subtitle: 'Peradangan akut pada umbai cacing (apendiks) yang membutuhkan penanganan medis.',
     organ: 'Umbai Cacing (Apendiks)',
-    youtubeVideoId: 'Av2xUNHjOCQ',
+    videoSrc: videoApendisitis,
     description:
       'Apendisitis adalah peradangan parah pada usus buntu (umbai cacing), yaitu kantung kecil seukuran jari yang menempel di pangkal usus besar sebelah kanan bawah perut.',
     causes: [
@@ -262,19 +267,16 @@ export const MenuMateriGangguanScreen: React.FC = () => {
           {/* Whiteboard Main Panel */}
           <div
             className={`gangguan-board-panel ${
-              currentData.youtubeVideoId ? 'has-video' : currentData.imageSrc ? 'has-image' : ''
+              currentData.videoSrc ? 'has-video' : currentData.imageSrc ? 'has-image' : ''
             }`}
           >
-            {currentData.youtubeVideoId ? (
+            {currentData.videoSrc ? (
               <div className="gangguan-video-wrapper">
-                <iframe
+                <GangguanVideoPlayer
                   key={currentData.id}
-                  className="gangguan-video-iframe"
-                  src={`https://www.youtube.com/embed/${currentData.youtubeVideoId}?rel=0&modestbranding=1`}
+                  src={currentData.videoSrc}
                   title={currentData.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
+                  soundEnabled={soundEnabled}
                 />
               </div>
             ) : currentData.imageSrc ? (

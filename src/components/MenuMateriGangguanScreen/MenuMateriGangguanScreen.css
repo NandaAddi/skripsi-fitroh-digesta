@@ -227,9 +227,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #ffffff;
 }
 
-.gangguan-video-wrapper,
+.gangguan-video-wrapper {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: clamp(16px, 2cqw, 24px);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
 .gangguan-image-wrapper {
   width: 100%;
   height: 100%;
@@ -240,24 +255,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.gangguan-video-wrapper {
-  background: #000000;
-}
-
-.gangguan-image-wrapper {
   background: #ffffff;
   padding: clamp(8px, 1cqw, 16px);
   box-sizing: border-box;
-}
-
-.gangguan-video-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
-  border-radius: clamp(16px, 2cqw, 24px);
 }
 
 .gangguan-image-media {
@@ -269,6 +269,282 @@
   display: block;
   user-select: none;
   pointer-events: none;
+}
+
+/* Custom Game Video Player */
+.gangguan-custom-player {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: clamp(16px, 2cqw, 24px);
+  overflow: hidden;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  user-select: none;
+}
+
+.gangguan-custom-player.fullscreen {
+  border-radius: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Video Element - Preserves full 16:9 without any black bars */
+.gangguan-player-video-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+  background: transparent;
+}
+
+/* Tombol Play Besar di Tengah (Game 3D Tactile) */
+.gangguan-center-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 1cqw, 14px);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 15;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
+}
+
+.gangguan-center-play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.gangguan-center-play-btn:active {
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
+.gangguan-center-play-circle {
+  width: clamp(60px, 6.5cqw, 88px);
+  height: clamp(60px, 6.5cqw, 88px);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: 4px solid #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 2px 0 rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  animation: gangguanPlayPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes gangguanPlayPulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 0 rgba(245, 158, 11, 0.6);
+  }
+  50% {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), 0 0 0 14px rgba(245, 158, 11, 0);
+  }
+}
+
+.gangguan-center-play-icon {
+  width: 44%;
+  height: 44%;
+  margin-left: 4px;
+}
+
+.gangguan-center-play-label {
+  background: rgba(15, 23, 42, 0.85);
+  color: #ffffff;
+  border: 2px solid #ffbd59;
+  border-radius: 999px;
+  padding: 4px 16px;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(13px, 1.3cqw, 16px);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* Custom Bottom Controls Bar */
+.gangguan-player-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.72) 65%, transparent 100%);
+  padding: clamp(12px, 1.4cqw, 20px) clamp(16px, 1.8cqw, 28px) clamp(10px, 1.2cqw, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1cqw, 14px);
+  z-index: 20;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: auto;
+}
+
+.gangguan-player-controls.hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.gangguan-player-controls.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Progress Bar / Scrubber */
+.gangguan-progress-track-wrapper {
+  width: 100%;
+  height: clamp(14px, 1.6cqw, 20px);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.gangguan-progress-track {
+  width: 100%;
+  height: clamp(6px, 0.7cqw, 9px);
+  background: rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  position: relative;
+  overflow: visible;
+  transition: height 0.14s ease;
+}
+
+.gangguan-progress-track-wrapper:hover .gangguan-progress-track {
+  height: clamp(8px, 0.95cqw, 12px);
+}
+
+.gangguan-progress-filled {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  border-radius: 999px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
+}
+
+.gangguan-progress-thumb {
+  position: absolute;
+  right: -7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(14px, 1.5cqw, 18px);
+  height: clamp(14px, 1.5cqw, 18px);
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #d97706;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.12s ease;
+}
+
+.gangguan-progress-track-wrapper:hover .gangguan-progress-thumb {
+  transform: translateY(-50%) scale(1.25);
+}
+
+/* Controls Bottom Row */
+.gangguan-controls-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.gangguan-controls-group-left,
+.gangguan-controls-group-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.1cqw, 16px);
+}
+
+/* Tactile Game Push Buttons for Video Player */
+.gangguan-ctrl-push-btn {
+  width: clamp(34px, 3.6cqw, 44px);
+  height: clamp(34px, 3.6cqw, 44px);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 2.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease, background 0.12s ease;
+  outline: none;
+}
+
+.gangguan-ctrl-push-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+  border-color: #ffbd59;
+  color: #ffbd59;
+}
+
+.gangguan-ctrl-push-btn:active {
+  transform: translateY(2px);
+}
+
+.gangguan-ctrl-push-btn.btn-play-pause {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.gangguan-ctrl-push-btn.btn-play-pause:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+  filter: brightness(1.12);
+}
+
+.gangguan-btn-icon {
+  width: 50%;
+  height: 50%;
+}
+
+/* Time Badge */
+.gangguan-time-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: clamp(13px, 1.3cqw, 16px);
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  margin-left: 4px;
+}
+
+.gangguan-time-badge .current-time {
+  color: #fbbf24;
+}
+
+.gangguan-time-badge .time-divider {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.gangguan-time-badge .total-duration {
+  color: #ffffff;
+}
+
+/* Volume Control Wrapper */
+.gangguan-volume-control-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gangguan-volume-slider {
+  width: clamp(55px, 6cqw, 85px);
+  accent-color: #f59e0b;
+  cursor: pointer;
+  height: 5px;
 }
 
 /* Custom Webkit Scrollbar */

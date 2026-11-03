@@ -12,6 +12,7 @@ import MenuMateriOrganIsiScreen from './components/MenuMateriOrganIsiScreen/Menu
 import MenuMateriGangguanScreen from './components/MenuMateriGangguanScreen/MenuMateriGangguanScreen';
 import MenuPengantarScreen from './components/MenuPengantarScreen/MenuPengantarScreen';
 import Menu3DScreen from './components/Menu3DScreen/Menu3DScreen';
+import MenuKuisScreen from './components/MenuKuisScreen/MenuKuisScreen';
 import NotFoundScreen from './components/NotFound/NotFoundScreen';
 import AssetPreloader from './components/AssetPreloader/AssetPreloader';
 import ClickSparkle from './components/ClickSparkle/ClickSparkle';
@@ -136,6 +137,16 @@ function App() {
               }
             />
 
+            {/* Halaman Khusus Menu Kuis Interaktif */}
+            <Route
+              path="/menu/kuis"
+              element={
+                <ProtectedRoute>
+                  <MenuKuisScreen />
+                </ProtectedRoute>
+              }
+            />
+
             {/* Alias kemudahan akses rute */}
             <Route path="/pengantar" element={<Navigate to="/menu/pengantar" replace />} />
             <Route path="/materi" element={<Navigate to="/menu/materi" replace />} />
@@ -149,6 +160,7 @@ function App() {
             <Route path="/materi/gangguan" element={<Navigate to="/menu/materi/gangguan" replace />} />
             <Route path="/3d" element={<Navigate to="/menu/3d" replace />} />
             <Route path="/3d/:organId" element={<Navigate to="/menu/3d" replace />} />
+            <Route path="/kuis" element={<Navigate to="/menu/kuis" replace />} />
 
             {/* Rute 404 Not Found Catch-All */}
             <Route path="*" element={<NotFoundScreen />} />

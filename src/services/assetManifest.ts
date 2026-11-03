@@ -68,6 +68,111 @@ import btnLambung from '../assets/menu-materi-organ-pencernaan/button-lambung.we
 import btnUsusHalus from '../assets/menu-materi-organ-pencernaan/button-usus-halus.webp';
 import btnUsusBesar from '../assets/menu-materi-organ-pencernaan/button-usus-besar.webp';
 
+// Kuis Screen Assets
+import bgKuis from '../assets/kuis-screen/bg-kuis-screen.webp';
+import btnRightKuis from '../assets/kuis-screen/button-right.webp';
+import soal1Img from '../assets/kuis-screen/soal-1/soal.webp';
+import jawabA1 from '../assets/kuis-screen/soal-1/jawab-a.webp';
+import jawabB1 from '../assets/kuis-screen/soal-1/jawab-b.webp';
+import jawabC1 from '../assets/kuis-screen/soal-1/jawab-c.webp';
+import jawabD1 from '../assets/kuis-screen/soal-1/jawab-d.webp';
+import soal2Img from '../assets/kuis-screen/soal-2/soal.webp';
+import jawabA2 from '../assets/kuis-screen/soal-2/jawab-a.webp';
+import jawabB2 from '../assets/kuis-screen/soal-2/jawab-b.webp';
+import jawabC2 from '../assets/kuis-screen/soal-2/jawab-c.webp';
+import jawabD2 from '../assets/kuis-screen/soal-2/jawab-d.webp';
+import soal3Img from '../assets/kuis-screen/soal-3/soal.webp';
+import jawabA3 from '../assets/kuis-screen/soal-3/jawab-a.webp';
+import jawabB3 from '../assets/kuis-screen/soal-3/jawab-b.webp';
+import jawabC3 from '../assets/kuis-screen/soal-3/jawab-c.webp';
+import jawabD3 from '../assets/kuis-screen/soal-3/jawab-d.webp';
+import soal4Img from '../assets/kuis-screen/soal-4/soal.webp';
+import videoPoster4 from '../assets/kuis-screen/soal-4/video-poster.webp';
+import jawabA4 from '../assets/kuis-screen/soal-4/jawab-a.webp';
+import jawabB4 from '../assets/kuis-screen/soal-4/jawab-b.webp';
+import jawabC4 from '../assets/kuis-screen/soal-4/jawab-c.webp';
+import jawabD4 from '../assets/kuis-screen/soal-4/jawab-d.webp';
+import soal5Img from '../assets/kuis-screen/soal-5/soal.webp';
+import jawabA5 from '../assets/kuis-screen/soal-5/jawab-a.webp';
+import jawabB5 from '../assets/kuis-screen/soal-5/jawab-b.webp';
+import jawabC5 from '../assets/kuis-screen/soal-5/jawab-c.webp';
+import jawabD5 from '../assets/kuis-screen/soal-5/jawab-d.webp';
+import soal6Img from '../assets/kuis-screen/soal-6/soal.webp';
+import jawabA6 from '../assets/kuis-screen/soal-6/jawab-a.webp';
+import jawabB6 from '../assets/kuis-screen/soal-6/jawab-b.webp';
+import jawabC6 from '../assets/kuis-screen/soal-6/jawab-c.webp';
+import jawabD6 from '../assets/kuis-screen/soal-6/jawab-d.webp';
+import soal7Img from '../assets/kuis-screen/soal-7/soal.webp';
+import jawabA7 from '../assets/kuis-screen/soal-7/jawab-a.webp';
+import jawabB7 from '../assets/kuis-screen/soal-7/jawab-b.webp';
+import jawabC7 from '../assets/kuis-screen/soal-7/jawab-c.webp';
+import jawabD7 from '../assets/kuis-screen/soal-7/jawab-d.webp';
+import soal8Img from '../assets/kuis-screen/soal-8/soal.webp';
+import jawabA8 from '../assets/kuis-screen/soal-8/jawab-a.webp';
+import jawabB8 from '../assets/kuis-screen/soal-8/jawab-b.webp';
+import jawabC8 from '../assets/kuis-screen/soal-8/jawab-c.webp';
+import jawabD8 from '../assets/kuis-screen/soal-8/jawab-d.webp';
+import soal9Img from '../assets/kuis-screen/soal-9/soal.webp';
+import jawabA9 from '../assets/kuis-screen/soal-9/jawab-a.webp';
+import jawabB9 from '../assets/kuis-screen/soal-9/jawab-b.webp';
+import jawabC9 from '../assets/kuis-screen/soal-9/jawab-c.webp';
+import jawabD9 from '../assets/kuis-screen/soal-9/jawab-d.webp';
+import soal10Img from '../assets/kuis-screen/soal-10/soal.webp';
+import jawabA10 from '../assets/kuis-screen/soal-10/jawab-a.webp';
+import jawabB10 from '../assets/kuis-screen/soal-10/jawab-b.webp';
+import jawabC10 from '../assets/kuis-screen/soal-10/jawab-c.webp';
+import jawabD10 from '../assets/kuis-screen/soal-10/jawab-d.webp';
+import soal11Img from '../assets/kuis-screen/soal-11/soal.webp';
+import jawabA11 from '../assets/kuis-screen/soal-11/jawab-a.webp';
+import jawabB11 from '../assets/kuis-screen/soal-11/jawab-b.webp';
+import jawabC11 from '../assets/kuis-screen/soal-11/jawab-c.webp';
+import jawabD11 from '../assets/kuis-screen/soal-11/jawab-d.webp';
+import soal12Img from '../assets/kuis-screen/soal-12/soal.webp';
+import jawabA12 from '../assets/kuis-screen/soal-12/jawab-a.webp';
+import jawabB12 from '../assets/kuis-screen/soal-12/jawab-b.webp';
+import jawabC12 from '../assets/kuis-screen/soal-12/jawab-c.webp';
+import jawabD12 from '../assets/kuis-screen/soal-12/jawab-d.webp';
+import soal13Img from '../assets/kuis-screen/soal-13/soal.webp';
+import jawabA13 from '../assets/kuis-screen/soal-13/jawab-a.webp';
+import jawabB13 from '../assets/kuis-screen/soal-13/jawab-b.webp';
+import jawabC13 from '../assets/kuis-screen/soal-13/jawab-c.webp';
+import jawabD13 from '../assets/kuis-screen/soal-13/jawab-d.webp';
+import soal14Img from '../assets/kuis-screen/soal-14/soal.webp';
+import jawabA14 from '../assets/kuis-screen/soal-14/jawab-a.webp';
+import jawabB14 from '../assets/kuis-screen/soal-14/jawab-b.webp';
+import jawabC14 from '../assets/kuis-screen/soal-14/jawab-c.webp';
+import jawabD14 from '../assets/kuis-screen/soal-14/jawab-d.webp';
+import soal15Img from '../assets/kuis-screen/soal-15/soal.webp';
+import jawabA15 from '../assets/kuis-screen/soal-15/jawab-a.webp';
+import jawabB15 from '../assets/kuis-screen/soal-15/jawab-b.webp';
+import jawabC15 from '../assets/kuis-screen/soal-15/jawab-c.webp';
+import jawabD15 from '../assets/kuis-screen/soal-15/jawab-d.webp';
+import soal16Img from '../assets/kuis-screen/soal-16/soal.webp';
+import jawabA16 from '../assets/kuis-screen/soal-16/jawab-a.webp';
+import jawabB16 from '../assets/kuis-screen/soal-16/jawab-b.webp';
+import jawabC16 from '../assets/kuis-screen/soal-16/jawab-c.webp';
+import jawabD16 from '../assets/kuis-screen/soal-16/jawab-d.webp';
+import soal17Img from '../assets/kuis-screen/soal-17/soal.webp';
+import jawabA17 from '../assets/kuis-screen/soal-17/jawab-a.webp';
+import jawabB17 from '../assets/kuis-screen/soal-17/jawab-b.webp';
+import jawabC17 from '../assets/kuis-screen/soal-17/jawab-c.webp';
+import jawabD17 from '../assets/kuis-screen/soal-17/jawab-d.webp';
+import soal18Img from '../assets/kuis-screen/soal-18/soal.webp';
+import jawabA18 from '../assets/kuis-screen/soal-18/jawab-a.webp';
+import jawabB18 from '../assets/kuis-screen/soal-18/jawab-b.webp';
+import jawabC18 from '../assets/kuis-screen/soal-18/jawab-c.webp';
+import jawabD18 from '../assets/kuis-screen/soal-18/jawab-d.webp';
+import soal19Img from '../assets/kuis-screen/soal-19/soal.webp';
+import jawabA19 from '../assets/kuis-screen/soal-19/jawab-a.webp';
+import jawabB19 from '../assets/kuis-screen/soal-19/jawab-b.webp';
+import jawabC19 from '../assets/kuis-screen/soal-19/jawab-c.webp';
+import jawabD19 from '../assets/kuis-screen/soal-19/jawab-d.webp';
+import soal20Img from '../assets/kuis-screen/soal-20/soal.webp';
+import jawabA20 from '../assets/kuis-screen/soal-20/jawab-a.webp';
+import jawabB20 from '../assets/kuis-screen/soal-20/jawab-b.webp';
+import jawabC20 from '../assets/kuis-screen/soal-20/jawab-c.webp';
+import jawabD20 from '../assets/kuis-screen/soal-20/jawab-d.webp';
+
 export interface PreloadItem {
   url: string;
   label: string;
@@ -136,6 +241,111 @@ export const ASSETS_TO_PRELOAD: PreloadItem[] = [
   { url: btnLambung, label: 'Tombol Organ Lambung' },
   { url: btnUsusHalus, label: 'Tombol Organ Usus Halus' },
   { url: btnUsusBesar, label: 'Tombol Organ Usus Besar' },
+
+  // Prioritas 8: Kuis Evaluasi Interaktif
+  { url: bgKuis, label: 'Latar Ruang Kuis DIGESTA' },
+  { url: btnRightKuis, label: 'Tombol Lanjut Kuis' },
+  { url: soal1Img, label: 'Pertanyaan Soal 1' },
+  { url: jawabA1, label: 'Pilihan Jawaban A Soal 1' },
+  { url: jawabB1, label: 'Pilihan Jawaban B Soal 1' },
+  { url: jawabC1, label: 'Pilihan Jawaban C Soal 1' },
+  { url: jawabD1, label: 'Pilihan Jawaban D Soal 1' },
+  { url: soal2Img, label: 'Pertanyaan Soal 2' },
+  { url: jawabA2, label: 'Pilihan Jawaban A Soal 2' },
+  { url: jawabB2, label: 'Pilihan Jawaban B Soal 2' },
+  { url: jawabC2, label: 'Pilihan Jawaban C Soal 2' },
+  { url: jawabD2, label: 'Pilihan Jawaban D Soal 2' },
+  { url: soal3Img, label: 'Pertanyaan Soal 3' },
+  { url: jawabA3, label: 'Pilihan Jawaban A Soal 3' },
+  { url: jawabB3, label: 'Pilihan Jawaban B Soal 3' },
+  { url: jawabC3, label: 'Pilihan Jawaban C Soal 3' },
+  { url: jawabD3, label: 'Pilihan Jawaban D Soal 3' },
+  { url: soal4Img, label: 'Pertanyaan Soal 4' },
+  { url: videoPoster4, label: 'Poster Video Mengunyah Soal 4' },
+  { url: jawabA4, label: 'Pilihan Jawaban A Soal 4' },
+  { url: jawabB4, label: 'Pilihan Jawaban B Soal 4' },
+  { url: jawabC4, label: 'Pilihan Jawaban C Soal 4' },
+  { url: jawabD4, label: 'Pilihan Jawaban D Soal 4' },
+  { url: soal5Img, label: 'Pertanyaan Soal 5' },
+  { url: jawabA5, label: 'Pilihan Jawaban A Soal 5' },
+  { url: jawabB5, label: 'Pilihan Jawaban B Soal 5' },
+  { url: jawabC5, label: 'Pilihan Jawaban C Soal 5' },
+  { url: jawabD5, label: 'Pilihan Jawaban D Soal 5' },
+  { url: soal6Img, label: 'Pertanyaan Soal 6' },
+  { url: jawabA6, label: 'Pilihan Jawaban A Soal 6' },
+  { url: jawabB6, label: 'Pilihan Jawaban B Soal 6' },
+  { url: jawabC6, label: 'Pilihan Jawaban C Soal 6' },
+  { url: jawabD6, label: 'Pilihan Jawaban D Soal 6' },
+  { url: soal7Img, label: 'Pertanyaan Soal 7' },
+  { url: jawabA7, label: 'Pilihan Jawaban A Soal 7' },
+  { url: jawabB7, label: 'Pilihan Jawaban B Soal 7' },
+  { url: jawabC7, label: 'Pilihan Jawaban C Soal 7' },
+  { url: jawabD7, label: 'Pilihan Jawaban D Soal 7' },
+  { url: soal8Img, label: 'Pertanyaan Soal 8' },
+  { url: jawabA8, label: 'Pilihan Jawaban A Soal 8' },
+  { url: jawabB8, label: 'Pilihan Jawaban B Soal 8' },
+  { url: jawabC8, label: 'Pilihan Jawaban C Soal 8' },
+  { url: jawabD8, label: 'Pilihan Jawaban D Soal 8' },
+  { url: soal9Img, label: 'Pertanyaan Soal 9' },
+  { url: jawabA9, label: 'Pilihan Jawaban A Soal 9' },
+  { url: jawabB9, label: 'Pilihan Jawaban B Soal 9' },
+  { url: jawabC9, label: 'Pilihan Jawaban C Soal 9' },
+  { url: jawabD9, label: 'Pilihan Jawaban D Soal 9' },
+  { url: soal10Img, label: 'Pertanyaan Soal 10' },
+  { url: jawabA10, label: 'Pilihan Jawaban A Soal 10' },
+  { url: jawabB10, label: 'Pilihan Jawaban B Soal 10' },
+  { url: jawabC10, label: 'Pilihan Jawaban C Soal 10' },
+  { url: jawabD10, label: 'Pilihan Jawaban D Soal 10' },
+  { url: soal11Img, label: 'Pertanyaan Soal 11' },
+  { url: jawabA11, label: 'Pilihan Jawaban A Soal 11' },
+  { url: jawabB11, label: 'Pilihan Jawaban B Soal 11' },
+  { url: jawabC11, label: 'Pilihan Jawaban C Soal 11' },
+  { url: jawabD11, label: 'Pilihan Jawaban D Soal 11' },
+  { url: soal12Img, label: 'Pertanyaan Soal 12' },
+  { url: jawabA12, label: 'Pilihan Jawaban A Soal 12' },
+  { url: jawabB12, label: 'Pilihan Jawaban B Soal 12' },
+  { url: jawabC12, label: 'Pilihan Jawaban C Soal 12' },
+  { url: jawabD12, label: 'Pilihan Jawaban D Soal 12' },
+  { url: soal13Img, label: 'Pertanyaan Soal 13' },
+  { url: jawabA13, label: 'Pilihan Jawaban A Soal 13' },
+  { url: jawabB13, label: 'Pilihan Jawaban B Soal 13' },
+  { url: jawabC13, label: 'Pilihan Jawaban C Soal 13' },
+  { url: jawabD13, label: 'Pilihan Jawaban D Soal 13' },
+  { url: soal14Img, label: 'Pertanyaan Soal 14' },
+  { url: jawabA14, label: 'Pilihan Jawaban A Soal 14' },
+  { url: jawabB14, label: 'Pilihan Jawaban B Soal 14' },
+  { url: jawabC14, label: 'Pilihan Jawaban C Soal 14' },
+  { url: jawabD14, label: 'Pilihan Jawaban D Soal 14' },
+  { url: soal15Img, label: 'Pertanyaan Soal 15' },
+  { url: jawabA15, label: 'Pilihan Jawaban A Soal 15' },
+  { url: jawabB15, label: 'Pilihan Jawaban B Soal 15' },
+  { url: jawabC15, label: 'Pilihan Jawaban C Soal 15' },
+  { url: jawabD15, label: 'Pilihan Jawaban D Soal 15' },
+  { url: soal16Img, label: 'Pertanyaan Soal 16' },
+  { url: jawabA16, label: 'Pilihan Jawaban A Soal 16' },
+  { url: jawabB16, label: 'Pilihan Jawaban B Soal 16' },
+  { url: jawabC16, label: 'Pilihan Jawaban C Soal 16' },
+  { url: jawabD16, label: 'Pilihan Jawaban D Soal 16' },
+  { url: soal17Img, label: 'Pertanyaan Soal 17' },
+  { url: jawabA17, label: 'Pilihan Jawaban A Soal 17' },
+  { url: jawabB17, label: 'Pilihan Jawaban B Soal 17' },
+  { url: jawabC17, label: 'Pilihan Jawaban C Soal 17' },
+  { url: jawabD17, label: 'Pilihan Jawaban D Soal 17' },
+  { url: soal18Img, label: 'Pertanyaan Soal 18' },
+  { url: jawabA18, label: 'Pilihan Jawaban A Soal 18' },
+  { url: jawabB18, label: 'Pilihan Jawaban B Soal 18' },
+  { url: jawabC18, label: 'Pilihan Jawaban C Soal 18' },
+  { url: jawabD18, label: 'Pilihan Jawaban D Soal 18' },
+  { url: soal19Img, label: 'Pertanyaan Soal 19' },
+  { url: jawabA19, label: 'Pilihan Jawaban A Soal 19' },
+  { url: jawabB19, label: 'Pilihan Jawaban B Soal 19' },
+  { url: jawabC19, label: 'Pilihan Jawaban C Soal 19' },
+  { url: jawabD19, label: 'Pilihan Jawaban D Soal 19' },
+  { url: soal20Img, label: 'Pertanyaan Soal 20' },
+  { url: jawabA20, label: 'Pilihan Jawaban A Soal 20' },
+  { url: jawabB20, label: 'Pilihan Jawaban B Soal 20' },
+  { url: jawabC20, label: 'Pilihan Jawaban C Soal 20' },
+  { url: jawabD20, label: 'Pilihan Jawaban D Soal 20' },
 ];
 
 export const BIOLOGY_TRIVIA = [
