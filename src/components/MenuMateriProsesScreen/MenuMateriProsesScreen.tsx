@@ -27,6 +27,11 @@ import slide3Kimiawi from '../../assets/menu-materi-proses-pencernaan/slide-3-ki
 import slide4Kimiawi from '../../assets/menu-materi-proses-pencernaan/slide-4-kimiawi.webp';
 import slide5Kimiawi from '../../assets/menu-materi-proses-pencernaan/slide-5-kimiawi.webp';
 
+// Video Animasi Proses Pencernaan
+import videoMekanik from '../../assets/menu-materi-proses-pencernaan/video-mekanik.mp4';
+import videoKimiawi from '../../assets/menu-materi-proses-pencernaan/video-kimiawi.mp4';
+import { OrganVideoPlayer } from '../MenuMateriOrganIsiScreen/OrganVideoPlayer';
+
 import './MenuMateriProsesScreen.css';
 
 type ProsesBranch = 'intro' | 'choice' | 'mekanik' | 'kimiawi';
@@ -35,7 +40,7 @@ const MEKANIK_SLIDES = [
   { id: 1, img: slide1Mekanik, title: 'Pertanyaan Pemantik Mekanik' },
   { id: 2, img: slide2Mekanik, title: 'Definisi Pencernaan Mekanik' },
   { id: 3, img: slide3Mekanik, title: 'Lokasi Pencernaan Mekanik' },
-  { id: 4, img: slide5Mekanik, title: 'Ilustrasi Mengunyah Makanan' },
+  { id: 4, img: slide5Mekanik, title: 'Video Animasi Pencernaan Mekanik', isVideo: true, videoSrc: videoMekanik },
   { id: 5, img: slide6Mekanik, title: 'Lanjut ke Pencernaan Kimiawi' },
 ];
 
@@ -43,7 +48,7 @@ const KIMIAWI_SLIDES = [
   { id: 1, img: slide1Kimiawi, title: 'Pertanyaan Pemantik Kimiawi' },
   { id: 2, img: slide2Kimiawi, title: 'Definisi Pencernaan Kimiawi' },
   { id: 3, img: slide3Kimiawi, title: 'Lokasi & Enzim Pencernaan Kimiawi' },
-  { id: 4, img: slide4Kimiawi, title: 'Ilustrasi Enzimatis Mulut' },
+  { id: 4, img: slide4Kimiawi, title: 'Video Animasi Pencernaan Kimiawi', isVideo: true, videoSrc: videoKimiawi },
   { id: 5, img: slide5Kimiawi, title: 'Lanjut ke Pencernaan Mekanik' },
 ];
 
@@ -220,6 +225,30 @@ export const MenuMateriProsesScreen: React.FC = () => {
             />
           ))}
         </div>
+
+        {/* Layer 2.5: Video Player Interaktif pada Slide Video Mekanik */}
+        {branch === 'mekanik' && MEKANIK_SLIDES[subSlide]?.isVideo && MEKANIK_SLIDES[subSlide]?.videoSrc && (
+          <div className="proses-video-player-container">
+            <OrganVideoPlayer
+              key={`video-mekanik-${subSlide}`}
+              src={MEKANIK_SLIDES[subSlide].videoSrc!}
+              title="Pencernaan Mekanik"
+              soundEnabled={soundEnabled}
+            />
+          </div>
+        )}
+
+        {/* Layer 2.5: Video Player Interaktif pada Slide Video Kimiawi */}
+        {branch === 'kimiawi' && KIMIAWI_SLIDES[subSlide]?.isVideo && KIMIAWI_SLIDES[subSlide]?.videoSrc && (
+          <div className="proses-video-player-container">
+            <OrganVideoPlayer
+              key={`video-kimiawi-${subSlide}`}
+              src={KIMIAWI_SLIDES[subSlide].videoSrc!}
+              title="Pencernaan Kimiawi"
+              soundEnabled={soundEnabled}
+            />
+          </div>
+        )}
 
         {/* Layer 3: Top Bar Navigasi & Informasi */}
         <div className="proses-topbar">
