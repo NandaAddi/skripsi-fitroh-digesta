@@ -108,7 +108,7 @@
 .proses-topbar-right {
   display: flex;
   align-items: center;
-  gap: clamp(8px, 1cqw, 16px);
+  gap: clamp(12px, 1.2cqw, 24px);
   pointer-events: auto;
 }
 
@@ -148,17 +148,25 @@
 
 /* Progress Tracker / Breadcrumb Badge */
 .proses-badge-tracker {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
   color: #ffffff;
-  border: 2.5px solid #ffffff;
+  border: clamp(3.5px, 0.32cqw, 5.5px) solid #ffffff;
   border-radius: 999px;
-  padding: clamp(4px, 0.55cqw, 8px) clamp(12px, 1.2cqw, 20px);
+  padding: clamp(10px, 0.95cqw, 18px) clamp(24px, 2.2cqw, 44px);
   font-family: 'Fredoka', 'Outfit', sans-serif;
   font-weight: 900;
-  font-size: clamp(12px, 1.15cqw, 16px);
-  letter-spacing: 0.5px;
-  box-shadow: 0 3px 0 #b45309, 0 4px 10px rgba(0, 0, 0, 0.25);
+  font-size: clamp(18px, 1.65cqw, 28px);
+  letter-spacing: clamp(1px, 0.1cqw, 2px);
+  box-shadow: 0 clamp(4px, 0.38cqw, 7px) 0 #b45309, 0 6px 16px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(46px, 4.2cqw, 68px);
+  box-sizing: border-box;
+  white-space: nowrap;
+  user-select: none;
 }
 
 /* Layer 4: Interactive Slide Buttons */
