@@ -91,10 +91,10 @@
 
 .petunjuk-slide-interactive {
   position: absolute;
-  top: 15.5%;
-  bottom: 13.5%;
-  left: 18.5%;
-  right: 18.5%;
+  top: 14%;
+  bottom: 12.5%;
+  left: 17.5%;
+  right: 17.5%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -107,12 +107,13 @@
 .petunjuk-slide2-header {
   text-align: center;
   width: 100%;
+  flex-shrink: 0;
 }
 
 .petunjuk-slide2-title {
   margin: 0;
   font-family: 'Fredoka', 'Outfit', sans-serif;
-  font-size: clamp(16px, 1.9cqw, 30px);
+  font-size: clamp(15px, 1.8cqw, 28px);
   font-weight: 900;
   color: #0f172a;
   letter-spacing: 0.3px;
@@ -120,35 +121,37 @@
 }
 
 .petunjuk-slide2-subtitle {
-  margin: clamp(2px, 0.3cqw, 4px) 0 0;
+  margin: clamp(2px, 0.25cqw, 4px) 0 0;
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(10.5px, 1.05cqw, 15px);
+  font-size: clamp(10px, 0.95cqw, 14px);
   color: #475569;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
-/* Tata Letak Grid 2x2: Lapang, Proporsional & Mudah Dibaca di Mobile */
+/* 4 Baris Kartu Tombol Vertikal: 1 Kolom Memanjang yang Rapi, Luas & Bebas Overflow */
 .petunjuk-button-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(8px, 1.1cqw, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.6cqw, 10px);
   width: 100%;
   flex: 1;
-  align-content: center;
-  margin-top: clamp(6px, 0.8cqw, 14px);
+  justify-content: space-evenly;
+  margin-top: clamp(4px, 0.6cqw, 12px);
 }
 
 .petunjuk-list-item {
   display: flex;
   align-items: center;
-  gap: clamp(8px, 1cqw, 14px);
-  padding: clamp(8px, 0.9cqw, 14px) clamp(10px, 1.2cqw, 18px);
-  border-radius: clamp(12px, 1.3cqw, 18px);
+  gap: clamp(8px, 1.1cqw, 18px);
+  padding: clamp(5px, 0.65cqw, 11px) clamp(10px, 1.4cqw, 20px);
+  border-radius: clamp(10px, 1.2cqw, 16px);
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
   user-select: none;
   box-sizing: border-box;
   width: 100%;
+  flex: 1;
+  max-height: clamp(50px, 6.2cqw, 88px);
 }
 
 .petunjuk-list-item:hover {
@@ -183,8 +186,8 @@
 
 /* Icon Wrapper */
 .petunjuk-item-icon-wrapper {
-  width: clamp(34px, 3.6cqw, 52px);
-  height: clamp(34px, 3.6cqw, 52px);
+  width: clamp(30px, 3.5cqw, 50px);
+  height: clamp(30px, 3.5cqw, 50px);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -218,31 +221,35 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  justify-content: center;
+  gap: clamp(1px, 0.2cqw, 3px);
 }
 
 .petunjuk-item-title {
   font-family: 'Fredoka', 'Outfit', sans-serif;
-  font-size: clamp(13px, 1.35cqw, 18px);
+  font-size: clamp(12.5px, 1.3cqw, 18px);
   font-weight: 900;
   color: #0f172a;
   line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .petunjuk-item-desc {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(11px, 1.05cqw, 14px);
+  font-size: clamp(10px, 1cqw, 14px);
   color: #334155;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.22;
 }
 
 /* Badge Posisi / Shortcut (Kanan) */
 .petunjuk-item-badge {
   font-family: 'Fredoka', 'Outfit', sans-serif;
   font-weight: 900;
-  font-size: clamp(9px, 0.9cqw, 12.5px);
-  padding: clamp(3px, 0.35cqw, 5px) clamp(8px, 0.9cqw, 13px);
+  font-size: clamp(9px, 0.85cqw, 12.5px);
+  padding: clamp(3px, 0.35cqw, 5px) clamp(8px, 0.8cqw, 14px);
   border-radius: 999px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -636,81 +643,88 @@
 @media (max-height: 560px) {
   .petunjuk-slide-interactive {
     top: 13.5%;
-    bottom: 11.5%;
+    bottom: 12%;
+    left: 17%;
+    right: 17%;
   }
 
   .petunjuk-slide2-title {
-    font-size: clamp(14px, 3.2vh, 20px);
+    font-size: clamp(13.5px, 3.2vh, 18px);
   }
 
   .petunjuk-slide2-subtitle {
-    font-size: clamp(10px, 2vh, 12px);
-    margin: 2px 0 0;
+    font-size: clamp(9px, 2vh, 11.5px);
+    margin-top: 1px;
   }
 
   .petunjuk-button-list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(6px, 1.2vh, 10px);
-    margin-top: clamp(4px, 1vh, 8px);
+    flex-direction: column;
+    gap: clamp(3px, 0.9vh, 7px);
+    margin-top: clamp(2px, 0.7vh, 5px);
   }
 
   .petunjuk-list-item {
-    padding: clamp(6px, 1.2vh, 10px) clamp(8px, 1.8vw, 14px);
-    gap: clamp(8px, 1.5vw, 12px);
-    border-width: 2.5px;
-    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+    padding: clamp(3px, 0.9vh, 7px) clamp(8px, 1.8vw, 14px);
+    gap: clamp(8px, 1.5vw, 14px);
+    border-width: 2px;
+    box-shadow: 0 2.5px 0 rgba(0, 0, 0, 0.12);
+    max-height: none;
   }
 
   .petunjuk-item-icon-wrapper {
-    width: clamp(28px, 5.8vh, 40px);
-    height: clamp(28px, 5.8vh, 40px);
+    width: clamp(26px, 5.8vh, 38px);
+    height: clamp(26px, 5.8vh, 38px);
   }
 
   .petunjuk-item-title {
-    font-size: clamp(12px, 2.5vh, 15px);
+    font-size: clamp(12px, 2.5vh, 14.5px);
   }
 
   .petunjuk-item-desc {
-    font-size: clamp(10px, 2vh, 12px);
-    line-height: 1.25;
+    font-size: clamp(9.5px, 2vh, 12px);
+    line-height: 1.2;
   }
 
   .petunjuk-item-badge {
-    font-size: clamp(9px, 1.8vh, 11px);
-    padding: 2px 8px;
+    font-size: clamp(8.5px, 1.8vh, 10.5px);
+    padding: 2px 7px;
   }
 }
 
 @media (max-height: 420px) {
   .petunjuk-slide-interactive {
-    top: 12.5%;
-    bottom: 10.5%;
+    top: 13%;
+    bottom: 11.5%;
+    left: 16.5%;
+    right: 16.5%;
   }
 
   .petunjuk-slide2-title {
-    font-size: 13.5px;
+    font-size: 13px;
   }
 
   .petunjuk-slide2-subtitle {
-    font-size: 9.5px;
-    margin: 1px 0 0;
+    font-size: 9px;
+    margin-top: 1px;
   }
 
   .petunjuk-button-list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-    margin-top: 4px;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 2px;
   }
 
   .petunjuk-list-item {
-    padding: 5px 8px;
-    border-radius: 10px;
+    padding: 3px 8px;
+    border-radius: 9px;
     gap: 8px;
+    border-width: 2px;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
   }
 
   .petunjuk-item-icon-wrapper {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
   }
 
   .petunjuk-item-title {
@@ -718,12 +732,12 @@
   }
 
   .petunjuk-item-desc {
-    font-size: 9.5px;
-    line-height: 1.2;
+    font-size: 9px;
+    line-height: 1.18;
   }
 
   .petunjuk-item-badge {
-    font-size: 8.5px;
-    padding: 1px 6px;
+    font-size: 8px;
+    padding: 1.5px 6px;
   }
 }
