@@ -76,7 +76,34 @@
   pointer-events: auto;
 }
 
-/* Layer 3: Interactive Corner Action Buttons */
+/* Layer 3: Interactive Corner Action Buttons (Anti-Blue Block / Tap Highlight) */
+
+.pengantar-btn-setting,
+.pengantar-btn-home,
+.pengantar-btn-left,
+.pengantar-btn-right,
+.pengantar-dot,
+.pengantar-modal-btn-x,
+.pengantar-switch,
+.pengantar-modal-btn-close {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.pengantar-btn-setting:focus,
+.pengantar-btn-home:focus,
+.pengantar-btn-left:focus,
+.pengantar-btn-right:focus,
+.pengantar-dot:focus,
+.pengantar-modal-btn-x:focus,
+.pengantar-switch:focus,
+.pengantar-modal-btn-close:focus {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
 
 /* Tombol Pengaturan (Top-Left) */
 .pengantar-btn-setting {
