@@ -17,7 +17,6 @@ import digestaLogo from '../assets/logo-digiesta.webp';
 import logoAnimation from '../assets/logo-animation/logo-animation.webp';
 import btnMateri from '../assets/menu-screen/button-materi.webp';
 import btnPengantar from '../assets/menu-screen/button-pengantar.webp';
-import btnSimulasi from '../assets/menu-screen/button-simulasi.webp';
 import btn3D from '../assets/menu-screen/button-3d-dimensi.webp';
 import btnKuis from '../assets/menu-screen/button-kuis.webp';
 import btnPetunjuk from '../assets/menu-screen/button-petunjuk.webp';
@@ -192,7 +191,6 @@ export const ASSETS_TO_PRELOAD: PreloadItem[] = [
   { url: menuBg, label: 'Latar Belakang Menu' },
   { url: btnMateri, label: 'Modul Tombol Materi' },
   { url: btnPengantar, label: 'Modul Tombol Pengantar' },
-  { url: btnSimulasi, label: 'Modul Tombol Simulasi' },
   { url: btn3D, label: 'Modul Tombol 3D Organ' },
   { url: btnKuis, label: 'Modul Tombol Kuis' },
   { url: btnPetunjuk, label: 'Modul Tombol Petunjuk' },

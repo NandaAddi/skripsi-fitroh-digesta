@@ -1,11 +1,10 @@
 import btnPengantar from '../assets/menu-screen/button-pengantar.webp';
 import btnMateri from '../assets/menu-screen/button-materi.webp';
-import btnSimulasi from '../assets/menu-screen/button-simulasi.webp';
 import btnPetunjuk from '../assets/menu-screen/button-petunjuk.webp';
 import btn3dDimensi from '../assets/menu-screen/button-3d-dimensi.webp';
 import btnKuis from '../assets/menu-screen/button-kuis.webp';
 
-export type MenuKey = 'pengantar' | 'materi' | 'simulasi' | 'petunjuk' | '3d' | 'kuis';
+export type MenuKey = 'pengantar' | 'materi' | '3d' | 'petunjuk' | 'kuis';
 
 export interface MenuItem {
   id: MenuKey;
@@ -40,14 +39,14 @@ export const MENU_ITEMS: MenuItem[] = [
     features: ['Pencernaan Mekanik & Kimiawi', 'Enzim-Enzim Pencernaan', 'Struktur Jaringan Organ'],
   },
   {
-    id: 'simulasi',
-    title: 'Simulasi Interaktif Gastrointestinal',
+    id: '3d',
+    title: 'Model Anatomi 3 Dimensi',
     badge: 'Modul 3',
-    img: btnSimulasi,
-    color: '#1a73e8',
-    icon: '🧪',
-    description: 'Eksperimen langsung dengan alur makanan interaktif! Amati bagaimana peristaltik menggerakkan bolus dan bagaimana asam lambung mencerna makanan.',
-    features: ['Kontrol Alur Makanan Real-time', 'Uji pH & Reaksi Enzim', 'Visualisasi Gerak Peristaltik'],
+    img: btn3dDimensi,
+    color: '#d61ca8',
+    icon: '🧊',
+    description: 'Visualisasi 3D anatomi sistem pencernaan beresolusi tinggi. Putar, zoom, dan telaah tiap organ pencernaan dari berbagai sudut pandang.',
+    features: ['Rotasi Bebas 360 Derajat', 'Zoom Detail Anatomi', 'Label Hotspot Interaktif'],
   },
   {
     id: 'petunjuk',
@@ -57,26 +56,16 @@ export const MENU_ITEMS: MenuItem[] = [
     color: '#0ca653',
     icon: '🧭',
     description: 'Panduan navigasi praktis bagi siswa dan guru dalam memanfaatkan seluruh fitur pembelajaran interaktif yang ada di dalam DIGESTA.',
-    features: ['Cara Menjalankan Simulasi', 'Navigasi Menu & Hotspot', 'Tips Penggunaan di Kelas'],
-  },
-  {
-    id: '3d',
-    title: 'Model Anatomi 3 Dimensi',
-    badge: 'Modul 4',
-    img: btn3dDimensi,
-    color: '#d61ca8',
-    icon: '🧊',
-    description: 'Visualisasi 3D anatomi sistem pencernaan beresolusi tinggi. Putar, zoom, dan telaah tiap organ pencernaan dari berbagai sudut pandang.',
-    features: ['Rotasi Bebas 360 Derajat', 'Zoom Detail Anatomi', 'Label Hotspot Interaktif'],
+    features: ['Cara Menjalankan Pembelajaran', 'Navigasi Menu & Hotspot', 'Tips Penggunaan di Kelas'],
   },
   {
     id: 'kuis',
     title: 'Kuis & Evaluasi Pemahaman',
     badge: 'Evaluasi',
     img: btnKuis,
-    color: '#e03b22',
+    color: '#0071db',
     icon: '🎯',
     description: 'Uji pemahamanmu tentang sistem pencernaan lewat tantangan kuis bergambar, tebak organ, dan evaluasi hasil belajar interaktif!',
-    features: ['Kuis Pilihan Ganda & Drag-Drop', 'Papan Skor Interaktif', 'Pembahasan Langsung'],
+    features: ['Kuis Pilihan Ganda & Analisis Kasus', 'Papan Skor Interaktif', 'Pembahasan Langsung'],
   },
 ];

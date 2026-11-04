@@ -25,7 +25,7 @@ const ORGAN_3D_TOPICS: Organ3DTopic[] = [
     id: 'kerongkongan',
     name: 'Kerongkongan (Esofagus)',
     label: 'KERONGKONGAN',
-    modelId: '479c15c7e6fe4cdb8c481f4d2047a686',
+    modelId: '8bb7a83f952d4071b8a2c89812f646f0',
     description: 'Saluran berotot yang menggerakkan bolus dengan gerak peristaltik.',
   },
   {

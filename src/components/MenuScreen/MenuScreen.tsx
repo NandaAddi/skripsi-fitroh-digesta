@@ -187,26 +187,49 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
           />
         </button>
 
-        {/* Layer 3: Grid 6 Tombol Menu Utama (2 Baris x 3 Kolom) */}
-        <div className="menuscreen-grid-container">
-          {MENU_ITEMS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`menuscreen-menu-card menuscreen-card-${item.id}`}
-              onClick={() => handleMenuClick(item)}
-              onMouseEnter={() => playSound('soft')}
-              title={item.title}
-              aria-label={item.title}
-            >
-              <img
-                src={item.img}
-                alt={item.title}
-                className="menuscreen-card-img"
-                draggable={false}
-              />
-            </button>
-          ))}
+        {/* Layer 3: Tata Letak Tombol Menu (Baris 1: 3 Tombol, Baris 2: 2 Tombol Terpusat) */}
+        <div className="menuscreen-menu-layout">
+          <div className="menuscreen-row menuscreen-row-top">
+            {MENU_ITEMS.slice(0, 3).map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`menuscreen-menu-card menuscreen-card-${item.id}`}
+                onClick={() => handleMenuClick(item)}
+                onMouseEnter={() => playSound('soft')}
+                title={item.title}
+                aria-label={item.title}
+              >
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="menuscreen-card-img"
+                  draggable={false}
+                />
+              </button>
+            ))}
+          </div>
+
+          <div className="menuscreen-row menuscreen-row-bottom">
+            {MENU_ITEMS.slice(3, 5).map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`menuscreen-menu-card menuscreen-card-${item.id}`}
+                onClick={() => handleMenuClick(item)}
+                onMouseEnter={() => playSound('soft')}
+                title={item.title}
+                aria-label={item.title}
+              >
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="menuscreen-card-img"
+                  draggable={false}
+                />
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Modal Pengaturan (Settings) */}
