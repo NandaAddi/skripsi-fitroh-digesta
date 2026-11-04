@@ -82,9 +82,9 @@
 .pengantar-btn-setting {
   position: absolute;
   top: 3.2%;
-  left: 2%;
-  width: clamp(48px, 6.2cqw, 84px);
-  height: clamp(48px, 6.2cqw, 84px);
+  left: 2.5%;
+  width: 7%;
+  aspect-ratio: 1;
   background: transparent;
   border: none;
   padding: 0;
@@ -108,9 +108,9 @@
 .pengantar-btn-home {
   position: absolute;
   top: 3.2%;
-  right: 2%;
-  width: clamp(52px, 6.6cqw, 88px);
-  height: clamp(52px, 6.6cqw, 88px);
+  right: 2.5%;
+  width: 7%;
+  aspect-ratio: 1;
   background: transparent;
   border: none;
   padding: 0;
@@ -133,10 +133,10 @@
 /* Tombol Navigasi Kiri / Previous (Bottom-Left di atas gelombang oranye) */
 .pengantar-btn-left {
   position: absolute;
-  bottom: 5.8%;
-  left: 2.2%;
-  width: clamp(44px, 5.5cqw, 76px);
-  height: clamp(44px, 5.5cqw, 76px);
+  bottom: 4.5%;
+  left: 2.5%;
+  width: 7%;
+  aspect-ratio: 1;
   background: transparent;
   border: none;
   padding: 0;
@@ -159,10 +159,10 @@
 /* Tombol Navigasi Kanan / Next (Bottom-Right di atas gelombang kuning) */
 .pengantar-btn-right {
   position: absolute;
-  bottom: 5.8%;
-  right: 2.2%;
-  width: clamp(44px, 5.5cqw, 76px);
-  height: clamp(44px, 5.5cqw, 76px);
+  bottom: 4.5%;
+  right: 2.5%;
+  width: 7%;
+  aspect-ratio: 1;
   background: transparent;
   border: none;
   padding: 0;

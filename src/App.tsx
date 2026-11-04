@@ -16,12 +16,16 @@ import MenuKuisScreen from './components/MenuKuisScreen/MenuKuisScreen';
 import NotFoundScreen from './components/NotFound/NotFoundScreen';
 import AssetPreloader from './components/AssetPreloader/AssetPreloader';
 import ClickSparkle from './components/ClickSparkle/ClickSparkle';
+import OrientationOverlay from './components/OrientationOverlay/OrientationOverlay';
+import { useGameScale } from './hooks/useGameScale';
 
 function App() {
   const [isPreloadDone, setIsPreloadDone] = useState(false);
+  const { isPortrait } = useGameScale();
 
   return (
     <AuthProvider>
+      <OrientationOverlay show={isPortrait} />
       <ClickSparkle />
       {!isPreloadDone && (
         <AssetPreloader onComplete={() => setIsPreloadDone(true)} />

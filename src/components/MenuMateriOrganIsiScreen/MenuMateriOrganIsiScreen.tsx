@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { playSound as playSoundEffect } from '../../services/soundService';
+import { playSound as playSoundEffect, isSoundEnabled } from '../../services/soundService';
 
 // Background & Tombol Navigasi WebP
 import bgClassroom from '../../assets/menu-materi-organ-pencernaan/isi/bg-isi-materi-organ-pencernaan.webp';
@@ -137,8 +137,7 @@ export const MenuMateriOrganIsiScreen: React.FC = () => {
   const navigate = useNavigate();
   const { organId } = useParams<{ organId?: string }>();
 
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [soundEnabled] = useState(() => isSoundEnabled());
   const [slideIndices, setSlideIndices] = useState<Record<string, number>>({});
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -203,17 +202,6 @@ export const MenuMateriOrganIsiScreen: React.FC = () => {
       setSlideIndices((prev) => ({ ...prev, [currentOrgan.id]: activeSlide - 1 }));
     }
   }, [slideIndices, currentOrgan.id, playSound]);
-
-  const toggleFullscreen = () => {
-    playSound('pop');
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
-  };
 
   // Navigasi Keyboard
   useEffect(() => {
@@ -282,32 +270,6 @@ export const MenuMateriOrganIsiScreen: React.FC = () => {
           </div>
 
           <div className="organ-isi-topbar-right">
-
-
-            <button
-              type="button"
-              className="organ-isi-util-btn"
-              onClick={() => {
-                const next = !soundEnabled;
-                setSoundEnabled(next);
-                if (next) playSound('pop');
-              }}
-              title={soundEnabled ? 'Matikan Suara' : 'Nyalakan Suara'}
-              aria-label="Toggle Suara"
-            >
-              {soundEnabled ? '🔊' : '🔇'}
-            </button>
-
-            <button
-              type="button"
-              className="organ-isi-util-btn"
-              onClick={toggleFullscreen}
-              title={isFullscreen ? 'Keluar Layar Penuh' : 'Mode Layar Penuh'}
-              aria-label="Toggle Fullscreen"
-            >
-              {isFullscreen ? '✕' : '⛶'}
-            </button>
-
             <button
               type="button"
               className="organ-isi-corner-btn"

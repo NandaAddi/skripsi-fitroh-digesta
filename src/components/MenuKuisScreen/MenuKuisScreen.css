@@ -81,8 +81,8 @@
 /* Posisi Tombol Beranda (Pojok Kiri Atas - Aman di dalam panggung) */
 .kuis-btn-home {
   top: 3.2%;
-  left: 2.8%;
-  width: 5.8%;
+  left: 2.5%;
+  width: 7%;
   aspect-ratio: 1;
 }
 
@@ -90,17 +90,23 @@
 .kuis-progress-badge {
   position: absolute;
   top: 3.2%;
-  right: 3.5%;
+  right: 2.5%;
   background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-  border: 3px solid #38bdf8;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  border: clamp(3.5px, 0.32cqw, 5.5px) solid #38bdf8;
+  box-shadow: 0 clamp(4px, 0.4cqw, 7px) 0 #0284c7, 0 6px 16px rgba(0, 0, 0, 0.35);
   border-radius: 999px;
-  padding: clamp(6px, 0.6cqw, 10px) clamp(16px, 1.5cqw, 24px);
+  padding: clamp(10px, 1.15cqw, 18px) clamp(22px, 2.4cqw, 42px);
   color: #38bdf8;
   font-family: 'Fredoka', 'Outfit', sans-serif;
-  font-weight: 800;
-  font-size: clamp(13px, 1.2cqw, 17px);
-  letter-spacing: 0.05em;
+  font-weight: 900;
+  font-size: clamp(16px, 1.85cqw, 28px);
+  letter-spacing: clamp(1px, 0.12cqw, 2.5px);
+  text-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(44px, 4.8cqw, 74px);
+  white-space: nowrap;
   z-index: 30;
   user-select: none;
   pointer-events: none;
@@ -108,9 +114,9 @@
 
 /* Posisi Tombol Kembali Soal Sebelumnya (Pojok Kiri Bawah) */
 .kuis-btn-prev {
-  bottom: 4.2%;
-  left: 3.5%;
-  width: 7.2%;
+  bottom: 4.5%;
+  left: 2.5%;
+  width: 7%;
   aspect-ratio: 1;
   opacity: 0.95;
 }
@@ -122,9 +128,9 @@
 
 /* Posisi Tombol Lanjut (Pojok Kanan Bawah) */
 .kuis-btn-next {
-  bottom: 4.2%;
-  right: 3.5%;
-  width: 7.2%;
+  bottom: 4.5%;
+  right: 2.5%;
+  width: 7%;
   aspect-ratio: 1;
   opacity: 0.9;
 }
@@ -151,7 +157,7 @@
   top: 7.5%;
   left: 50%;
   transform: translateX(-50%);
-  width: min(72%, 1100px);
+  width: 74%;
   z-index: 10;
   display: flex;
   justify-content: center;
@@ -225,30 +231,29 @@
 .kuis-question-img {
   width: 100%;
   height: auto;
-  max-height: calc(100vh * 0.26);
-  max-height: calc(100dvh * 0.26);
+  max-height: 280px;
   object-fit: contain;
   filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35));
 }
 
 /* Container Soal Varian Media (Soal 4: Ilustrasi Mengunyah Makanan) */
 .kuis-question-container.variant-media {
-  top: 9%;
-  width: min(74.8%, 1140px);
+  top: 7.5%;
+  width: 74%;
 }
 
 .kuis-question-container.variant-media .kuis-question-img {
-  max-height: calc(100vh * 0.47);
-  max-height: calc(100dvh * 0.47);
+  max-height: 508px;
 }
 
 /* Slot Video Interaktif Mengunyah (Soal 4 - Pas di dalam Box Putih) */
 .kuis-question-video-slot {
   position: absolute;
-  left: 28%;
-  top: 12.5%;
-  width: 44%;
-  height: 64%;
+  left: 50%;
+  top: 14.5%;
+  transform: translateX(-50%);
+  width: 45%;
+  height: 65%;
   border-radius: clamp(14px, 1.6cqw, 24px);
   overflow: hidden;
   cursor: pointer;
@@ -257,12 +262,15 @@
   justify-content: center;
   background: #000000;
   z-index: 15;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  transition: transform 0.15s ease, filter 0.15s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+  border: clamp(2px, 0.2cqw, 3.5px) solid #cbd5e1;
+  transition: transform 0.15s ease, filter 0.15s ease, border-color 0.15s ease;
 }
 
 .kuis-question-video-slot:hover {
   filter: brightness(1.05);
+  border-color: #38bdf8;
+  transform: translateX(-50%) scale(1.015);
 }
 
 .kuis-question-video-el {
@@ -325,7 +333,7 @@
 .kuis-options-grid.layout-square {
   top: 36.5%;
   bottom: 6.5%;
-  width: min(58%, 880px);
+  width: 60%;
   column-gap: clamp(16px, 3.5cqw, 42px);
   row-gap: clamp(8px, 1.6cqw, 18px);
 }
@@ -340,7 +348,7 @@
 .kuis-options-grid.layout-pill {
   top: 41%;
   bottom: 15%;
-  width: min(68%, 1040px);
+  width: 68%;
   column-gap: clamp(20px, 3.2cqw, 48px);
   row-gap: clamp(16px, 2.4cqw, 32px);
   align-items: center;
@@ -361,7 +369,7 @@
 .kuis-options-grid.layout-media-question {
   top: 59%;
   bottom: 8.5%;
-  width: min(73.5%, 1120px);
+  width: 74%;
   column-gap: clamp(16px, 3.8cqw, 44px);
   row-gap: clamp(12px, 1.8cqw, 24px);
   align-items: center;
@@ -382,7 +390,7 @@
 .kuis-options-grid.layout-stack {
   top: 36%;
   bottom: 8%;
-  width: min(72%, 1100px);
+  width: 72%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -587,6 +595,18 @@
   animation: kuisFadeIn 0.2s ease-out;
 }
 
+.kuis-modal-overlay.flash-correct {
+  animation: kuisFlashCorrect 0.4s ease-out forwards;
+}
+
+.kuis-modal-overlay.flash-wrong {
+  animation: kuisFlashWrong 0.4s ease-out forwards;
+}
+
+.kuis-modal-overlay.flash-final {
+  animation: kuisFlashFinal 0.4s ease-out forwards;
+}
+
 @keyframes kuisFadeIn {
   from {
     opacity: 0;
@@ -596,25 +616,85 @@
   }
 }
 
+@keyframes kuisFlashCorrect {
+  0% {
+    background: rgba(16, 185, 129, 0.38);
+  }
+  35% {
+    background: rgba(16, 185, 129, 0.22);
+  }
+  100% {
+    background: rgba(15, 23, 42, 0.72);
+  }
+}
+
+@keyframes kuisFlashWrong {
+  0% {
+    background: rgba(239, 68, 68, 0.38);
+  }
+  35% {
+    background: rgba(239, 68, 68, 0.22);
+  }
+  100% {
+    background: rgba(15, 23, 42, 0.72);
+  }
+}
+
+@keyframes kuisFlashFinal {
+  0% {
+    background: rgba(245, 158, 11, 0.38);
+  }
+  35% {
+    background: rgba(245, 158, 11, 0.22);
+  }
+  100% {
+    background: rgba(15, 23, 42, 0.72);
+  }
+}
+
 .kuis-result-card {
   position: relative;
-  width: clamp(340px, 46cqw, 640px);
-  max-width: 90%;
+  width: min(92%, 1200px);
   background: #ffffff;
-  border-radius: clamp(24px, 2.5cqw, 36px);
-  padding: clamp(32px, 3.2cqw, 44px) clamp(24px, 2.4cqw, 38px) clamp(24px, 2.4cqw, 36px);
+  border-radius: 36px;
+  padding: 44px 52px 36px;
   text-align: center;
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45), 0 6px 0 rgba(0, 0, 0, 0.15);
-  animation: kuisScaleUp 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 8px 0 rgba(0, 0, 0, 0.14);
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: visible;
 }
 
-@keyframes kuisScaleUp {
+.kuis-result-card.correct-theme {
+  border: 6px solid #10b981;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 45px rgba(16, 185, 129, 0.35), 0 8px 0 rgba(0, 0, 0, 0.14);
+  animation: kuisPopSpringCorrect 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.kuis-result-card.wrong-theme {
+  border: 6px solid #ef4444;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 45px rgba(239, 68, 68, 0.28), 0 8px 0 rgba(0, 0, 0, 0.14);
+  animation: kuisWobbleWrong 0.42s ease-out forwards;
+}
+
+.kuis-result-card.final-theme {
+  border: 6px solid #f59e0b;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 55px rgba(245, 158, 11, 0.4), 0 8px 0 rgba(0, 0, 0, 0.14);
+  animation: kuisPopSpringCorrect 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes kuisPopSpringCorrect {
   0% {
-    transform: scale(0.85);
+    transform: scale(0.72);
     opacity: 0;
+  }
+  65% {
+    transform: scale(1.035);
+    opacity: 1;
+  }
+  85% {
+    transform: scale(0.985);
   }
   100% {
     transform: scale(1);
@@ -622,12 +702,28 @@
   }
 }
 
-.kuis-result-card.correct-theme {
-  border: 4.5px solid #10b981;
-}
-
-.kuis-result-card.wrong-theme {
-  border: 4.5px solid #ef4444;
+@keyframes kuisWobbleWrong {
+  0% {
+    transform: scale(0.75) translateX(0);
+    opacity: 0;
+  }
+  28% {
+    transform: scale(1) translateX(-18px);
+    opacity: 1;
+  }
+  48% {
+    transform: scale(1) translateX(14px);
+  }
+  68% {
+    transform: scale(1) translateX(-8px);
+  }
+  85% {
+    transform: scale(1) translateX(4px);
+  }
+  100% {
+    transform: scale(1) translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Badge Plat Timbul Atas */
@@ -637,74 +733,120 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
-  border: 3.5px solid #78350f;
-  box-shadow: 0 4px 0 #78350f, 0 6px 14px rgba(0, 0, 0, 0.25);
-  padding: clamp(6px, 0.7cqw, 10px) clamp(22px, 2.2cqw, 32px);
+  border: clamp(3.5px, 0.32cqw, 5px) solid #78350f;
+  box-shadow: 0 clamp(3.5px, 0.35cqw, 5px) 0 #78350f, 0 6px 14px rgba(0, 0, 0, 0.25);
+  padding: clamp(8px, 0.95cqw, 14px) clamp(24px, 2.6cqw, 48px);
   border-radius: 999px;
   color: #ffffff;
   font-weight: 900;
-  font-size: clamp(14px, 1.3cqw, 18px);
+  font-size: clamp(17px, 1.85cqw, 28px);
   letter-spacing: 0.06em;
-  text-shadow: 0 1.5px 2px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  white-space: nowrap;
 }
 
 /* Icon Lingkaran Game */
 .kuis-result-icon-wrapper {
-  margin-top: clamp(6px, 0.8cqw, 12px);
-  margin-bottom: clamp(12px, 1.2cqw, 16px);
+  margin-top: 6px;
+  margin-bottom: 10px;
 }
 
 .kuis-modal-svg {
-  width: clamp(52px, 5.2cqw, 72px);
-  height: clamp(52px, 5.2cqw, 72px);
+  width: 80px;
+  height: 80px;
 }
 
 .kuis-modal-svg.correct {
   color: #10b981;
-  filter: drop-shadow(0 4px 10px rgba(16, 185, 129, 0.4));
+  filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.5));
+  animation: kuisCheckmarkBounce 0.46s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s both;
+}
+
+@keyframes kuisCheckmarkBounce {
+  0% {
+    transform: scale(0) rotate(-16deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.28) rotate(8deg);
+    opacity: 1;
+  }
+  82% {
+    transform: scale(0.92) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
 }
 
 .kuis-modal-svg.wrong {
   color: #ef4444;
-  filter: drop-shadow(0 4px 10px rgba(239, 68, 68, 0.4));
+  filter: drop-shadow(0 4px 12px rgba(239, 68, 68, 0.5));
+  animation: kuisCrossWiggle 0.46s ease-out 0.08s both;
+}
+
+@keyframes kuisCrossWiggle {
+  0% {
+    transform: scale(0.3) rotate(0deg);
+    opacity: 0;
+  }
+  35% {
+    transform: scale(1.18) rotate(-14deg);
+    opacity: 1;
+  }
+  55% {
+    transform: scale(1) rotate(14deg);
+  }
+  75% {
+    transform: scale(1) rotate(-8deg);
+  }
+  90% {
+    transform: scale(1) rotate(4deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
 }
 
 /* Judul Hasil */
 .kuis-result-title {
   margin: 0;
-  font-size: clamp(24px, 2.3cqw, 32px);
+  font-size: 44px;
   font-weight: 900;
-  color: #1e293b;
-  line-height: 1.2;
+  color: #0f172a;
+  line-height: 1.25;
 }
 
 /* Badge Skor */
 .kuis-score-pill {
-  margin-top: clamp(8px, 0.9cqw, 12px);
+  margin-top: 12px;
   background: #f1f5f9;
-  border: 2.5px solid #cbd5e1;
+  border: 3.5px solid #cbd5e1;
   border-radius: 999px;
-  padding: clamp(4px, 0.5cqw, 8px) clamp(16px, 1.6cqw, 24px);
-  font-size: clamp(15px, 1.3cqw, 18px);
+  padding: 8px 32px;
+  font-size: 28px;
   font-weight: 800;
   color: #0f172a;
 }
 
 /* Penjelasan Materi */
 .kuis-result-explanation {
-  margin-top: clamp(12px, 1.3cqw, 16px);
-  margin-bottom: clamp(20px, 2cqw, 28px);
-  font-size: clamp(15px, 1.35cqw, 18px);
-  font-weight: 600;
-  color: #475569;
-  line-height: 1.45;
-  max-width: 96%;
+  margin-top: 18px;
+  margin-bottom: 26px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.5;
+  max-width: 95%;
 }
 
 /* Tombol Aksi 3D */
 .kuis-modal-actions {
   display: flex;
-  gap: clamp(12px, 1.3cqw, 18px);
+  gap: 20px;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -712,13 +854,13 @@
 
 .kuis-action-btn {
   flex: 0 1 auto;
-  min-width: clamp(220px, 22cqw, 320px);
-  max-width: 380px;
+  min-width: 380px;
+  max-width: 520px;
   border-radius: 999px;
   font-family: 'Fredoka', 'Outfit', sans-serif;
   font-weight: 900;
-  font-size: clamp(16px, 1.4cqw, 20px);
-  padding: clamp(12px, 1.2cqw, 16px) clamp(24px, 2.2cqw, 36px);
+  font-size: 30px;
+  padding: 18px 48px;
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
   outline: none;
@@ -738,8 +880,8 @@
 .kuis-btn-retry {
   background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
   color: #ffffff;
-  border: 4px solid #78350f;
-  box-shadow: 0 5px 0 #78350f, 0 8px 18px rgba(0, 0, 0, 0.25);
+  border: 5px solid #78350f;
+  box-shadow: 0 6px 0 #78350f, 0 8px 18px rgba(0, 0, 0, 0.25);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
@@ -751,8 +893,8 @@
 .kuis-btn-menu {
   background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%);
   color: #ffffff;
-  border: 4px solid #0369a1;
-  box-shadow: 0 5px 0 #0369a1, 0 8px 18px rgba(0, 0, 0, 0.25);
+  border: 5px solid #0369a1;
+  box-shadow: 0 6px 0 #0369a1, 0 8px 18px rgba(0, 0, 0, 0.25);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
@@ -760,13 +902,26 @@
   box-shadow: 0 1px 0 #0369a1;
 }
 
-/* Tombol Lanjut Soal / Lihat Hasil (Hijau 3D) */
+/* Tombol Lanjut Soal / Lihat Hasil (Hijau 3D dengan Gentle Pulse) */
 .kuis-btn-next-step {
   background: linear-gradient(180deg, #10b981 0%, #059669 100%);
   color: #ffffff;
-  border: 4px solid #047857;
-  box-shadow: 0 5px 0 #047857, 0 8px 18px rgba(0, 0, 0, 0.25);
+  border: 5px solid #047857;
+  box-shadow: 0 6px 0 #047857, 0 8px 18px rgba(0, 0, 0, 0.25);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  animation: kuisActionPulse 2s infinite ease-in-out;
+}
+
+@keyframes kuisActionPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 6px 0 #047857, 0 8px 18px rgba(0, 0, 0, 0.25);
+  }
+  50% {
+    transform: scale(1.035);
+    box-shadow: 0 6px 0 #047857, 0 0 24px rgba(16, 185, 129, 0.65), 0 8px 18px rgba(0, 0, 0, 0.25);
+    filter: brightness(1.04);
+  }
 }
 
 .kuis-btn-next-step:active {
@@ -775,12 +930,31 @@
 
 /* Modal Tema Hasil Akhir */
 .kuis-result-card.final-theme {
-  border: 4.5px solid #f59e0b;
+  border: 6px solid #f59e0b;
 }
 
 .kuis-trophy-svg {
-  width: clamp(56px, 5.8cqw, 76px);
-  height: clamp(56px, 5.8cqw, 76px);
+  width: 90px;
+  height: 90px;
   color: #f59e0b;
-  filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.45));
+  filter: drop-shadow(0 4px 14px rgba(245, 158, 11, 0.55));
+  animation: kuisTrophyPop 0.52s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s both;
+}
+
+@keyframes kuisTrophyPop {
+  0% {
+    transform: scale(0.2) translateY(24px);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.24) translateY(-8px);
+    opacity: 1;
+  }
+  82% {
+    transform: scale(0.94) translateY(2px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }

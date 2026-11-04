@@ -53,28 +53,113 @@
   pointer-events: none;
 }
 
-/* Layer 2: Topbar Navigasi & Kontrol */
-.menu-3d-topbar {
+/* Layer 3: Kontainer Utama Viewer 3D Terpadu (Full-Height hingga Batas Atas) */
+.menu-3d-main-container {
   position: absolute;
-  top: clamp(8px, 1.4cqw, 18px);
-  left: clamp(12px, 2.2cqw, 32px);
-  right: clamp(12px, 2.2cqw, 32px);
+  top: 2.2%;
+  bottom: clamp(66px, 8cqw, 124px);
+  left: 2.2%;
+  right: 2.2%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 30;
-  pointer-events: none;
-}
-
-.menu-3d-topbar-left,
-.menu-3d-topbar-right {
-  display: flex;
-  align-items: center;
-  gap: clamp(8px, 1cqw, 14px);
+  flex-direction: column;
+  z-index: 10;
   pointer-events: auto;
 }
 
-/* Tombol Sudut (Kembali Menu Utama) */
+/* Kartu Frame 3D Interaktif Game */
+.menu-3d-card-frame {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #090d16;
+  border: clamp(3.5px, 0.45cqw, 6px) solid #38bdf8;
+  border-radius: clamp(16px, 1.8cqw, 26px);
+  box-shadow: 0 clamp(4px, 0.5cqw, 8px) 0 #0284c7, 0 clamp(8px, 1.1cqw, 22px) rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+}
+
+/* Lencana Plat Judul & Info Organ (Menutupi Label Author Sketchfab di Pojok Kiri Atas) */
+.menu-3d-author-cover-plate {
+  position: absolute;
+  top: clamp(10px, 1.2cqw, 20px);
+  left: clamp(12px, 1.4cqw, 24px);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border: clamp(2.5px, 0.3cqw, 4px) solid #38bdf8;
+  border-radius: clamp(16px, 1.8cqw, 24px);
+  padding: clamp(8px, 0.85cqw, 14px) clamp(14px, 1.5cqw, 24px);
+  box-shadow: 0 clamp(4px, 0.45cqw, 6px) 0 #0284c7, 0 clamp(8px, 1cqw, 22px) rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.4cqw, 8px);
+  z-index: 20;
+  max-width: clamp(300px, 38cqw, 540px);
+  backdrop-filter: blur(12px);
+  pointer-events: auto;
+}
+
+.menu-3d-cover-header {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 0.9cqw, 14px);
+  flex-wrap: wrap;
+}
+
+.menu-3d-cover-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  flex-shrink: 0;
+}
+
+.menu-3d-cover-title {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(14px, 1.4cqw, 22px);
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+}
+
+.menu-3d-cover-organ-badge {
+  background: #f59e0b;
+  color: #780214;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(11.5px, 1.15cqw, 17px);
+  padding: clamp(2px, 0.25cqw, 4px) clamp(10px, 1.1cqw, 16px);
+  border-radius: 999px;
+  border: clamp(1.5px, 0.2cqw, 2.5px) solid #b45309;
+  box-shadow: 0 2px 0 #78350f;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.menu-3d-cover-desc {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(11.5px, 1.1cqw, 15px);
+  color: #cbd5e1;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Aksi Pojok Kanan Atas: Panduan Navigasi & Tombol Beranda */
+.menu-3d-top-actions {
+  position: absolute;
+  top: clamp(10px, 1.2cqw, 20px);
+  right: clamp(12px, 1.4cqw, 24px);
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.2cqw, 18px);
+  z-index: 25;
+  pointer-events: auto;
+}
+
+/* Tombol Sudut Beranda */
 .menu-3d-corner-btn {
   background: transparent;
   border: none;
@@ -84,10 +169,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(48px, 5.2cqw, 76px);
-  height: clamp(48px, 5.2cqw, 76px);
+  width: clamp(48px, 5.6cqw, 82px);
+  height: clamp(48px, 5.6cqw, 82px);
+  aspect-ratio: 1;
   transition: transform 0.14s ease, filter 0.14s ease;
   outline: none;
+  flex-shrink: 0;
 }
 
 .menu-3d-corner-btn img {
@@ -107,150 +194,27 @@
   filter: brightness(0.95);
 }
 
-/* Badge Plat Judul Halaman 3D */
-.menu-3d-title-badge {
-  display: flex;
-  align-items: center;
-  gap: clamp(6px, 0.8cqw, 12px);
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-  border: clamp(2.5px, 0.3cqw, 4px) solid #38bdf8;
-  border-radius: 999px;
-  padding: clamp(4px, 0.55cqw, 8px) clamp(14px, 1.6cqw, 24px);
-  box-shadow: 0 clamp(3px, 0.35cqw, 5px) 0 #0284c7, 0 clamp(4px, 0.5cqw, 12px) rgba(0, 0, 0, 0.4);
-}
-
-.menu-3d-badge-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #38bdf8;
-}
-
-.menu-3d-badge-text {
-  font-family: 'Fredoka', 'Outfit', sans-serif;
-  font-weight: 900;
-  font-size: clamp(14px, 1.45cqw, 22px);
-  color: #ffffff;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-/* Tombol Utilitas (Suara & Fullscreen) */
-.menu-3d-util-btn {
-  background: rgba(15, 23, 42, 0.76);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  color: #ffffff;
-  border-radius: 999px;
-  width: clamp(34px, 3.2cqw, 46px);
-  height: clamp(34px, 3.2cqw, 46px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: clamp(14px, 1.3cqw, 19px);
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
-  outline: none;
-}
-
-.menu-3d-util-btn:hover {
-  background: rgba(30, 41, 59, 0.95);
-  border-color: #38bdf8;
-  transform: translateY(-2px);
-}
-
-.menu-3d-util-btn:active {
-  transform: translateY(1px);
-}
-
-/* Layer 3: Kontainer Utama Viewer 3D Terpadu */
-.menu-3d-main-container {
-  position: absolute;
-  top: clamp(60px, 7.6cqw, 110px);
-  bottom: clamp(62px, 8.8cqw, 120px);
-  left: clamp(20px, 3.5cqw, 50px);
-  right: clamp(20px, 3.5cqw, 50px);
-  display: flex;
-  flex-direction: column;
-  z-index: 10;
-  pointer-events: auto;
-}
-
-/* Kartu Frame 3D Interaktif Game */
-.menu-3d-card-frame {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #0f172a;
-  border: clamp(3.5px, 0.45cqw, 6px) solid #38bdf8;
-  border-radius: clamp(16px, 1.8cqw, 26px);
-  box-shadow: 0 clamp(4px, 0.5cqw, 8px) 0 #0284c7, 0 clamp(8px, 1.1cqw, 22px) rgba(0, 0, 0, 0.6);
-  overflow: hidden;
-  position: relative;
-}
-
-/* Header di dalam Card: Nama Organ & Hint Kontrol */
-.menu-3d-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-  padding: clamp(6px, 0.8cqw, 12px) clamp(12px, 1.6cqw, 24px);
-  border-bottom: clamp(2px, 0.25cqw, 3.5px) solid rgba(56, 189, 248, 0.4);
-  z-index: 5;
-}
-
-.menu-3d-header-left {
-  display: flex;
-  align-items: center;
-  gap: clamp(8px, 1cqw, 14px);
-}
-
-.menu-3d-organ-tag {
-  background: #f59e0b;
-  color: #780214;
-  font-family: 'Fredoka', 'Outfit', sans-serif;
-  font-weight: 900;
-  font-size: clamp(14px, 1.5cqw, 23px);
-  padding: clamp(3px, 0.35cqw, 6px) clamp(12px, 1.4cqw, 20px);
-  border-radius: 999px;
-  border: clamp(2px, 0.22cqw, 3px) solid #b45309;
-  box-shadow: 0 2px 0 #78350f;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-.menu-3d-organ-desc {
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(11.5px, 1.15cqw, 16px);
-  color: #cbd5e1;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 45cqw;
-}
-
 /* Badge Panduan Kontrol Interaktif */
 .menu-3d-controls-guide {
   display: flex;
   align-items: center;
-  gap: clamp(6px, 0.8cqw, 12px);
+  gap: clamp(6px, 0.75cqw, 10px);
 }
 
 .menu-3d-guide-pill {
   display: flex;
   align-items: center;
   gap: 5px;
-  background: rgba(30, 41, 59, 0.85);
-  border: 1.5px solid rgba(148, 163, 184, 0.35);
-  padding: clamp(2px, 0.3cqw, 5px) clamp(8px, 0.8cqw, 12px);
+  background: rgba(15, 23, 42, 0.88);
+  border: 1.5px solid rgba(56, 189, 248, 0.4);
+  padding: clamp(3px, 0.35cqw, 6px) clamp(8px, 0.8cqw, 14px);
   border-radius: 999px;
-  font-size: clamp(10.5px, 0.95cqw, 13.5px);
+  font-size: clamp(10px, 0.9cqw, 13px);
   color: #e2e8f0;
   font-weight: 700;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .menu-3d-guide-pill svg {
@@ -316,35 +280,31 @@
 /* Layer 5: Barisan 5 Tombol Organ Horizontal di Bagian Bawah */
 .menu-3d-bottombar {
   position: absolute;
-  bottom: clamp(10px, 1.8cqw, 24px);
-  left: 0;
-  right: 0;
+  bottom: clamp(10px, 1.6cqw, 22px);
+  left: 2.2%;
+  right: 2.2%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: clamp(12px, 2.93cqw, 34px);
-  padding: 0 clamp(12px, 2.83cqw, 32px);
+  gap: clamp(8px, 1.4cqw, 20px);
   z-index: 20;
   pointer-events: auto;
 }
 
 .menu-3d-tab-btn {
   flex: 1;
-  width: 16.7cqw;
-  max-width: 16.7cqw;
-  height: 5.76cqw;
-  min-height: 5.76cqw;
-  max-height: 5.76cqw;
+  min-width: 0;
+  height: clamp(38px, 4.6cqw, 78px);
   background: #be1931;
   background-image: linear-gradient(180deg, #c71b35 0%, #b2142b 100%);
-  border: clamp(3px, 0.42cqw, 5px) solid #780214;
+  border: clamp(3px, 0.35cqw, 4.5px) solid #780214;
   border-radius: 999px;
-  box-shadow: 0 clamp(3px, 0.38cqw, 5px) 0 #4a000a, 0 clamp(4px, 0.55cqw, 10px) rgba(0, 0, 0, 0.35);
+  box-shadow: 0 clamp(3px, 0.35cqw, 5px) 0 #4a000a, 0 clamp(4px, 0.5cqw, 10px) rgba(0, 0, 0, 0.35);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 clamp(4px, 0.6cqw, 12px);
+  padding: 0 clamp(4px, 0.7cqw, 12px);
   transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
   user-select: none;
   outline: none;
@@ -365,17 +325,17 @@
 /* Penyesuaian ukuran teks per tombol agar seimbang dan proporsional */
 .menu-3d-label-mulut,
 .menu-3d-label-lambung {
-  font-size: clamp(15px, 1.9cqw, 32px);
+  font-size: clamp(13px, 1.5cqw, 24px);
 }
 
 .menu-3d-label-kerongkongan {
-  font-size: clamp(11px, 1.3cqw, 23px);
+  font-size: clamp(10px, 1.15cqw, 18px);
   letter-spacing: 0.2px;
 }
 
 .menu-3d-label-usus-halus,
 .menu-3d-label-usus-besar {
-  font-size: clamp(12.5px, 1.55cqw, 26px);
+  font-size: clamp(11px, 1.25cqw, 20px);
 }
 
 /* Efek Hover: Warna tombol berubah menjadi Merah Cerah / Oranye Menyala tanpa glow luar */

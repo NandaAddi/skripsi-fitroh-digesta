@@ -4,7 +4,8 @@ import bgImg from '../../assets/menu-materi-screen/bg-menu-materi.webp';
 import btnProses from '../../assets/menu-materi-screen/buton-proses-pencernaan.webp';
 import btnOrgan from '../../assets/menu-materi-screen/button-organ-pencernaan.webp';
 import btnGangguan from '../../assets/menu-materi-screen/button-gangguan-pencernaan.webp';
-import { useAuth } from '../../context/AuthContext';
+import btnBack from '../../assets/menu-materi-proses-pencernaan/button-back-menu-materi.webp';
+import btnHome from '../../assets/menu-materi-proses-pencernaan/button-home.webp';
 import { playSound as playSoundEffect } from '../../services/soundService';
 import './MenuMateriScreen.css';
 
@@ -177,10 +178,8 @@ const TOPIC_DETAILS: Record<MateriTopicKey, TopicDetail> = {
 export const MenuMateriScreen: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { user } = useAuth();
 
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [soundEnabled] = useState(true);
   const stageRef = useRef<HTMLDivElement>(null);
 
   // Ambil topik aktif dari parameter URL (misal: /menu/materi?topik=proses)
@@ -215,17 +214,6 @@ export const MenuMateriScreen: React.FC = () => {
     navigate('/menu');
   };
 
-  const toggleFullscreen = () => {
-    playSound('pop');
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
-  };
-
   // Tutup modal jika tombol ESC ditekan
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -249,53 +237,30 @@ export const MenuMateriScreen: React.FC = () => {
           draggable={false}
         />
 
-        {/* Layer 2: Top Bar Navigasi (Kembali & Kontrol Audio/Fullscreen) */}
+        {/* Layer 2: Top Bar Navigasi (Kembali di Kiri, Beranda di Kanan) */}
         <div className="menu-materi-topbar">
-          <button
-            type="button"
-            className="menu-materi-btn-back"
-            onClick={handleBackToMenu}
-            title="Kembali ke Menu Utama"
-            aria-label="Kembali ke Menu Utama"
-          >
-            <span>←</span>
-            <span>Menu Utama</span>
-          </button>
-
-          <div className="menu-materi-controls-right">
+          <div className="menu-materi-topbar-left">
             <button
               type="button"
-              className="menu-materi-icon-btn"
-              onClick={() => {
-                const next = !soundEnabled;
-                setSoundEnabled(next);
-                if (next) playSound('pop');
-              }}
-              title={soundEnabled ? 'Matikan Suara' : 'Nyalakan Suara'}
-              aria-label="Toggle Sound"
+              className="menu-materi-corner-btn"
+              onClick={handleBackToMenu}
+              title="Kembali ke Menu Utama"
+              aria-label="Kembali ke Menu Utama"
             >
-              {soundEnabled ? '🔊' : '🔇'}
+              <img src={btnBack} alt="Kembali ke Menu Utama" />
             </button>
+          </div>
 
+          <div className="menu-materi-topbar-right">
             <button
               type="button"
-              className="menu-materi-icon-btn"
-              onClick={toggleFullscreen}
-              title={isFullscreen ? 'Keluar Fullscreen' : 'Mode Layar Penuh'}
-              aria-label="Toggle Fullscreen"
+              className="menu-materi-corner-btn"
+              onClick={handleBackToMenu}
+              title="Kembali ke Menu Utama"
+              aria-label="Kembali ke Menu Utama"
             >
-              {isFullscreen ? '✕' : '⛶'}
+              <img src={btnHome} alt="Menu Utama" />
             </button>
-
-            {user && (
-              <span className="menu-materi-user-tag">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '4px' }}>
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                {user.fullName} {user.attendanceNumber ? `(#${user.attendanceNumber})` : ''}
-              </span>
-            )}
           </div>
         </div>
 

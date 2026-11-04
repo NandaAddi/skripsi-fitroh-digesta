@@ -203,14 +203,14 @@
 
 .startscreen-modal-title {
   color: #c92a2a;
-  font-size: clamp(20px, 3.2vw, 36px);
+  font-size: clamp(20px, 2cqw, 36px);
   margin: 0 0 12px;
   font-weight: 700;
 }
 
 .startscreen-modal-desc {
   color: #495057;
-  font-size: clamp(14px, 1.8vw, 18px);
+  font-size: clamp(14px, 1.2cqw, 18px);
   margin: 0 0 24px;
   line-height: 1.5;
 }
@@ -220,7 +220,7 @@
   color: white;
   border: none;
   font-family: inherit;
-  font-size: clamp(14px, 1.6vw, 18px);
+  font-size: clamp(14px, 1.1cqw, 18px);
   font-weight: 600;
   padding: 10px 28px;
   border-radius: 999px;

@@ -159,7 +159,7 @@ import audioOptB19 from '../../assets/kuis-screen/soal-19/jawab-b-gastritis.mp3'
 import audioOptC19 from '../../assets/kuis-screen/soal-19/jawab-c-konstipasi.mp3';
 import audioOptD19 from '../../assets/kuis-screen/soal-19/jawab-d-diare.mp3';
 
-import { playSound as playSoundEffect } from '../../services/soundService';
+import { playSound as playSoundEffect, isSoundEnabled } from '../../services/soundService';
 import './MenuKuisScreen.css';
 
 type OptionKey = 'A' | 'B' | 'C' | 'D';
@@ -653,7 +653,7 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
 
 export const MenuKuisScreen: React.FC = () => {
   const navigate = useNavigate();
-  const [soundEnabled] = useState(true);
+  const [soundEnabled] = useState(() => isSoundEnabled());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, OptionKey | null>>({});
   const [submittedAnswers, setSubmittedAnswers] = useState<Record<number, OptionKey | null>>({});
@@ -786,20 +786,13 @@ export const MenuKuisScreen: React.FC = () => {
     }
   };
 
-  const handleSelectOption = (key: OptionKey, audioSrc?: string, speechText?: string) => {
+  const handleSelectOption = (key: OptionKey, audioSrc?: string, _speechText?: string) => {
     playSound('pop');
     setSelectedAnswers((prev) => ({ ...prev, [currentIndex]: key }));
     setShowHintToast(false);
 
     if (audioSrc) {
       playVoiceAudio(audioSrc, key);
-    } else if (speechText && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      stopVoiceAudio();
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(speechText);
-      utterance.lang = 'id-ID';
-      utterance.rate = 1.0;
-      window.speechSynthesis.speak(utterance);
     } else {
       stopVoiceAudio();
     }
@@ -818,9 +811,9 @@ export const MenuKuisScreen: React.FC = () => {
     setSubmittedAnswers((prev) => ({ ...prev, [currentIndex]: currentSelectedAnswer }));
 
     if (isCorrect) {
-      playSound('chime');
+      playSound('success');
     } else {
-      playSound('soft');
+      playSound('error');
     }
     setShowResultModal(true);
   };
@@ -1124,7 +1117,7 @@ export const MenuKuisScreen: React.FC = () => {
 
         {/* Modal Hasil Tiap Soal Bergaya Game */}
         {showResultModal && (
-          <div className="kuis-modal-overlay">
+          <div className={`kuis-modal-overlay ${isCurrentCorrect ? 'flash-correct' : 'flash-wrong'}`}>
             <div
               className={`kuis-result-card ${isCurrentCorrect ? 'correct-theme' : 'wrong-theme'}`}
               role="dialog"
@@ -1201,7 +1194,7 @@ export const MenuKuisScreen: React.FC = () => {
 
         {/* Modal Hasil Akhir Kuis (Trophy & Skor Kumulatif) */}
         {showFinalModal && (
-          <div className="kuis-modal-overlay">
+          <div className="kuis-modal-overlay flash-final">
             <div
               className="kuis-result-card final-theme"
               role="dialog"

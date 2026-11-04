@@ -79,23 +79,23 @@
 }
 
 .gangguan-btn-setting {
-  top: 4.2%;
-  left: 3.2%;
-  width: 6.8%;
+  top: 3.2%;
+  left: 2.5%;
+  width: 7%;
   aspect-ratio: 1;
 }
 
 .gangguan-btn-home {
-  top: 4.2%;
-  right: 3.2%;
-  width: 6.8%;
+  top: 3.2%;
+  right: 2.5%;
+  width: 7%;
   aspect-ratio: 1;
 }
 
 .gangguan-btn-right {
   bottom: 4.5%;
-  right: 3.2%;
-  width: 6.8%;
+  right: 2.5%;
+  width: 7%;
   aspect-ratio: 1;
 }
 

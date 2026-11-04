@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 import { playSound as playSoundEffect } from '../../services/soundService';
 
 // Background & Tombol Navigasi
@@ -54,12 +53,10 @@ const KIMIAWI_SLIDES = [
 
 export const MenuMateriProsesScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   const [branch, setBranch] = useState<ProsesBranch>('intro');
   const [subSlide, setSubSlide] = useState(0);
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [soundEnabled] = useState(true);
   const stageRef = useRef<HTMLDivElement>(null);
 
   // Sintesis audio interaktif Web Audio API terpusat & aman
@@ -130,17 +127,6 @@ export const MenuMateriProsesScreen: React.FC = () => {
   const handleGoHome = () => {
     playSound('pop');
     navigate('/menu');
-  };
-
-  const toggleFullscreen = () => {
-    playSound('pop');
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
   };
 
   // Kontrol Navigasi Keyboard
@@ -267,49 +253,6 @@ export const MenuMateriProsesScreen: React.FC = () => {
           </div>
 
           <div className="proses-topbar-right">
-            {user && (
-              <span className="proses-user-tag">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-                {user.fullName} {user.attendanceNumber ? `(#${user.attendanceNumber})` : ''}
-              </span>
-            )}
-
-            <button
-              type="button"
-              className="proses-util-btn"
-              onClick={() => {
-                const next = !soundEnabled;
-                setSoundEnabled(next);
-                if (next) playSound('pop');
-              }}
-              title={soundEnabled ? 'Matikan Suara' : 'Nyalakan Suara'}
-              aria-label="Toggle Suara"
-            >
-              {soundEnabled ? '🔊' : '🔇'}
-            </button>
-
-            <button
-              type="button"
-              className="proses-util-btn"
-              onClick={toggleFullscreen}
-              title={isFullscreen ? 'Keluar Layar Penuh' : 'Mode Layar Penuh'}
-              aria-label="Toggle Fullscreen"
-            >
-              {isFullscreen ? '✕' : '⛶'}
-            </button>
-
             <button
               type="button"
               className="proses-corner-btn"

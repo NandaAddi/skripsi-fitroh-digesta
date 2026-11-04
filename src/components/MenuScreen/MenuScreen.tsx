@@ -7,7 +7,11 @@ import btnExit from '../../assets/menu-screen/button-exit.webp';
 import { useAuth } from '../../context/AuthContext';
 import { MENU_ITEMS, type MenuItem } from '../../data/modules';
 import type { User } from '../../services/auth';
-import { playSound as playSoundEffect } from '../../services/soundService';
+import {
+  playSound as playSoundEffect,
+  isSoundEnabled,
+  setSoundEnabled as saveSoundPref,
+} from '../../services/soundService';
 import './MenuScreen.css';
 
 export interface MenuScreenProps {
@@ -28,7 +32,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
   const activeUser = currentUser || user;
 
   const [activeModal, setActiveModal] = useState<'settings' | 'exit' | null>(null);
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(() => isSoundEnabled());
   const [isFullscreen, setIsFullscreen] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -185,6 +189,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
                     onClick={() => {
                       const next = !soundEnabled;
                       setSoundEnabled(next);
+                      saveSoundPref(next);
                       if (next) playSound('pop');
                     }}
                   >

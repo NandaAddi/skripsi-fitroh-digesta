@@ -11,7 +11,11 @@ import videoSembelit from '../../assets/menu-materi-gangguan-pencernaan-screen/v
 import videoApendisitis from '../../assets/menu-materi-gangguan-pencernaan-screen/video-apendisitis.mp4';
 import { GangguanVideoPlayer } from './GangguanVideoPlayer';
 import { useAuth } from '../../context/AuthContext';
-import { playSound as playSoundEffect } from '../../services/soundService';
+import {
+  playSound as playSoundEffect,
+  isSoundEnabled,
+  setSoundEnabled as saveSoundPref,
+} from '../../services/soundService';
 import './MenuMateriGangguanScreen.css';
 
 export type GangguanKey = 'maag' | 'gastritis' | 'diare' | 'sembelit' | 'apendisitis';
@@ -165,7 +169,7 @@ export const MenuMateriGangguanScreen: React.FC = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<GangguanKey>('maag');
   const [showSettingsModal, setShowSettingsModal] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(() => isSoundEnabled());
   const [isFullscreen, setIsFullscreen] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -388,6 +392,7 @@ export const MenuMateriGangguanScreen: React.FC = () => {
                     onClick={() => {
                       const next = !soundEnabled;
                       setSoundEnabled(next);
+                      saveSoundPref(next);
                       if (next) playSound('pop');
                     }}
                   >

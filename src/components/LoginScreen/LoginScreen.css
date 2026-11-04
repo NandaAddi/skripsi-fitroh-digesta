@@ -69,12 +69,12 @@
   }
 }
 
-/* Top Bar: Navigasi & Kontrol Audio/Layar Penuh */
+/* Top Bar: Navigasi & Kontrol Audio/Layar Penuh (Game 3D Tactile Buttons) */
 .loginscreen-topbar {
   position: absolute;
   top: 3.2%;
-  left: 2.8%;
-  right: 2.8%;
+  left: 2.5%;
+  right: 2.5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -82,77 +82,80 @@
 }
 
 .loginscreen-btn-round {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border: 3px solid #cbd5e1;
   border-radius: 999px;
-  height: clamp(30px, 4cqh, 42px);
-  padding: 0 clamp(12px, 1.3cqw, 20px);
+  height: clamp(38px, 4.8cqh, 52px);
+  padding: 0 clamp(16px, 1.5cqw, 24px);
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   cursor: pointer;
-  color: #343a40;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: clamp(11.5px, 1.1cqw, 14px);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-  backdrop-filter: blur(8px);
+  color: #1e293b;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: clamp(13px, 1.2cqw, 16px);
+  box-shadow: 0 4px 0 #94a3b8, 0 6px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+  user-select: none;
 }
 
 .loginscreen-btn-round:hover {
   background: #ffffff;
-  color: #1971c2;
-  border-color: #a5d8ff;
-  transform: scale(1.03);
-  box-shadow: 0 4px 14px rgba(25, 113, 194, 0.18);
+  color: #0284c7;
+  border-color: #94a3b8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #94a3b8, 0 8px 18px rgba(2, 132, 199, 0.2);
 }
 
 .loginscreen-btn-round:active {
-  transform: scale(0.96);
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #94a3b8;
 }
 
 .loginscreen-controls-right {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .loginscreen-icon-btn {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border: 3px solid #cbd5e1;
   border-radius: 50%;
-  width: clamp(30px, 4cqh, 42px);
-  height: clamp(30px, 4cqh, 42px);
+  width: clamp(38px, 4.8cqh, 52px);
+  height: clamp(38px, 4.8cqh, 52px);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #343a40;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: #1e293b;
+  box-shadow: 0 4px 0 #94a3b8, 0 6px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
   padding: 0;
-  backdrop-filter: blur(8px);
+  user-select: none;
 }
 
 .loginscreen-icon-btn:hover {
   background: #ffffff;
-  color: #1971c2;
-  border-color: #a5d8ff;
-  transform: scale(1.08);
+  color: #0284c7;
+  border-color: #94a3b8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #94a3b8, 0 8px 18px rgba(2, 132, 199, 0.2);
 }
 
 .loginscreen-icon-btn:active {
-  transform: scale(0.95);
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #94a3b8;
 }
 
-/* Layer 3: Compact & Highly Readable Card Panel */
+/* Layer 3: Well-Proportioned Cartoon Game Card Panel */
 .loginscreen-card-wrapper {
   position: absolute;
   left: 50%;
-  top: 48cqh;
+  top: 50.5%;
   transform: translateX(-50%);
-  width: min(92cqw, clamp(300px, 31cqw, 420px));
-  max-height: calc(100cqh - 16px);
+  width: min(92%, clamp(420px, 35cqw, 640px));
+  max-height: calc(100% - 20px);
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -164,25 +167,35 @@
 }
 
 .loginscreen-card {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  border-radius: clamp(24px, 2.5cqw, 36px);
+  border: clamp(3.5px, 0.32cqw, 5px) solid #38bdf8;
   box-shadow: 
-    0 18px 45px rgba(0, 0, 0, 0.12),
-    0 4px 12px rgba(0, 0, 0, 0.04),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.9);
-  border: 2px solid #b9dcfa;
-  padding: clamp(12px, 1.5cqh, 18px) clamp(16px, 1.8cqw, 24px);
+    0 10px 0 #0284c7,
+    0 22px 50px rgba(0, 0, 0, 0.22),
+    inset 0 2px 0 rgba(255, 255, 255, 0.9);
+  padding: clamp(20px, 2.5cqh, 34px) clamp(22px, 2.5cqw, 40px);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  animation: loginscreen-card-bounce 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes loginscreen-card-bounce {
+  0% {
+    transform: scale(0.88) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Header Judul Kartu Siswa */
 .loginscreen-card-header {
   text-align: center;
-  margin-bottom: clamp(8px, 1.2cqh, 14px);
+  margin-bottom: clamp(12px, 1.4cqh, 18px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -191,42 +204,44 @@
 
 .loginscreen-title {
   margin: 0;
-  font-size: clamp(18px, 1.65cqw, 23px);
-  font-weight: 800;
-  color: #1c2738;
-  letter-spacing: -0.2px;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(24px, 2.2cqw, 34px);
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+  line-height: 1.25;
 }
 
 /* Alert Notifikasi */
 .loginscreen-alert {
-  padding: clamp(6px, 0.7cqh, 9px) clamp(10px, 1cqw, 14px);
-  border-radius: 10px;
-  font-size: clamp(11.5px, 1cqw, 13px);
-  font-weight: 600;
-  margin-bottom: clamp(8px, 0.9cqh, 12px);
+  padding: clamp(8px, 1cqh, 12px) clamp(14px, 1.2cqw, 18px);
+  border-radius: 14px;
+  font-size: clamp(13px, 1.1cqw, 16px);
+  font-weight: 700;
+  margin-bottom: clamp(10px, 1.2cqh, 16px);
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 9px;
   animation: loginscreen-pop 0.2s ease;
 }
 
 .loginscreen-alert.error {
   background: #fff5f5;
   color: #c92a2a;
-  border: 1.5px solid #ffc9c9;
+  border: 2px solid #ffc9c9;
 }
 
 .loginscreen-alert.success {
   background: #ebfbee;
   color: #2b8a3e;
-  border: 1.5px solid #b2f2bb;
+  border: 2px solid #b2f2bb;
 }
 
 /* Form Container */
 .loginscreen-form {
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 1cqh, 11px);
+  gap: clamp(12px, 1.4cqh, 18px);
 }
 
 .loginscreen-input-group {
@@ -237,28 +252,32 @@
 
 .loginscreen-input-icon {
   position: absolute;
-  left: 12px;
-  color: #495057;
+  left: clamp(14px, 1.2cqw, 18px);
+  color: #0284c7;
   pointer-events: none;
   display: flex;
   align-items: center;
   z-index: 2;
 }
 
+.loginscreen-input-icon svg {
+  width: clamp(20px, 1.45cqw, 24px);
+  height: clamp(20px, 1.45cqw, 24px);
+}
+
 .loginscreen-input {
   width: 100%;
-  font-family: inherit;
-  font-size: clamp(13px, 1.1cqw, 14.5px);
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(15.5px, 1.35cqw, 20px);
   font-weight: 600;
-  padding: clamp(8px, 0.9cqh, 11px) 14px;
-  padding-left: 38px;
-  padding-right: 14px;
-  border-radius: 12px;
-  border: 1.5px solid #ced4da;
+  padding: clamp(12px, 1.4cqh, 17px) clamp(16px, 1.4cqw, 22px);
+  padding-left: clamp(48px, 3.4cqw, 58px);
+  border-radius: clamp(14px, 1.2cqw, 18px);
+  border: clamp(2.5px, 0.22cqw, 3.5px) solid #cbd5e1;
   background: #ffffff;
-  color: #212529;
+  color: #0f172a;
   outline: none;
-  transition: all 0.2s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
 }
 
@@ -274,68 +293,77 @@
 }
 
 .loginscreen-input:hover {
-  border-color: #adb5bd;
+  border-color: #94a3b8;
 }
 
 .loginscreen-input:focus {
-  border-color: #1971c2;
-  box-shadow: 0 0 0 3px rgba(25, 113, 194, 0.18);
+  border-color: #0284c7;
+  box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.22);
   background: #ffffff;
 }
 
 /* High-Contrast Readable Placeholders */
 .loginscreen-input::placeholder {
-  color: #6c757d;
+  color: #94a3b8;
   font-weight: 500;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .loginscreen-toggle-pwd {
   position: absolute;
-  right: 10px;
+  right: 12px;
   background: none;
   border: none;
-  padding: 4px;
+  padding: 6px;
   cursor: pointer;
-  color: #495057;
+  color: #64748b;
   display: flex;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: color 0.15s ease;
   z-index: 2;
 }
 
 .loginscreen-toggle-pwd:hover {
-  color: #1971c2;
+  color: #0284c7;
 }
 
-/* Primary Submit Action Button */
+/* Primary Submit Action Button (Tactile 3D Game Push Button) */
 .loginscreen-submit-btn {
-  background: linear-gradient(135deg, #1c7ed6 0%, #1864ab 100%);
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
   color: #ffffff;
-  border: none;
-  font-family: inherit;
-  font-weight: 800;
-  font-size: clamp(13.5px, 1.2cqw, 15px);
-  padding: clamp(9px, 1.1cqh, 12px) 0;
-  border-radius: 12px;
+  border: clamp(3px, 0.25cqw, 4.5px) solid #0369a1;
+  box-shadow: 0 6px 0 #075985, 0 8px 18px rgba(2, 132, 199, 0.35);
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(16.5px, 1.45cqw, 22px);
+  padding: clamp(12px, 1.5cqh, 18px) 0;
+  border-radius: 999px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(24, 100, 171, 0.32);
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  margin-top: 3px;
+  gap: 8px;
+  margin-top: 4px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  user-select: none;
+}
+
+.loginscreen-submit-btn svg {
+  width: clamp(18px, 1.4cqw, 22px);
+  height: clamp(18px, 1.4cqw, 22px);
 }
 
 .loginscreen-submit-btn:hover:not(:disabled) {
-  transform: translateY(-1px) scale(1.015);
-  box-shadow: 0 6px 18px rgba(24, 100, 171, 0.42);
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #075985, 0 12px 22px rgba(2, 132, 199, 0.45);
 }
 
 .loginscreen-submit-btn:active:not(:disabled) {
-  transform: scale(0.985);
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #075985;
 }
 
 .loginscreen-submit-btn:disabled {
@@ -347,11 +375,12 @@
 .loginscreen-divider {
   display: flex;
   align-items: center;
-  margin: clamp(6px, 0.8cqh, 9px) 0;
-  color: #868e96;
-  font-size: clamp(10px, 0.85cqw, 11px);
+  margin: clamp(10px, 1.2cqh, 16px) 0;
+  color: #64748b;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(12px, 1cqw, 15px);
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 1px;
   text-transform: uppercase;
 }
 
@@ -359,41 +388,51 @@
 .loginscreen-divider::after {
   content: '';
   flex: 1;
-  height: 1px;
-  background: #dee2e6;
+  height: 2px;
+  background: #e2e8f0;
 }
 
 .loginscreen-divider span {
-  padding: 0 10px;
+  padding: 0 14px;
 }
 
+/* Tombol Masuk sebagai Siswa Tamu (Tactile 3D Game Push Button) */
 .loginscreen-guest-btn {
-  background: #f8f9fa;
-  color: #343a40;
-  border: 1.5px solid #ced4da;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: clamp(12.5px, 1.1cqw, 13.5px);
-  padding: clamp(7px, 0.9cqh, 10px) 0;
-  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  color: #1e293b;
+  border: clamp(2.5px, 0.22cqw, 3.5px) solid #cbd5e1;
+  box-shadow: 0 4px 0 #94a3b8, 0 6px 14px rgba(0, 0, 0, 0.08);
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: clamp(14.5px, 1.25cqw, 18.5px);
+  padding: clamp(10px, 1.25cqh, 15px) 0;
+  border-radius: 999px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
+  user-select: none;
+}
+
+.loginscreen-guest-btn svg {
+  width: clamp(16px, 1.25cqw, 20px);
+  height: clamp(16px, 1.25cqw, 20px);
+  color: #0284c7;
 }
 
 .loginscreen-guest-btn:hover {
-  background: #e7f5ff;
-  border-color: #74c0fc;
-  color: #1864ab;
-  transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(24, 100, 171, 0.1);
+  background: #ffffff;
+  border-color: #94a3b8;
+  color: #0284c7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #94a3b8, 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
 .loginscreen-guest-btn:active {
-  transform: scale(0.985);
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #94a3b8;
 }
 
 @keyframes loginscreen-pop {
@@ -414,73 +453,75 @@
 /* Compact Stage Heights (Laptops / Small Screens / Tablets) */
 @container loginstage (max-height: 560px) {
   .loginscreen-illustration {
-    transform: scale(0.85);
+    transform: scale(0.84) translateY(-1%);
     transform-origin: top center;
     animation: loginscreen-float-compact 4.5s ease-in-out infinite;
   }
 
   .loginscreen-card-wrapper {
-    top: 43cqh;
+    top: 44.5cqh;
     bottom: auto;
     transform: translateX(-50%);
-    width: min(92cqw, clamp(280px, 33cqw, 390px));
+    width: min(92cqw, clamp(380px, 48cqw, 560px));
   }
 
   .loginscreen-card {
-    padding: clamp(7px, 1.2cqh, 12px) clamp(12px, 1.6cqw, 20px);
-    border-radius: 16px;
+    padding: clamp(14px, 2.2cqh, 22px) clamp(18px, 2.2cqw, 30px);
+    border-radius: 24px;
+    border-width: 4px;
+    box-shadow: 0 8px 0 #0284c7, 0 16px 36px rgba(0, 0, 0, 0.2);
   }
 
   .loginscreen-card-header {
-    margin-bottom: clamp(4px, 0.8cqh, 8px);
+    margin-bottom: clamp(8px, 1.2cqh, 12px);
   }
 
   .loginscreen-title {
-    font-size: clamp(15px, 1.4cqw, 19px);
+    font-size: clamp(20px, 1.8cqw, 26px);
   }
 
   .loginscreen-form {
-    gap: clamp(5px, 0.8cqh, 8px);
+    gap: clamp(8px, 1.2cqh, 12px);
   }
 
   .loginscreen-input {
-    padding: clamp(6px, 0.85cqh, 9px) 12px;
-    padding-left: 35px;
-    font-size: clamp(12px, 1cqw, 13.5px);
-    border-radius: 10px;
+    padding: clamp(9px, 1.15cqh, 13px) 16px;
+    padding-left: clamp(42px, 3cqw, 48px);
+    font-size: clamp(14px, 1.15cqw, 16.5px);
+    border-radius: 12px;
   }
 
   .loginscreen-submit-btn {
-    padding: clamp(7px, 0.95cqh, 10px) 0;
-    font-size: clamp(12.5px, 1.1cqw, 14px);
-    border-radius: 10px;
+    padding: clamp(10px, 1.2cqh, 14px) 0;
+    font-size: clamp(15px, 1.25cqw, 18px);
+    box-shadow: 0 5px 0 #075985, 0 6px 14px rgba(2, 132, 199, 0.3);
   }
 
   .loginscreen-divider {
-    margin: clamp(3px, 0.5cqh, 6px) 0;
-    font-size: clamp(9px, 0.8cqw, 10px);
+    margin: clamp(6px, 0.8cqh, 10px) 0;
+    font-size: clamp(11px, 0.9cqw, 12.5px);
   }
 
   .loginscreen-guest-btn {
-    padding: clamp(6px, 0.85cqh, 9px) 0;
-    font-size: clamp(11.5px, 1cqw, 13px);
-    border-radius: 10px;
+    padding: clamp(8px, 1cqh, 12px) 0;
+    font-size: clamp(13.5px, 1.1cqw, 15.5px);
+    box-shadow: 0 3px 0 #94a3b8, 0 5px 12px rgba(0, 0, 0, 0.08);
   }
 }
 
 @keyframes loginscreen-float-compact {
   0%, 100% {
-    transform: scale(0.85);
+    transform: scale(0.84) translateY(-1%);
   }
   50% {
-    transform: translateY(0.5%) scale(0.85);
+    transform: scale(0.84) translateY(-0.3%);
   }
 }
 
 /* Ultra Compact Stage Heights (Mobile Phones in Landscape: 360px - 440px) */
 @container loginstage (max-height: 440px) {
   .loginscreen-illustration {
-    transform: scale(0.76);
+    transform: scale(0.72) translateY(-3%);
     transform-origin: top center;
     animation: loginscreen-float-tiny 4.5s ease-in-out infinite;
   }
@@ -492,87 +533,108 @@
   }
 
   .loginscreen-btn-round {
-    height: 28px;
-    padding: 0 10px;
-    font-size: 10.5px;
+    height: 34px;
+    padding: 0 14px;
+    font-size: 12px;
+    border-width: 2px;
+    box-shadow: 0 3px 0 #94a3b8;
   }
 
   .loginscreen-icon-btn {
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
+    border-width: 2px;
+    box-shadow: 0 3px 0 #94a3b8;
   }
 
   .loginscreen-card-wrapper {
-    top: 39cqh;
+    top: 38.5cqh;
     bottom: auto;
     transform: translateX(-50%);
-    width: min(94cqw, clamp(270px, 35cqw, 350px));
+    width: min(92cqw, clamp(360px, 60cqw, 500px));
   }
 
   .loginscreen-card {
-    padding: 6px 14px;
-    border-radius: 14px;
+    padding: 10px 22px;
+    border-radius: 20px;
+    border-width: 3.5px;
+    box-shadow: 0 6px 0 #0284c7, 0 12px 28px rgba(0, 0, 0, 0.2);
   }
 
   .loginscreen-card-header {
-    margin-bottom: 3px;
+    margin-bottom: 6px;
   }
 
   .loginscreen-title {
-    font-size: 14.5px;
+    font-size: 18px;
   }
 
   .loginscreen-alert {
-    padding: 4px 8px;
-    margin-bottom: 4px;
-    font-size: 11px;
+    padding: 5px 10px;
+    margin-bottom: 6px;
+    font-size: 12px;
   }
 
   .loginscreen-form {
-    gap: 4px;
+    gap: 6px;
   }
 
   .loginscreen-input {
-    padding: 4.5px 10px;
-    padding-left: 32px;
-    font-size: 11.5px;
-    border-radius: 8px;
+    padding: 7px 14px;
+    padding-left: 38px;
+    font-size: 13.5px;
+    border-radius: 10px;
+    border-width: 2.5px;
   }
 
   .loginscreen-input-icon {
-    left: 10px;
+    left: 12px;
   }
 
   .loginscreen-input-icon svg {
-    width: 14px;
-    height: 14px;
+    width: 17px;
+    height: 17px;
   }
 
   .loginscreen-submit-btn {
-    padding: 5.5px 0;
-    font-size: 12px;
-    border-radius: 8px;
-    margin-top: 1px;
+    padding: 8px 0;
+    font-size: 14.5px;
+    border-radius: 999px;
+    border-width: 3px;
+    box-shadow: 0 4px 0 #075985, 0 6px 12px rgba(2, 132, 199, 0.3);
+    margin-top: 2px;
+  }
+
+  .loginscreen-submit-btn svg {
+    width: 16px;
+    height: 16px;
   }
 
   .loginscreen-divider {
-    margin: 2.5px 0;
-    font-size: 8.5px;
+    margin: 4px 0;
+    font-size: 10.5px;
   }
 
   .loginscreen-guest-btn {
-    padding: 4.5px 0;
-    font-size: 11px;
-    border-radius: 8px;
+    padding: 7px 0;
+    font-size: 13px;
+    border-radius: 999px;
+    border-width: 2.5px;
+    box-shadow: 0 3px 0 #94a3b8;
+  }
+
+  .loginscreen-guest-btn svg {
+    width: 15px;
+    height: 15px;
   }
 }
 
 @keyframes loginscreen-float-tiny {
   0%, 100% {
-    transform: scale(0.76);
+    transform: scale(0.72) translateY(-3%);
   }
   50% {
-    transform: translateY(0.5%) scale(0.76);
+    transform: scale(0.72) translateY(-2.3%);
   }
 }
 

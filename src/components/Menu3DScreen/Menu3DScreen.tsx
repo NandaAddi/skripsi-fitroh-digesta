@@ -56,8 +56,7 @@ export const Menu3DScreen: React.FC = () => {
   const { organId } = useParams<{ organId?: string }>();
   const stageRef = useRef<HTMLDivElement>(null);
 
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [soundEnabled] = useState(true);
   const [isLoadingIframe, setIsLoadingIframe] = useState(true);
 
   // Cari organ aktif dari parameter URL, fallback ke 'mulut'
@@ -85,19 +84,8 @@ export const Menu3DScreen: React.FC = () => {
     navigate('/menu');
   };
 
-  const toggleFullscreen = () => {
-    playSound('pop');
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
-  };
-
-  // URL embed Sketchfab resmi dengan parameter optimal
-  const embedUrl = `https://sketchfab.com/models/${activeOrgan.modelId}/embed?autostart=1&preload=1&ui_theme=dark&ui_watermark=0&ui_hint=2`;
+  // URL embed Sketchfab resmi dengan parameter optimal (termasuk ui_infos=0)
+  const embedUrl = `https://sketchfab.com/models/${activeOrgan.modelId}/embed?autostart=1&preload=1&ui_theme=dark&ui_infos=0&ui_watermark=0&ui_hint=2`;
 
   return (
     <div className="menu-3d-viewport">
@@ -112,77 +100,36 @@ export const Menu3DScreen: React.FC = () => {
         />
         <div className="menu-3d-overlay" />
 
-        {/* Layer 2: Topbar Navigasi & Kontrol */}
-        <div className="menu-3d-topbar">
-          <div className="menu-3d-topbar-left">
-            <button
-              type="button"
-              className="menu-3d-corner-btn"
-              onClick={handleGoHome}
-              title="Kembali ke Menu Utama"
-              aria-label="Kembali ke Menu Utama"
-            >
-              <img src={btnHome} alt="Menu Utama" />
-            </button>
-
-            <div className="menu-3d-title-badge">
-              <div className="menu-3d-badge-icon">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                  <polyline points="2 17 12 22 22 17" />
-                  <polyline points="2 12 12 17 22 12" />
-                </svg>
-              </div>
-              <span className="menu-3d-badge-text">3D ORGAN PENCERNAAN</span>
-            </div>
-          </div>
-
-          <div className="menu-3d-topbar-right">
-            <button
-              type="button"
-              className="menu-3d-util-btn"
-              onClick={() => {
-                const next = !soundEnabled;
-                setSoundEnabled(next);
-                if (next) playSound('pop');
-              }}
-              title={soundEnabled ? 'Matikan Suara' : 'Nyalakan Suara'}
-              aria-label="Toggle Suara"
-            >
-              {soundEnabled ? '🔊' : '🔇'}
-            </button>
-
-            <button
-              type="button"
-              className="menu-3d-util-btn"
-              onClick={toggleFullscreen}
-              title={isFullscreen ? 'Keluar Layar Penuh' : 'Mode Layar Penuh'}
-              aria-label="Toggle Fullscreen"
-            >
-              {isFullscreen ? '✕' : '⛶'}
-            </button>
-          </div>
-        </div>
-
-        {/* Layer 3: Kontainer Utama Viewer 3D Interaktif */}
+        {/* Layer 3: Kontainer Utama Viewer 3D Interaktif (Full Height hingga batas atas) */}
         <div className="menu-3d-main-container">
           <div className="menu-3d-card-frame">
-            {/* Header Card: Judul Organ & Panduan Kontrol 3D */}
-            <div className="menu-3d-card-header">
-              <div className="menu-3d-header-left">
-                <div className="menu-3d-organ-tag">{activeOrgan.label}</div>
-                <div className="menu-3d-organ-desc">{activeOrgan.description}</div>
+            {/* Lencana Plat Judul & Info Organ (Menutupi Label Author Sketchfab di Pojok Kiri Atas) */}
+            <div className="menu-3d-author-cover-plate">
+              <div className="menu-3d-cover-header">
+                <div className="menu-3d-cover-icon">
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg>
+                </div>
+                <span className="menu-3d-cover-title">3D ORGAN PENCERNAAN</span>
+                <span className="menu-3d-cover-organ-badge">{activeOrgan.label}</span>
               </div>
+              <div className="menu-3d-cover-desc">{activeOrgan.description}</div>
+            </div>
 
+            {/* Aksi Pojok Kanan Atas: Panduan Navigasi & Tombol Beranda */}
+            <div className="menu-3d-top-actions">
               <div className="menu-3d-controls-guide">
                 <div className="menu-3d-guide-pill" title="Klik dan geser mouse untuk memutar organ 360°">
                   <svg
@@ -240,6 +187,16 @@ export const Menu3DScreen: React.FC = () => {
                   <span>Geser</span>
                 </div>
               </div>
+
+              <button
+                type="button"
+                className="menu-3d-corner-btn"
+                onClick={handleGoHome}
+                title="Kembali ke Menu Utama"
+                aria-label="Kembali ke Menu Utama"
+              >
+                <img src={btnHome} alt="Menu Utama" />
+              </button>
             </div>
 
             {/* Area Embed Iframe Sketchfab */}

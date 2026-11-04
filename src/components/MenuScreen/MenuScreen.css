@@ -76,7 +76,7 @@
   padding: 0;
   cursor: pointer;
   z-index: 25;
-  width: 8.5cqw;
+  width: 7%;
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
@@ -85,8 +85,8 @@
 }
 
 .menuscreen-btn-settings {
-  top: 2.8cqh;
-  left: 1.7cqw;
+  top: 3.2%;
+  left: 2.5%;
 }
 
 .menuscreen-btn-settings:hover {
@@ -100,8 +100,8 @@
 
 /* Pojok Kanan Atas: Tombol Keluar (Exit) */
 .menuscreen-btn-exit {
-  top: 2.8cqh;
-  right: 2.7cqw;
+  top: 3.2%;
+  right: 2.5%;
 }
 
 .menuscreen-btn-exit:hover {
@@ -124,13 +124,13 @@
 .menuscreen-grid-container {
   position: absolute;
   left: 50%;
-  top: 54.1cqh;
+  top: 54.1%;
   transform: translateX(-50%);
-  width: 95cqw;
+  width: 95%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 6.1cqw;
-  row-gap: 5.2cqh;
+  column-gap: 6.1%;
+  row-gap: 5.2%;
   z-index: 10;
 }
 

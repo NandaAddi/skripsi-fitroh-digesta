@@ -103,3 +103,122 @@ input[type="number"],
 textarea {
   cursor: text !important;
 }
+
+/* ==========================================================================
+   DIGESTA UNIFIED 1920x1080 MASTER GAME STAGE FORMULA
+   Presisi Skala Game - 100% Identik di Semua Ukuran Layar & Bebas Zoom Berlebih
+   ========================================================================== */
+
+:root {
+  --game-scale: 1;
+}
+
+/* Master Fixed 1920x1080 Stage with Hardware-Accelerated Transform Scale */
+.startscreen-stage,
+.loginscreen-stage,
+.menuscreen-stage,
+.pengantar-stage,
+.menu-materi-stage,
+.proses-pencernaan-stage,
+.organ-pencernaan-stage,
+.organ-isi-stage,
+.gangguan-stage,
+.menu-3d-stage,
+.kuis-stage,
+.notfound-stage {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 1920px !important;
+  height: 1080px !important;
+  min-width: 1920px !important;
+  min-height: 1080px !important;
+  max-width: 1920px !important;
+  max-height: 1080px !important;
+  aspect-ratio: 16 / 9 !important;
+  transform: translate(-50%, -50%) scale(var(--game-scale, 1)) !important;
+  transform-origin: center center !important;
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.55), 0 0 60px rgba(15, 23, 42, 0.6) !important;
+  container-type: size !important;
+}
+
+/* Master Viewport Container */
+.startscreen-viewport,
+.loginscreen-viewport,
+.menuscreen-viewport,
+.pengantar-viewport,
+.materi-viewport,
+.menu-materi-viewport,
+.proses-pencernaan-viewport,
+.organ-viewport,
+.materi-organ-viewport,
+.materi-gangguan-viewport,
+.menu3d-viewport,
+.kuis-viewport,
+.notfound-viewport {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  width: 100dvw !important;
+  height: 100dvh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #0f172a !important;
+  overflow: hidden !important;
+  user-select: none !important;
+}
+
+/* ==========================================================================
+   DIGESTA UNIFIED BUTTON DESIGN TOKENS
+   Ukuran Baku: Sudut Navigasi (7.0% / ~134px), Utilitas (4.2% / ~80px)
+   ========================================================================== */
+
+/* Standar Baku Tombol Sudut Utama (Settings, Home, Back, Exit, Prev, Next) */
+.game-corner-btn-base {
+  width: 7% !important;
+  aspect-ratio: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  outline: none !important;
+}
+
+/* Standar Baku Tombol Utilitas (Audio, Fullscreen) */
+.game-util-btn-base {
+  width: 4.2% !important;
+  aspect-ratio: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  background: rgba(15, 23, 42, 0.72) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease !important;
+}
+
+.game-util-btn-base:hover {
+  transform: scale(1.08) !important;
+  background: rgba(30, 41, 59, 0.9) !important;
+  border-color: #38bdf8 !important;
+}
+
+.game-util-btn-base:active {
+  transform: scale(0.94) !important;
+}
+
+
