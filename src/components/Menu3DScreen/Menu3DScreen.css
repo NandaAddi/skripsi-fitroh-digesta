@@ -277,7 +277,7 @@
   }
 }
 
-/* Layer 5: Barisan 5 Tombol Organ Horizontal di Bagian Bawah */
+/* Layer 5: Barisan 6 Tombol Organ Horizontal di Bagian Bawah */
 .menu-3d-bottombar {
   position: absolute;
   bottom: clamp(10px, 1.6cqw, 22px);
@@ -286,7 +286,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: clamp(8px, 1.4cqw, 20px);
+  gap: clamp(5px, 0.9cqw, 14px);
   z-index: 20;
   pointer-events: auto;
 }
@@ -304,7 +304,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 clamp(4px, 0.7cqw, 12px);
+  padding: 0 clamp(3px, 0.6cqw, 10px);
   transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
   user-select: none;
   outline: none;
@@ -323,19 +323,27 @@
 }
 
 /* Penyesuaian ukuran teks per tombol agar seimbang dan proporsional */
+.menu-3d-label-sistem-pencernaan {
+  font-size: clamp(8px, 0.9cqw, 14px);
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 1.05;
+  white-space: normal;
+}
+
 .menu-3d-label-mulut,
 .menu-3d-label-lambung {
-  font-size: clamp(13px, 1.5cqw, 24px);
+  font-size: clamp(12px, 1.35cqw, 22px);
 }
 
 .menu-3d-label-kerongkongan {
-  font-size: clamp(10px, 1.15cqw, 18px);
-  letter-spacing: 0.2px;
+  font-size: clamp(9px, 1.02cqw, 16px);
+  letter-spacing: 0.1px;
 }
 
 .menu-3d-label-usus-halus,
 .menu-3d-label-usus-besar {
-  font-size: clamp(11px, 1.25cqw, 20px);
+  font-size: clamp(10px, 1.12cqw, 17px);
 }
 
 /* Efek Hover: Warna tombol berubah menjadi Merah Cerah / Oranye Menyala tanpa glow luar */

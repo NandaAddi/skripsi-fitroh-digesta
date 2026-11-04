@@ -15,6 +15,13 @@ interface Organ3DTopic {
 
 const ORGAN_3D_TOPICS: Organ3DTopic[] = [
   {
+    id: 'sistem-pencernaan',
+    name: 'Sistem Pencernaan',
+    label: 'SISTEM PENCERNAAN',
+    modelId: '0031f9c064d44c42a251543dc500f525',
+    description: 'Anatomi saluran dan sistem pencernaan manusia secara menyeluruh.',
+  },
+  {
     id: 'mulut',
     name: 'Mulut (Cavum Oris)',
     label: 'MULUT',
@@ -220,7 +227,7 @@ export const Menu3DScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Layer 5: Barisan 5 Tombol Organ Horizontal di Bagian Bawah */}
+        {/* Layer 5: Barisan 6 Tombol Organ Horizontal di Bagian Bawah */}
         <nav className="menu-3d-bottombar" aria-label="Pilih Organ 3D">
           {ORGAN_3D_TOPICS.map((organ) => {
             const isActive = organ.id === activeOrgan.id;

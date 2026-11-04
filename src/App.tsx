@@ -11,6 +11,7 @@ import MenuMateriOrganScreen from './components/MenuMateriOrganScreen/MenuMateri
 import MenuMateriOrganIsiScreen from './components/MenuMateriOrganIsiScreen/MenuMateriOrganIsiScreen';
 import MenuMateriGangguanScreen from './components/MenuMateriGangguanScreen/MenuMateriGangguanScreen';
 import MenuPengantarScreen from './components/MenuPengantarScreen/MenuPengantarScreen';
+import MenuPetunjukScreen from './components/MenuPetunjukScreen/MenuPetunjukScreen';
 import Menu3DScreen from './components/Menu3DScreen/Menu3DScreen';
 import MenuKuisScreen from './components/MenuKuisScreen/MenuKuisScreen';
 import NotFoundScreen from './components/NotFound/NotFoundScreen';
@@ -151,8 +152,19 @@ function App() {
               }
             />
 
+            {/* Halaman Khusus Menu Petunjuk Penggunaan */}
+            <Route
+              path="/menu/petunjuk"
+              element={
+                <ProtectedRoute>
+                  <MenuPetunjukScreen />
+                </ProtectedRoute>
+              }
+            />
+
             {/* Alias kemudahan akses rute */}
             <Route path="/pengantar" element={<Navigate to="/menu/pengantar" replace />} />
+            <Route path="/petunjuk" element={<Navigate to="/menu/petunjuk" replace />} />
             <Route path="/materi" element={<Navigate to="/menu/materi" replace />} />
             <Route path="/proses" element={<Navigate to="/menu/materi/proses" replace />} />
             <Route path="/materi/proses" element={<Navigate to="/menu/materi/proses" replace />} />

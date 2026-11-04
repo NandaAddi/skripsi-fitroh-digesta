@@ -147,8 +147,10 @@ Seluruh rute telah dikonfigurasi menggunakan React Router DOM v7 di [`src/App.ts
 | `/menu/pengantar` | `MenuPengantarScreen` | Terproteksi | 3 slide materi pengantar interaktif dengan tombol navigasi panah kiri/kanan. |
 | `/menu/materi` | `MenuMateriScreen` | Terproteksi | Pilihan 3 topik materi utama (Proses Pencernaan, Organ Pencernaan, Gangguan). |
 | `/menu/materi/gangguan` | `MenuMateriGangguanScreen`| Terproteksi | Layar papan tulis ruang kelas dengan 5 tab vertikal (Maag, Gastritis, Diare, Sembelit, Apendisitis). |
-| `/menu/3d` | `Menu3DScreen` | Terproteksi | Layar interaktif model 3D anatomi organ pencernaan Sketchfab (Mulut, Kerongkongan, Lambung, Usus Halus, Usus Besar). |
+| `/menu/3d` | `Menu3DScreen` | Terproteksi | Layar interaktif model 3D anatomi organ pencernaan Sketchfab (Sistem Pencernaan, Mulut, Kerongkongan, Lambung, Usus Halus, Usus Besar). |
+| `/menu/petunjuk` | `MenuPetunjukScreen` | Terproteksi | Layar petunjuk penggunaan aplikasi DIGESTA (Informasi media, software pendukung, dan fungsi tombol antarmuka). |
 | `/pengantar` | *Redirect Alias* | Publik | Otomatis dialihkan (*redirect*) ke `/menu/pengantar`. |
+| `/petunjuk` | *Redirect Alias* | Publik | Otomatis dialihkan (*redirect*) ke `/menu/petunjuk`. |
 | `/materi` | *Redirect Alias* | Publik | Otomatis dialihkan (*redirect*) ke `/menu/materi`. |
 | `/gangguan` | *Redirect Alias* | Publik | Otomatis dialihkan (*redirect*) ke `/menu/materi/gangguan`. |
 | `/3d` | *Redirect Alias* | Publik | Otomatis dialihkan (*redirect*) ke `/menu/3d`. |

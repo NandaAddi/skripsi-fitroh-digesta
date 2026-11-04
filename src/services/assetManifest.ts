@@ -37,6 +37,14 @@ import pengantarBtnRight from '../assets/pangantar-screen/button-right.webp';
 import pengantarBtnHome from '../assets/pangantar-screen/button-home.webp';
 import pengantarBtnSetting from '../assets/pangantar-screen/button-setting.webp';
 
+// Petunjuk Penggunaan Screen Assets
+import petunjukBg from '../assets/petunjuk-penggunaan-screen/bg-petunjuk-penggunaan.webp';
+import petunjukSlide1 from '../assets/petunjuk-penggunaan-screen/konten-slide-1.webp';
+import petunjukBtnLeft from '../assets/petunjuk-penggunaan-screen/button-left.webp';
+import petunjukBtnRight from '../assets/petunjuk-penggunaan-screen/button-right.webp';
+import petunjukBtnHome from '../assets/petunjuk-penggunaan-screen/button-home.webp';
+import petunjukBtnSetting from '../assets/petunjuk-penggunaan-screen/button-setting.webp';
+
 // Menu Materi Assets
 import menuMateriBg from '../assets/menu-materi-screen/bg-menu-materi.webp';
 import btnProsesPencernaan from '../assets/menu-materi-screen/buton-proses-pencernaan.webp';
@@ -210,6 +218,14 @@ export const ASSETS_TO_PRELOAD: PreloadItem[] = [
   { url: pengantarBtnRight, label: 'Tombol Navigasi Kanan' },
   { url: pengantarBtnHome, label: 'Tombol Kembali Beranda' },
   { url: pengantarBtnSetting, label: 'Tombol Opsi Cepat' },
+
+  // Prioritas 4.5: Petunjuk Penggunaan
+  { url: petunjukBg, label: 'Latar Petunjuk Penggunaan' },
+  { url: petunjukSlide1, label: 'Konten Petunjuk Slide 1' },
+  { url: petunjukBtnLeft, label: 'Tombol Navigasi Kiri Petunjuk' },
+  { url: petunjukBtnRight, label: 'Tombol Navigasi Kanan Petunjuk' },
+  { url: petunjukBtnHome, label: 'Tombol Beranda Petunjuk' },
+  { url: petunjukBtnSetting, label: 'Tombol Pengaturan Petunjuk' },
 
   // Prioritas 5: Menu Materi & Topik Gangguan
   { url: menuMateriBg, label: 'Latar Menu Materi Pokok' },
