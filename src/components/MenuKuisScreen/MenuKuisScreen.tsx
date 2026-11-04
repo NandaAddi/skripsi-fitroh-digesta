@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { quizService } from '../../services/quizService';
 import bgImg from '../../assets/kuis-screen/bg-kuis-screen.webp';
 import btnRight from '../../assets/kuis-screen/button-right.webp';
 import btnHome from '../../assets/menu-materi-gangguan-pencernaan-screen/button-home.webp';
@@ -653,12 +655,14 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
 
 export const MenuKuisScreen: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [soundEnabled] = useState(() => isSoundEnabled());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, OptionKey | null>>({});
   const [submittedAnswers, setSubmittedAnswers] = useState<Record<number, OptionKey | null>>({});
   const [showResultModal, setShowResultModal] = useState(false);
   const [showFinalModal, setShowFinalModal] = useState(false);
+  const [quizDurationSeconds, setQuizDurationSeconds] = useState(0);
   const [showHintToast, setShowHintToast] = useState(false);
   const [isPlayingVoice, setIsPlayingVoice] = useState(false);
   const [playingAudioKey, setPlayingAudioKey] = useState<string | null>(null);
@@ -666,6 +670,11 @@ export const MenuKuisScreen: React.FC = () => {
   const stageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const quizStartTimeRef = useRef<number>(0);
+
+  useEffect(() => {
+    quizStartTimeRef.current = Date.now();
+  }, []);
 
   const currentQ = QUIZ_QUESTIONS[currentIndex];
   const currentSelectedAnswer = selectedAnswers[currentIndex] ?? null;
@@ -832,8 +841,46 @@ export const MenuKuisScreen: React.FC = () => {
       setCurrentIndex((prev) => prev + 1);
     } else {
       playSound('chime');
+      const finalCorrectCount = QUIZ_QUESTIONS.reduce((count, q, idx) => {
+        return submittedAnswers[idx] === q.correctAnswer ? count + 1 : count;
+      }, 0);
+      const finalScore = Math.round((finalCorrectCount / QUIZ_QUESTIONS.length) * 100);
+      const startTime = quizStartTimeRef.current || Date.now();
+      const duration = Math.max(1, Math.round((Date.now() - startTime) / 1000));
+      setQuizDurationSeconds(duration);
+
+      // Simpan hasil pengerjaan kuis ke Supabase & database lokal
+      quizService
+        .submitQuizScore({
+          studentId: user?.id,
+          studentName: user?.fullName || 'Siswa DIGESTA',
+          attendanceNumber: user?.attendanceNumber,
+          score: finalScore,
+          correctCount: finalCorrectCount,
+          totalQuestions: QUIZ_QUESTIONS.length,
+          durationSeconds: duration,
+        })
+        .catch((err) => {
+          console.warn('[DIGESTA Quiz] Gagal mencatat skor kuis:', err);
+        });
+
       setShowFinalModal(true);
     }
+  };
+
+  const handleRetryQuiz = () => {
+    playSound('pop');
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    stopVoiceAudio();
+    setShowFinalModal(false);
+    setShowResultModal(false);
+    setCurrentIndex(0);
+    setSelectedAnswers({});
+    setSubmittedAnswers({});
+    setQuizDurationSeconds(0);
+    quizStartTimeRef.current = Date.now();
   };
 
   const handleGoHome = () => {
@@ -935,6 +982,34 @@ export const MenuKuisScreen: React.FC = () => {
           aria-label="Kembali ke Menu Utama"
         >
           <img src={btnHome} alt="Beranda" className="kuis-ctrl-img" draggable={false} />
+        </button>
+
+        {/* Tombol Papan Peringkat / Trophy di Header */}
+        <button
+          type="button"
+          className="kuis-btn-trophy"
+          onClick={() => {
+            playSound('chime');
+            navigate('/menu/leaderboard');
+          }}
+          title="Buka Halaman Papan Peringkat Kuis"
+          aria-label="Buka Papan Peringkat"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            className="kuis-btn-trophy-svg"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+            <path d="M4 22h16" />
+            <path d="M10 14.66V17c0 .55-.45 1-1 1H8c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1h-1c-.55 0-1-.45-1-1v-2.34" />
+            <path d="M6 4h12a2 2 0 0 1 2 2v3a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V6a2 2 0 0 1 2-2Z" />
+          </svg>
         </button>
 
         {/* Badge Progres Soal Kuis (Pojok Kanan Atas) */}
@@ -1243,17 +1318,39 @@ export const MenuKuisScreen: React.FC = () => {
                 </span>
               </div>
 
+              {/* Durasi Pengerjaan */}
+              <div className="kuis-duration-pill">
+                <span>Waktu Pengerjaan: {quizService.formatDuration(quizDurationSeconds)}</span>
+              </div>
+
               {/* Ulasan Hasil */}
               <p className="kuis-result-explanation">{finalFeedback}</p>
 
               {/* Tombol Aksi 3D */}
-              <div className="kuis-modal-actions">
+              <div className="kuis-modal-actions final-actions">
+                <button
+                  type="button"
+                  className="kuis-action-btn kuis-btn-leaderboard-action"
+                  onClick={() => {
+                    playSound('chime');
+                    navigate('/menu/leaderboard');
+                  }}
+                >
+                  Peringkat
+                </button>
+                <button
+                  type="button"
+                  className="kuis-action-btn kuis-btn-retry"
+                  onClick={handleRetryQuiz}
+                >
+                  Coba Lagi
+                </button>
                 <button
                   type="button"
                   className="kuis-action-btn kuis-btn-menu"
                   onClick={handleGoHome}
                 >
-                  Kembali ke Menu
+                  Menu Utama
                 </button>
               </div>
             </div>

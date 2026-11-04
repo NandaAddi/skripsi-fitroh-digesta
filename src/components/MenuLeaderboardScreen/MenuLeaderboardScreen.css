@@ -1,0 +1,660 @@
+/* ============================================================================
+   DIGESTA - Full-Page Leaderboard Screen (Panggung 16:9 Terkunci)
+   Pure Vanilla CSS - Container Query & Fluid Scaling Ready
+   ============================================================================ */
+
+.lb-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f172a;
+  overflow: hidden;
+  user-select: none;
+}
+
+.lb-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+/* Layer 1: Background Ruang Kelas */
+.lb-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/* BILAH ATAS (HEADER NAVIGATION)                                             */
+/* -------------------------------------------------------------------------- */
+
+.lb-ctrl-btn {
+  position: absolute;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 20;
+}
+
+.lb-ctrl-btn:hover {
+  transform: scale(1.08);
+}
+
+.lb-ctrl-btn:active {
+  transform: scale(0.92);
+}
+
+.lb-ctrl-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+}
+
+.lb-btn-home {
+  top: 3.2%;
+  left: 2.5%;
+  width: 7%;
+  aspect-ratio: 1;
+}
+
+/* Plat Judul Tengah */
+.lb-plate-title {
+  position: absolute;
+  top: 3.2%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+  border: clamp(3.5px, 0.35cqw, 5px) solid #d97706;
+  border-radius: 999px;
+  padding: clamp(8px, 0.9cqw, 14px) clamp(24px, 2.8cqw, 48px);
+  box-shadow: 0 clamp(4px, 0.45cqw, 7px) 0 #b45309, 0 8px 18px rgba(0, 0, 0, 0.35);
+  z-index: 20;
+  white-space: nowrap;
+}
+
+.lb-plate-title span {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(16px, 1.7cqw, 24px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 4px rgba(180, 83, 9, 0.65);
+}
+
+/* Status Akun Siswa Aktif (Pojok Kanan Atas) */
+.lb-user-status-pill {
+  position: absolute;
+  top: 3.2%;
+  right: 2.5%;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: clamp(3px, 0.3cqw, 4.5px) solid #38bdf8;
+  box-shadow: 0 clamp(3.5px, 0.38cqw, 6px) 0 #0284c7, 0 6px 16px rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+  padding: clamp(6px, 0.65cqw, 10px) clamp(14px, 1.4cqw, 22px);
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 0.8cqw, 12px);
+  z-index: 20;
+}
+
+.lb-user-avatar {
+  width: clamp(26px, 2.6cqw, 36px);
+  height: clamp(26px, 2.6cqw, 36px);
+  border-radius: 50%;
+  background: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.lb-user-svg {
+  width: 60%;
+  height: 60%;
+}
+
+.lb-user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.lb-user-name {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(12px, 1.15cqw, 15px);
+  font-weight: 800;
+  color: #ffffff;
+  max-width: clamp(120px, 14cqw, 200px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lb-user-sub {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(10px, 0.95cqw, 12px);
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+/* -------------------------------------------------------------------------- */
+/* GRID KONTEN UTAMA (KIRI: PODIUM, KANAN: DAFTAR LENGKAP)                   */
+/* -------------------------------------------------------------------------- */
+
+.lb-content-grid {
+  position: absolute;
+  top: 14%;
+  left: 3%;
+  right: 3%;
+  bottom: 4%;
+  display: grid;
+  grid-template-columns: 43% 55%;
+  gap: 2%;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+/* -------------------------------------------------------------------------- */
+/* SISI KIRI: PODIUM JUARA TOP 3                                             */
+/* -------------------------------------------------------------------------- */
+
+.lb-podium-card {
+  background: #ffffff;
+  border: clamp(3.5px, 0.35cqw, 5px) solid #f59e0b;
+  border-radius: clamp(20px, 2.2cqw, 28px);
+  box-shadow: 0 clamp(6px, 0.65cqw, 10px) 0 #d97706, 0 14px 28px rgba(0, 0, 0, 0.3);
+  padding: clamp(12px, 1.3cqw, 18px);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.lb-podium-header {
+  text-align: center;
+  margin-bottom: clamp(6px, 0.7cqw, 10px);
+}
+
+.lb-podium-title {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(18px, 1.8cqw, 24px);
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.lb-podium-subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(11px, 1cqw, 13px);
+  font-weight: 600;
+  color: #64748b;
+  margin: 3px 0 0;
+}
+
+/* Baris Tiga Kolom Podium */
+.lb-podiums-row {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(8px, 1cqw, 14px);
+  padding: clamp(6px, 0.8cqw, 12px) 0 clamp(4px, 0.5cqw, 8px);
+}
+
+.lb-podium-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+/* Kartu Siswa di Atas Podium */
+.lb-podium-student-card {
+  width: 100%;
+  background: #f8fafc;
+  border: clamp(2px, 0.22cqw, 3px) solid #cbd5e1;
+  border-radius: clamp(10px, 1.1cqw, 14px);
+  padding: clamp(6px, 0.7cqw, 10px) clamp(4px, 0.5cqw, 8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: clamp(6px, 0.7cqw, 10px);
+  box-sizing: border-box;
+}
+
+.lb-podium-student-card.champ {
+  background: #fffbeb;
+  border-color: #f59e0b;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
+}
+
+.lb-crown-icon {
+  width: clamp(26px, 2.6cqw, 36px);
+  height: clamp(22px, 2.2cqw, 30px);
+  color: #f59e0b;
+  animation: lbCrownBounce 2s ease-in-out infinite;
+}
+
+@keyframes lbCrownBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.lb-crown-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.lb-medal-icon {
+  font-size: clamp(22px, 2.4cqw, 32px);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.lb-student-podium-name {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(12px, 1.15cqw, 15px);
+  font-weight: 800;
+  color: #0f172a;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lb-student-podium-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3px;
+}
+
+.lb-podium-score {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(13px, 1.3cqw, 17px);
+  font-weight: 900;
+  color: #059669;
+}
+
+.lb-podium-score.gold {
+  color: #d97706;
+}
+
+.lb-podium-time {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(10px, 0.9cqw, 11px);
+  font-weight: 700;
+  color: #64748b;
+}
+
+/* Balok Podium Fisik 3D */
+.lb-podium-pedestal {
+  width: 100%;
+  border-radius: clamp(10px, 1cqw, 14px) clamp(10px, 1cqw, 14px) 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.45);
+}
+
+.lb-pedestal-num {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(24px, 2.6cqw, 36px);
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.lb-pedestal-label {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(10px, 0.95cqw, 12px);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.05em;
+}
+
+/* Ketinggian Tiap Podium */
+.lb-podium-column.rank-1 .lb-podium-pedestal {
+  height: clamp(90px, 10cqw, 130px);
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+  border: clamp(3px, 0.3cqw, 4px) solid #d97706;
+  border-bottom: none;
+}
+
+.lb-podium-column.rank-2 .lb-podium-pedestal {
+  height: clamp(65px, 7.5cqw, 95px);
+  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%);
+  border: clamp(3px, 0.3cqw, 4px) solid #64748b;
+  border-bottom: none;
+}
+
+.lb-podium-column.rank-3 .lb-podium-pedestal {
+  height: clamp(50px, 6cqw, 75px);
+  background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+  border: clamp(3px, 0.3cqw, 4px) solid #c2410c;
+  border-bottom: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* SISI KANAN: DAFTAR LENGKAP PERINGKAT SISWA                                 */
+/* -------------------------------------------------------------------------- */
+
+.lb-list-card {
+  background: #ffffff;
+  border: clamp(3.5px, 0.35cqw, 5px) solid #38bdf8;
+  border-radius: clamp(20px, 2.2cqw, 28px);
+  box-shadow: 0 clamp(6px, 0.65cqw, 10px) 0 #0284c7, 0 14px 28px rgba(0, 0, 0, 0.3);
+  padding: clamp(12px, 1.3cqw, 18px);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.lb-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: clamp(8px, 0.9cqw, 12px);
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.lb-list-title {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(18px, 1.8cqw, 24px);
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.lb-list-count {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(11px, 1cqw, 13px);
+  font-weight: 700;
+  color: #64748b;
+}
+
+.lb-refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  border-radius: 999px;
+  padding: clamp(4px, 0.5cqw, 7px) clamp(10px, 1.1cqw, 16px);
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(11px, 1.05cqw, 13px);
+  font-weight: 800;
+  color: #475569;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.lb-refresh-btn:hover {
+  background: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+.lb-refresh-svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Kontainer Scroll Baris Siswa */
+.lb-scroll-container {
+  flex: 1;
+  min-height: 0;
+  margin-top: clamp(8px, 0.9cqw, 12px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.lb-rows-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(7px, 0.8cqw, 10px);
+}
+
+.lb-rows-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lb-rows-scroll::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 999px;
+}
+
+.lb-rows-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.lb-rows-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Baris Siswa Tiap Item */
+.lb-student-row {
+  display: flex;
+  align-items: center;
+  padding: clamp(7px, 0.8cqw, 10px) clamp(10px, 1.1cqw, 14px);
+  border-radius: clamp(12px, 1.2cqw, 16px);
+  background: #ffffff;
+  border: 2.5px solid #e2e8f0;
+  box-shadow: 0 3px 0 #cbd5e1;
+  gap: clamp(8px, 0.9cqw, 14px);
+  transition: transform 0.1s ease;
+}
+
+.lb-student-row:hover {
+  transform: translateX(3px);
+}
+
+/* Warna Medali Top 3 Pada Baris */
+.lb-student-row.rank-row-gold {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #f59e0b;
+  box-shadow: 0 3px 0 #d97706;
+}
+
+.lb-student-row.rank-row-gold .lb-rank-badge {
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+  border-color: #d97706;
+  color: #ffffff;
+}
+
+.lb-student-row.rank-row-silver {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-color: #94a3b8;
+  box-shadow: 0 3px 0 #64748b;
+}
+
+.lb-student-row.rank-row-silver .lb-rank-badge {
+  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%);
+  border-color: #64748b;
+  color: #ffffff;
+}
+
+.lb-student-row.rank-row-bronze {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border-color: #ea580c;
+  box-shadow: 0 3px 0 #c2410c;
+}
+
+.lb-student-row.rank-row-bronze .lb-rank-badge {
+  background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+  border-color: #c2410c;
+  color: #ffffff;
+}
+
+/* Highlight Khusus Akun Siswa Aktif ("KAMU") */
+.lb-student-row.is-current-user {
+  border: 3px solid #0284c7;
+  background: #f0f9ff;
+  box-shadow: 0 3px 0 #0369a1, 0 0 12px rgba(14, 165, 233, 0.35);
+}
+
+.lb-rank-badge {
+  width: clamp(30px, 3.2cqw, 38px);
+  height: clamp(30px, 3.2cqw, 38px);
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(13px, 1.3cqw, 16px);
+  font-weight: 900;
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.lb-student-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.lb-name-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lb-student-fullname {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(13px, 1.3cqw, 16.5px);
+  font-weight: 800;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lb-you-tag {
+  background: #0284c7;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(9px, 0.85cqw, 11px);
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.lb-meta-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.lb-absen-tag {
+  background: #e2e8f0;
+  color: #334155;
+  font-size: clamp(10px, 0.95cqw, 12px);
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.lb-time-tag {
+  color: #64748b;
+  font-size: clamp(10.5px, 0.95cqw, 12px);
+  font-weight: 600;
+}
+
+.lb-score-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.lb-score-digits {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(18px, 1.9cqw, 24px);
+  font-weight: 900;
+  color: #059669;
+  line-height: 1;
+}
+
+.lb-score-unit {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(10px, 0.9cqw, 11px);
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.lb-loading-box,
+.lb-empty-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #64748b;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: clamp(13px, 1.25cqw, 15px);
+  text-align: center;
+}
+
+.lb-spinner {
+  width: 34px;
+  height: 34px;
+  border: 4px solid #cbd5e1;
+  border-top-color: #38bdf8;
+  border-radius: 50%;
+  animation: lbSpin 0.8s linear infinite;
+}
+
+@keyframes lbSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}

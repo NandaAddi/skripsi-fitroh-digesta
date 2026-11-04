@@ -1,13 +1,13 @@
 /**
  * Auth Service - Supabase Ready Architecture
  * 
- * Antarmuka autentikasi ini kompatibel dengan Supabase Auth.
- * Saat kredensial Supabase di `.env` belum diisi, sistem beroperasi
- * dalam simulasi interaktif berkecepatan tinggi dengan persistensi localStorage,
- * memungkinkan mockup panel berfungsi penuh dengan feedback nyata.
+ * Antarmuka autentikasi ini terintegrasi langsung dengan Supabase Database & Auth.
+ * Saat kredensial Supabase di `.env` belum diisi atau perangkat offline,
+ * sistem secara mulus beroperasi dalam fallback lokal instan dengan persistensi
+ * localStorage, memungkinkan seluruh fitur tetap berjalan tanpa hambatan.
  */
 
-import { supabaseConfig } from './supabaseClient';
+import { supabase, supabaseConfig } from './supabaseClient';
 
 export interface User {
   id: string;
@@ -25,45 +25,16 @@ export interface AuthResponse {
 
 const STORAGE_KEY = 'digesta_auth_session';
 
-/**
- * Sinkronisasi data profil siswa ke tabel Supabase (jika terhubung).
- * Berjalan non-blocking di background agar mode offline/tanpa backend tetap instan.
- */
-async function syncToSupabase(user: User): Promise<void> {
-  if (!supabaseConfig.isConfigured()) return;
-  try {
-    const endpoint = `${supabaseConfig.url}/rest/v1/students`;
-    await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'apikey': supabaseConfig.anonKey || '',
-        'Authorization': `Bearer ${supabaseConfig.anonKey || ''}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal',
-      },
-      body: JSON.stringify({
-        id: user.id,
-        full_name: user.fullName,
-        attendance_number: user.attendanceNumber ?? null,
-        role: user.role,
-        last_login: user.createdAt,
-      }),
-    });
-  } catch (err) {
-    console.warn('[DIGESTA Supabase Sync] Fallback lokal aktif (gagal sinkronisasi Supabase):', err);
-  }
-}
-
 export const authService = {
   /**
    * Cek status apakah menggunakan live Supabase atau simulasi lokal
    */
   isLive(): boolean {
-    return supabaseConfig.isConfigured();
+    return supabaseConfig.isConfigured() && Boolean(supabase);
   },
 
   /**
-   * Mendapatkan sesi pengguna yang saat ini aktif
+   * Mendapatkan sesi pengguna yang saat ini aktif dari localStorage
    */
   getCurrentUser(): User | null {
     try {
@@ -75,7 +46,8 @@ export const authService = {
   },
 
   /**
-   * Masuk langsung dengan Nama Lengkap dan Nomor Absen Siswa
+   * Masuk langsung dengan Nama Lengkap dan Nomor Absen Siswa.
+   * Terhubung langsung ke tabel `students` di Supabase untuk pendaftaran/sinkronisasi instan.
    */
   async signInWithStudentProfile({
     fullName,
@@ -84,9 +56,6 @@ export const authService = {
     fullName: string;
     attendanceNumber: number;
   }): Promise<AuthResponse> {
-    // Simulasi delay realistis untuk feedback visual
-    await new Promise((resolve) => setTimeout(resolve, 400));
-
     const trimmedName = fullName.trim();
     if (!trimmedName || trimmedName.length < 2) {
       return { user: null, error: 'Nama lengkap minimal 2 karakter.' };
@@ -97,6 +66,44 @@ export const authService = {
       return { user: null, error: 'Nomor absen harus berupa angka antara 1 sampai 99.' };
     }
 
+    // Jika Supabase aktif, lakukan upsert profil siswa di tabel `students`
+    if (supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('students')
+          .upsert(
+            {
+              full_name: trimmedName,
+              attendance_number: absNum,
+              role: 'student',
+              last_login: new Date().toISOString(),
+            },
+            { onConflict: 'full_name,attendance_number' }
+          )
+          .select('id, full_name, attendance_number, role, created_at')
+          .single();
+
+        if (!error && data) {
+          const user: User = {
+            id: data.id,
+            fullName: data.full_name,
+            attendanceNumber: data.attendance_number,
+            email: `absen${data.attendance_number}@digesta.local`,
+            role: (data.role as 'student' | 'teacher' | 'guest') || 'student',
+            createdAt: data.created_at || new Date().toISOString(),
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+          return { user, error: null };
+        } else if (error) {
+          console.warn('[DIGESTA Supabase Auth] Upsert siswa gagal, menggunakan fallback lokal:', error.message);
+        }
+      } catch (err) {
+        console.warn('[DIGESTA Supabase Auth] Pengecualian koneksi Supabase:', err);
+      }
+    }
+
+    // Fallback lokal jika belum ada koneksi Supabase / offline
+    await new Promise((resolve) => setTimeout(resolve, 350));
     const user: User = {
       id: 'std_' + Math.random().toString(36).substring(2, 9),
       fullName: trimmedName,
@@ -107,10 +114,6 @@ export const authService = {
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-
-    // Sinkronisasi non-blocking di latar belakang
-    syncToSupabase(user).catch(() => {});
-
     return { user, error: null };
   },
 
@@ -124,9 +127,6 @@ export const authService = {
     email: string;
     password: string;
   }): Promise<AuthResponse> {
-    // Simulasi delay jaringan realistis
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
     const trimmedEmail = email.trim();
     if (!trimmedEmail || !trimmedEmail.includes('@')) {
       return { user: null, error: 'Format email tidak valid.' };
@@ -135,7 +135,38 @@ export const authService = {
       return { user: null, error: 'Kata sandi minimal 6 karakter.' };
     }
 
-    // Nama otomatis dari username email jika tidak ada profil tersimpan
+    if (supabase) {
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: trimmedEmail,
+          password,
+        });
+
+        if (error) {
+          return { user: null, error: error.message };
+        }
+
+        if (data.user) {
+          const fullName =
+            data.user.user_metadata?.full_name ||
+            trimmedEmail.split('@')[0].replace(/[._-]/g, ' ');
+          const user: User = {
+            id: data.user.id,
+            email: data.user.email || trimmedEmail,
+            fullName,
+            role: 'student',
+            createdAt: data.user.created_at || new Date().toISOString(),
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+          return { user, error: null };
+        }
+      } catch (err) {
+        console.warn('[DIGESTA Supabase Auth] Login email gagal, fallback lokal:', err);
+      }
+    }
+
+    // Fallback simulasi
+    await new Promise((resolve) => setTimeout(resolve, 400));
     const cleanName = trimmedEmail
       .split('@')[0]
       .replace(/[._-]/g, ' ')
@@ -165,8 +196,6 @@ export const authService = {
     password: string;
     fullName: string;
   }): Promise<AuthResponse> {
-    await new Promise((resolve) => setTimeout(resolve, 600));
-
     const trimmedName = fullName.trim();
     const trimmedEmail = email.trim();
 
@@ -180,6 +209,40 @@ export const authService = {
       return { user: null, error: 'Kata sandi minimal 6 karakter.' };
     }
 
+    if (supabase) {
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email: trimmedEmail,
+          password,
+          options: {
+            data: {
+              full_name: trimmedName,
+            },
+          },
+        });
+
+        if (error) {
+          return { user: null, error: error.message };
+        }
+
+        if (data.user) {
+          const user: User = {
+            id: data.user.id,
+            email: data.user.email || trimmedEmail,
+            fullName: trimmedName,
+            role: 'student',
+            createdAt: data.user.created_at || new Date().toISOString(),
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+          return { user, error: null };
+        }
+      } catch (err) {
+        console.warn('[DIGESTA Supabase Auth] SignUp gagal, fallback lokal:', err);
+      }
+    }
+
+    // Fallback simulasi
+    await new Promise((resolve) => setTimeout(resolve, 500));
     const user: User = {
       id: 'usr_' + Math.random().toString(36).substring(2, 9),
       email: trimmedEmail,
@@ -197,7 +260,7 @@ export const authService = {
    * Sangat berguna untuk pengujian, demonstrasi, atau siswa tanpa akun
    */
   async signInAsGuest(guestName?: string): Promise<AuthResponse> {
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 200));
 
     const name = guestName?.trim() || 'Siswa Tamu DIGESTA';
     const user: User = {
@@ -217,7 +280,13 @@ export const authService = {
    * Keluar dari sesi (kompatibel dengan Supabase signOut)
    */
   async signOut(): Promise<{ error: string | null }> {
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    if (supabase) {
+      try {
+        await supabase.auth.signOut();
+      } catch (err) {
+        console.warn('[DIGESTA Supabase Auth] SignOut exception:', err);
+      }
+    }
     localStorage.removeItem(STORAGE_KEY);
     return { error: null };
   },

@@ -319,6 +319,23 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               </svg>
               <span>Masuk sebagai Siswa Tamu</span>
             </button>
+
+            {/* Tombol Jalan Pintas Mode Guru / Admin */}
+            <button
+              type="button"
+              className="loginscreen-admin-link"
+              onClick={() => {
+                playSound('pop');
+                navigate('/admin');
+              }}
+              title="Masuk ke Dashboard Guru / Admin"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              <span>Mode Guru / Admin</span>
+            </button>
           </div>
         </div>
       </div>

@@ -98,6 +98,35 @@
   transform: scale(0.95) rotate(-15deg);
 }
 
+/* Tombol Papan Peringkat / Trophy 3D */
+.menuscreen-btn-trophy {
+  top: 3.2%;
+  left: 10.5%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+  border: clamp(3px, 0.3cqw, 4.5px) solid #d97706;
+  box-shadow: 0 clamp(3.5px, 0.35cqw, 5.5px) 0 #b45309, 0 6px 14px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.menuscreen-btn-trophy:hover {
+  transform: translateY(-2px) scale(1.08);
+  filter: brightness(1.08) drop-shadow(0 6px 16px rgba(245, 158, 11, 0.45));
+}
+
+.menuscreen-btn-trophy:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 1px 0 #b45309;
+}
+
+.menuscreen-btn-trophy-svg {
+  width: 58%;
+  height: 58%;
+}
+
 /* Pojok Kanan Atas: Tombol Keluar (Exit) */
 .menuscreen-btn-exit {
   top: 3.2%;

@@ -435,6 +435,30 @@
   box-shadow: 0 1px 0 #94a3b8;
 }
 
+.loginscreen-admin-link {
+  margin-top: clamp(8px, 1cqh, 12px);
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(12px, 1cqw, 14px);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 8px;
+  transition: color 0.12s ease, background 0.12s ease;
+  user-select: none;
+}
+
+.loginscreen-admin-link:hover {
+  color: #0284c7;
+  background: #f1f5f9;
+}
+
 @keyframes loginscreen-pop {
   from {
     opacity: 0;

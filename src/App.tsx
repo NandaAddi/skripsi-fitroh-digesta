@@ -14,6 +14,8 @@ import MenuPengantarScreen from './components/MenuPengantarScreen/MenuPengantarS
 import MenuPetunjukScreen from './components/MenuPetunjukScreen/MenuPetunjukScreen';
 import Menu3DScreen from './components/Menu3DScreen/Menu3DScreen';
 import MenuKuisScreen from './components/MenuKuisScreen/MenuKuisScreen';
+import MenuLeaderboardScreen from './components/MenuLeaderboardScreen/MenuLeaderboardScreen';
+import AdminDashboardScreen from './components/AdminDashboardScreen/AdminDashboardScreen';
 import NotFoundScreen from './components/NotFound/NotFoundScreen';
 import AssetPreloader from './components/AssetPreloader/AssetPreloader';
 import ClickSparkle from './components/ClickSparkle/ClickSparkle';
@@ -162,9 +164,21 @@ function App() {
               }
             />
 
+            {/* Halaman Khusus Papan Peringkat (Leaderboard) */}
+            <Route
+              path="/menu/leaderboard"
+              element={
+                <ProtectedRoute>
+                  <MenuLeaderboardScreen />
+                </ProtectedRoute>
+              }
+            />
+
             {/* Alias kemudahan akses rute */}
             <Route path="/pengantar" element={<Navigate to="/menu/pengantar" replace />} />
             <Route path="/petunjuk" element={<Navigate to="/menu/petunjuk" replace />} />
+            <Route path="/leaderboard" element={<Navigate to="/menu/leaderboard" replace />} />
+            <Route path="/peringkat" element={<Navigate to="/menu/leaderboard" replace />} />
             <Route path="/materi" element={<Navigate to="/menu/materi" replace />} />
             <Route path="/proses" element={<Navigate to="/menu/materi/proses" replace />} />
             <Route path="/materi/proses" element={<Navigate to="/menu/materi/proses" replace />} />
@@ -177,6 +191,10 @@ function App() {
             <Route path="/3d" element={<Navigate to="/menu/3d" replace />} />
             <Route path="/3d/:organId" element={<Navigate to="/menu/3d" replace />} />
             <Route path="/kuis" element={<Navigate to="/menu/kuis" replace />} />
+
+            {/* Rute Khusus Dashboard Guru / Admin */}
+            <Route path="/admin" element={<AdminDashboardScreen />} />
+            <Route path="/guru" element={<Navigate to="/admin" replace />} />
 
             {/* Rute 404 Not Found Catch-All */}
             <Route path="*" element={<NotFoundScreen />} />

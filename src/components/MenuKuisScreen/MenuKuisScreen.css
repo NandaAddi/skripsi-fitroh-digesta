@@ -958,3 +958,82 @@
     opacity: 1;
   }
 }
+
+/* Tombol Piala Leaderboard di Header Kuis */
+.kuis-btn-trophy {
+  position: absolute;
+  top: 3.2%;
+  left: 10.5%;
+  width: clamp(40px, 4.4cqw, 62px);
+  height: clamp(40px, 4.4cqw, 62px);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+  border: clamp(3px, 0.3cqw, 4.5px) solid #d97706;
+  box-shadow: 0 clamp(3.5px, 0.35cqw, 5.5px) 0 #b45309, 0 6px 14px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 30;
+  transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.14s ease;
+  outline: none;
+}
+
+.kuis-btn-trophy:hover {
+  transform: translateY(-2px) scale(1.08);
+  filter: brightness(1.08);
+}
+
+.kuis-btn-trophy:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 1px 0 #b45309;
+}
+
+.kuis-btn-trophy-svg {
+  width: 58%;
+  height: 58%;
+}
+
+/* Badge Durasi Pengerjaan di Modal Akhir */
+.kuis-duration-pill {
+  margin-top: 8px;
+  background: #f8fafc;
+  border: 2.5px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 4px 22px;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(14px, 1.4cqw, 20px);
+  font-weight: 700;
+  color: #475569;
+}
+
+/* Tindakan Modal Hasil Akhir (3 Tombol Responsif) */
+.kuis-modal-actions.final-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(10px, 1.2cqw, 16px);
+  justify-content: center;
+  width: 100%;
+}
+
+.kuis-modal-actions.final-actions .kuis-action-btn {
+  flex: 1 1 auto;
+  min-width: clamp(140px, 16cqw, 200px);
+  max-width: clamp(200px, 24cqw, 280px);
+  font-size: clamp(16px, 1.6cqw, 22px);
+  padding: clamp(10px, 1.1cqw, 15px) clamp(16px, 1.8cqw, 28px);
+}
+
+/* Tombol Buka Leaderboard (Kuning Emas 3D) */
+.kuis-btn-leaderboard-action {
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+  color: #ffffff;
+  border: clamp(3.5px, 0.35cqw, 5px) solid #d97706;
+  box-shadow: 0 clamp(4px, 0.4cqw, 6px) 0 #b45309, 0 8px 18px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.kuis-btn-leaderboard-action:active {
+  box-shadow: 0 1px 0 #b45309;
+}
