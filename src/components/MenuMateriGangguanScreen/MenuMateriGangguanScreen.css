@@ -1,4 +1,5 @@
 /* MenuMateriGangguanScreen.css - 16:9 Locked Aspect Ratio Educational Stage */
+@import '../MenuScreen/MenuScreen.css';
 
 .gangguan-viewport {
   position: fixed;

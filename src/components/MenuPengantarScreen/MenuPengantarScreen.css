@@ -247,14 +247,17 @@
 }
 
 .pengantar-modal-card {
-  background: #ffffff;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 480px;
-  border: 2px solid #e9ecef;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-  padding: 24px;
+  background: linear-gradient(180deg, #ffffff 0%, #fffbf0 100%);
+  border-radius: clamp(28px, 2.4cqw, 44px);
+  width: min(92%, 1000px);
+  max-height: min(92%, 900px);
+  border: 5px solid #3b82f6;
+  box-shadow: 0 16px 0 rgba(0, 0, 0, 0.18), 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 3px 0 rgba(255, 255, 255, 0.9);
+  padding: clamp(28px, 2.4cqw, 44px) clamp(36px, 3.2cqw, 60px);
   animation: pengantar-pop-up 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 @keyframes pengantar-pop-up {
@@ -272,73 +275,95 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #f1f3f5;
-  padding-bottom: 12px;
-  margin-bottom: 18px;
+  border-bottom: 3.5px solid #e2e8f0;
+  padding-bottom: clamp(14px, 1.2cqw, 20px);
+  margin-bottom: clamp(16px, 1.4cqw, 24px);
 }
 
 .pengantar-modal-title {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #212529;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(32px, 2.4cqw, 44px);
+  font-weight: 900;
+  color: #0f172a;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .pengantar-modal-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid #f1f3f5;
+  padding: clamp(16px, 1.3cqw, 22px) clamp(20px, 1.6cqw, 30px);
+  background: #ffffff;
+  border: 3.5px solid #e2e8f0;
+  border-radius: 22px;
+  margin-bottom: clamp(12px, 1.1cqw, 18px);
+  box-shadow: 0 5px 0 #cbd5e1;
+  gap: 20px;
 }
 
 .pengantar-modal-label {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #343a40;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(24px, 1.75cqw, 32px);
+  font-weight: 900;
+  color: #0f172a;
 }
 
 .pengantar-modal-sub {
-  font-size: 0.8rem;
-  color: #868e96;
+  font-size: clamp(17px, 1.3cqw, 22px);
+  color: #334155;
+  font-weight: 700;
+  margin-top: 5px;
 }
 
 .pengantar-switch {
-  padding: 6px 14px;
+  padding: clamp(10px, 0.9cqw, 14px) clamp(22px, 1.8cqw, 32px);
   border-radius: 999px;
-  border: 1.5px solid #ced4da;
-  background: #f8f9fa;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 0.85rem;
+  border: 3.5px solid #cbd5e1;
+  background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
+  color: #ffffff;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(19px, 1.4cqw, 24px);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  box-shadow: 0 5px 0 #475569;
+  white-space: nowrap;
 }
 
 .pengantar-switch.active {
-  background: #ebfbee;
-  border-color: #40c057;
-  color: #2b8a3e;
+  background: linear-gradient(180deg, #4ade80 0%, #16a34a 100%);
+  border-color: #86efac;
+  box-shadow: 0 5px 0 #15803d;
+  color: #ffffff;
 }
 
 .pengantar-modal-btn-close {
   width: 100%;
-  margin-top: 18px;
-  padding: 11px 0;
-  background: #1c7ed6;
+  margin-top: clamp(14px, 1.3cqw, 22px);
+  padding: clamp(16px, 1.3cqw, 22px) clamp(28px, 2.2cqw, 48px);
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
   color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 0.95rem;
+  border: 3.5px solid #bae6fd;
+  border-radius: 999px;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(24px, 1.7cqw, 32px);
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: 0 8px 0 #0369a1, 0 14px 28px rgba(2, 132, 199, 0.4);
+  transition: all 0.15s ease;
+  user-select: none;
 }
 
 .pengantar-modal-btn-close:hover {
-  background: #1864ab;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 0 #0369a1, 0 18px 32px rgba(2, 132, 199, 0.45);
+  filter: brightness(1.05);
+}
+
+.pengantar-modal-btn-close:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #0369a1;
 }

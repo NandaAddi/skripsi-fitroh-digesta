@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bgImg from '../../assets/menu-screen/bg-menuscreen.webp';
 import logoImg from '../../assets/menu-screen/logo-menuscreen.webp';
@@ -13,6 +13,11 @@ import {
   setSoundEnabled as saveSoundPref,
 } from '../../services/soundService';
 import './MenuScreen.css';
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
 
 export interface MenuScreenProps {
   currentUser?: User | null;
@@ -34,7 +39,46 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
   const [activeModal, setActiveModal] = useState<'settings' | 'exit' | null>(null);
   const [soundEnabled, setSoundEnabled] = useState(() => isSoundEnabled());
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isPwaInstalled, setIsPwaInstalled] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return (
+      window.matchMedia('(display-mode: standalone)').matches ||
+      Boolean((navigator as { standalone?: boolean }).standalone)
+    );
+  });
   const stageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+
+    const handleAppInstalled = () => {
+      setIsPwaInstalled(true);
+      setDeferredPrompt(null);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
+
+  const handleInstallPwa = async () => {
+    if (!deferredPrompt) return;
+    playSound('pop');
+    await deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setIsPwaInstalled(true);
+    }
+    setDeferredPrompt(null);
+  };
 
   // Efek suara interaktif terpusat
   const playSound = (type: 'pop' | 'chime' | 'soft') => {
@@ -210,6 +254,56 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
                   >
                     {isFullscreen ? 'Keluar Fullscreen' : 'Layar Penuh'}
                   </button>
+                </div>
+
+                {/* Aplikasi Mandiri / Progressive Web App (PWA) */}
+                <div className="menuscreen-setting-row">
+                  <div>
+                    <div className="menuscreen-setting-label">Aplikasi Mandiri (PWA)</div>
+                    <div className="menuscreen-setting-sub">
+                      {isPwaInstalled
+                        ? 'Aplikasi telah terpasang & dapat dimainkan tanpa koneksi'
+                        : deferredPrompt
+                          ? 'Pasang ke layar utama untuk akses instan tanpa browser'
+                          : 'Mendukung penyimpanan offline & dapat ditambahkan ke Beranda'}
+                    </div>
+                  </div>
+                  {isPwaInstalled ? (
+                    <span
+                      className="menuscreen-user-tag"
+                      style={{
+                        background: 'linear-gradient(180deg, #dcfce7 0%, #bbf7d0 100%)',
+                        borderColor: '#22c55e',
+                        color: '#15803d',
+                      }}
+                    >
+                      Terpasang
+                    </span>
+                  ) : deferredPrompt ? (
+                    <button
+                      type="button"
+                      className="menuscreen-btn-action"
+                      style={{
+                        background: 'linear-gradient(180deg, #22c55e 0%, #16a34a 100%)',
+                        borderColor: '#86efac',
+                        boxShadow: '0 5px 0 #15803d',
+                      }}
+                      onClick={handleInstallPwa}
+                    >
+                      Pasang Aplikasi
+                    </button>
+                  ) : (
+                    <span
+                      className="menuscreen-user-tag"
+                      style={{
+                        background: 'linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%)',
+                        borderColor: '#0284c7',
+                        color: '#0369a1',
+                      }}
+                    >
+                      Siap Offline
+                    </span>
+                  )}
                 </div>
 
                 {/* Profil Pengguna */}
