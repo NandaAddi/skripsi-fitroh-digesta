@@ -107,13 +107,6 @@ export const MenuPetunjukScreen: React.FC = () => {
           {/* Slide 2: Petunjuk Interaktif Tombol Aplikasi (Game Aesthetic) */}
           <div className={`petunjuk-slide-pane ${currentSlide === 1 ? 'active' : ''}`}>
             <div className="petunjuk-slide-interactive">
-              <div className="petunjuk-slide2-header">
-                <h2 className="petunjuk-slide2-title">Fungsi Tombol Antarmuka</h2>
-                <p className="petunjuk-slide2-subtitle">
-                  Kenali fungsi tombol navigasi untuk mempermudah pengalaman belajarmu di aplikasi DIGESTA
-                </p>
-              </div>
-
               <div className="petunjuk-button-list">
                 {/* Baris 1: Tombol Pengaturan */}
                 <div className="petunjuk-list-item petunjuk-item-setting">

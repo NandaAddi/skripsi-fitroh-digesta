@@ -4,7 +4,6 @@ import { useAuth } from '../../context/AuthContext';
 import { quizService, type TestType } from '../../services/quizService';
 import bgImg from '../../assets/kuis-screen/bg-kuis-screen.webp';
 import btnRight from '../../assets/kuis-screen/button-right.webp';
-import btnHome from '../../assets/menu-materi-gangguan-pencernaan-screen/button-home.webp';
 
 // Aset Soal 1
 import soal1Img from '../../assets/kuis-screen/soal-1/soal.webp';
@@ -950,8 +949,6 @@ export const MenuKuisScreen: React.FC = () => {
       } else if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         handleSubmit();
-      } else if (e.key === 'Escape') {
-        handleGoHome();
       }
     };
 
@@ -994,17 +991,6 @@ export const MenuKuisScreen: React.FC = () => {
           className="kuis-bg"
           draggable={false}
         />
-
-        {/* Tombol Beranda (Kembali ke Menu) */}
-        <button
-          type="button"
-          className="kuis-ctrl-btn kuis-btn-home"
-          onClick={handleGoHome}
-          title="Kembali ke Menu Utama"
-          aria-label="Kembali ke Menu Utama"
-        >
-          <img src={btnHome} alt="Beranda" className="kuis-ctrl-img" draggable={false} />
-        </button>
 
         {/* Badge Tipe Kuis di Header (PRE-TEST / POST-TEST) */}
         <div className={`kuis-test-type-badge ${testType === 'pre_test' ? 'badge-pretest' : 'badge-posttest'}`}>

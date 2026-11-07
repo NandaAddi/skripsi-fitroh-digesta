@@ -78,14 +78,6 @@
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
 }
 
-/* Posisi Tombol Beranda (Pojok Kiri Atas - Aman di dalam panggung) */
-.kuis-btn-home {
-  top: 3.2%;
-  left: 2.5%;
-  width: 7%;
-  aspect-ratio: 1;
-}
-
 /* Badge Indikator Progres Soal Kuis (Pojok Kanan Atas) */
 .kuis-progress-badge {
   position: absolute;
@@ -959,11 +951,11 @@
   }
 }
 
-/* Badge Tipe Kuis (PRE-TEST / POST-TEST) di Header Samping Home */
+/* Badge Tipe Kuis (PRE-TEST / POST-TEST) di Pojok Kiri Atas */
 .kuis-test-type-badge {
   position: absolute;
   top: 3.2%;
-  left: 10.5%;
+  left: 2.5%;
   border-radius: 999px;
   padding: clamp(6px, 0.7cqw, 12px) clamp(16px, 1.8cqw, 28px);
   display: flex;
