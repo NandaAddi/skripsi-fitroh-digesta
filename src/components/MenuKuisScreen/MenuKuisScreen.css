@@ -959,40 +959,39 @@
   }
 }
 
-/* Tombol Piala Leaderboard di Header Kuis */
-.kuis-btn-trophy {
+/* Badge Tipe Kuis (PRE-TEST / POST-TEST) di Header Samping Home */
+.kuis-test-type-badge {
   position: absolute;
   top: 3.2%;
   left: 10.5%;
-  width: clamp(40px, 4.4cqw, 62px);
-  height: clamp(40px, 4.4cqw, 62px);
-  border-radius: 50%;
-  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
-  border: clamp(3px, 0.3cqw, 4.5px) solid #d97706;
-  box-shadow: 0 clamp(3.5px, 0.35cqw, 5.5px) 0 #b45309, 0 6px 14px rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+  padding: clamp(6px, 0.7cqw, 12px) clamp(16px, 1.8cqw, 28px);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  cursor: pointer;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(13px, 1.4cqw, 20px);
+  letter-spacing: 1px;
   z-index: 30;
-  transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.14s ease;
-  outline: none;
+  user-select: none;
+  min-height: clamp(38px, 4.2cqw, 58px);
 }
 
-.kuis-btn-trophy:hover {
-  transform: translateY(-2px) scale(1.08);
-  filter: brightness(1.08);
+.kuis-test-type-badge.badge-pretest {
+  background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
+  border: clamp(3px, 0.3cqw, 4.5px) solid #7dd3fc;
+  box-shadow: 0 clamp(3.5px, 0.35cqw, 5px) 0 #075985, 0 6px 14px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
-.kuis-btn-trophy:active {
-  transform: translateY(2px) scale(0.95);
-  box-shadow: 0 1px 0 #b45309;
-}
-
-.kuis-btn-trophy-svg {
-  width: 58%;
-  height: 58%;
+.kuis-test-type-badge.badge-posttest {
+  background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+  border: clamp(3px, 0.3cqw, 4.5px) solid #fef08a;
+  box-shadow: 0 clamp(3.5px, 0.35cqw, 5px) 0 #78350f, 0 6px 14px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 /* Badge Durasi Pengerjaan di Modal Akhir */
@@ -1008,7 +1007,7 @@
   color: #475569;
 }
 
-/* Tindakan Modal Hasil Akhir (3 Tombol Responsif) */
+/* Tindakan Modal Hasil Akhir */
 .kuis-modal-actions.final-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1018,22 +1017,18 @@
 }
 
 .kuis-modal-actions.final-actions .kuis-action-btn {
-  flex: 1 1 auto;
-  min-width: clamp(140px, 16cqw, 200px);
-  max-width: clamp(200px, 24cqw, 280px);
-  font-size: clamp(16px, 1.6cqw, 22px);
-  padding: clamp(10px, 1.1cqw, 15px) clamp(16px, 1.8cqw, 28px);
+  min-width: clamp(200px, 24cqw, 320px);
+  font-size: clamp(17px, 1.7cqw, 24px);
+  padding: clamp(12px, 1.3cqw, 18px) clamp(24px, 2.4cqw, 40px);
 }
 
-/* Tombol Buka Leaderboard (Kuning Emas 3D) */
-.kuis-btn-leaderboard-action {
-  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
-  color: #ffffff;
-  border: clamp(3.5px, 0.35cqw, 5px) solid #d97706;
-  box-shadow: 0 clamp(4px, 0.4cqw, 6px) 0 #b45309, 0 8px 18px rgba(0, 0, 0, 0.25);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-}
-
-.kuis-btn-leaderboard-action:active {
-  box-shadow: 0 1px 0 #b45309;
+.kuis-locked-notice {
+  margin: 12px 0 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(12px, 1.15cqw, 15px);
+  color: #64748b;
+  font-weight: 600;
+  text-align: center;
+  max-width: 480px;
+  line-height: 1.35;
 }

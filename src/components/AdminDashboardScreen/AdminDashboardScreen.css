@@ -331,6 +331,175 @@
   box-sizing: border-box;
 }
 
+/* -------------------------------------------------------------------------- */
+/* 2.5 QUIZ CONTROL PANEL (BUKA/KUNCI KUIS PRE & POST)                        */
+/* -------------------------------------------------------------------------- */
+
+.admin-quiz-control-panel {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 3.5px solid #334155;
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 6px 0 #0f172a, 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.admin-control-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-control-title-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-control-icon {
+  width: 32px;
+  height: 32px;
+  color: #fbbf24;
+  flex-shrink: 0;
+}
+
+.admin-control-title {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.admin-control-subtitle {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 2px 0 0;
+}
+
+.admin-switches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.admin-switch-card {
+  background: #0f172a;
+  border: 2.5px solid #334155;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.admin-switch-card.card-is-open {
+  border-color: #10b981;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, #0f172a 100%);
+}
+
+.admin-switch-card.card-is-locked {
+  border-color: #ef4444;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, #0f172a 100%);
+}
+
+.switch-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.switch-card-badge {
+  align-self: flex-start;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.switch-card-badge.tag-pre {
+  background: #38bdf8;
+  color: #0c4a6e;
+}
+
+.switch-card-badge.tag-post {
+  background: #fbbf24;
+  color: #78350f;
+}
+
+.switch-card-name {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.switch-card-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.admin-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 3px solid;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.admin-toggle-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.admin-toggle-btn:active:not(:disabled) {
+  transform: translateY(2px);
+}
+
+.admin-toggle-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-toggle-btn.is-open {
+  background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
+  border-color: #059669;
+  box-shadow: 0 4px 0 #047857;
+  color: #ffffff;
+}
+
+.admin-toggle-btn.is-closed {
+  background: linear-gradient(180deg, #f87171 0%, #ef4444 100%);
+  border-color: #dc2626;
+  box-shadow: 0 4px 0 #b91c1c;
+  color: #ffffff;
+}
+
+.toggle-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
 .admin-kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -409,6 +578,15 @@
 .admin-kpi-card.card-blue .kpi-icon-slot {
   background: #e0f2fe;
   color: #0284c7;
+}
+
+.admin-kpi-card.card-cyan {
+  border: 3.5px solid #06b6d4;
+  box-shadow: 0 5px 0 #0891b2;
+}
+.admin-kpi-card.card-cyan .kpi-icon-slot {
+  background: #cffafe;
+  color: #0891b2;
 }
 
 .admin-kpi-card.card-amber {
@@ -664,6 +842,81 @@
 
 .admin-score-text.score-failed {
   color: #e11d48;
+}
+
+.test-score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.score-val-pre {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: #0284c7;
+}
+
+.score-val-post {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.score-val-post.text-passed {
+  color: #059669;
+}
+
+.score-val-post.text-failed {
+  color: #e11d48;
+}
+
+.score-sub-time {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.test-not-yet {
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.admin-gain-pill {
+  display: inline-block;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  padding: 4px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.admin-gain-pill.gain-positive {
+  background: #d1fae5;
+  color: #047857;
+  border: 1.5px solid #6ee7b7;
+}
+
+.admin-gain-pill.gain-neutral {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1.5px solid #cbd5e1;
+}
+
+.admin-gain-pill.gain-negative {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1.5px solid #fca5a5;
+}
+
+.admin-gain-pill.gain-pending {
+  background: transparent;
+  color: #94a3b8;
+  font-weight: 700;
 }
 
 .admin-kkm-pill {

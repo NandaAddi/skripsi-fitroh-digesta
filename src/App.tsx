@@ -13,8 +13,8 @@ import MenuMateriGangguanScreen from './components/MenuMateriGangguanScreen/Menu
 import MenuPengantarScreen from './components/MenuPengantarScreen/MenuPengantarScreen';
 import MenuPetunjukScreen from './components/MenuPetunjukScreen/MenuPetunjukScreen';
 import Menu3DScreen from './components/Menu3DScreen/Menu3DScreen';
+import MenuPilihanKuisScreen from './components/MenuPilihanKuisScreen/MenuPilihanKuisScreen';
 import MenuKuisScreen from './components/MenuKuisScreen/MenuKuisScreen';
-import MenuLeaderboardScreen from './components/MenuLeaderboardScreen/MenuLeaderboardScreen';
 import AdminDashboardScreen from './components/AdminDashboardScreen/AdminDashboardScreen';
 import NotFoundScreen from './components/NotFound/NotFoundScreen';
 import AssetPreloader from './components/AssetPreloader/AssetPreloader';
@@ -144,9 +144,19 @@ function App() {
               }
             />
 
-            {/* Halaman Khusus Menu Kuis Interaktif */}
+            {/* Halaman Pemilihan Kuis (Pre-Test & Post-Test) */}
             <Route
               path="/menu/kuis"
+              element={
+                <ProtectedRoute>
+                  <MenuPilihanKuisScreen />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Halaman Ruang Pengerjaan Kuis */}
+            <Route
+              path="/menu/kuis/play"
               element={
                 <ProtectedRoute>
                   <MenuKuisScreen />
@@ -164,21 +174,11 @@ function App() {
               }
             />
 
-            {/* Halaman Khusus Papan Peringkat (Leaderboard) */}
-            <Route
-              path="/menu/leaderboard"
-              element={
-                <ProtectedRoute>
-                  <MenuLeaderboardScreen />
-                </ProtectedRoute>
-              }
-            />
-
             {/* Alias kemudahan akses rute */}
             <Route path="/pengantar" element={<Navigate to="/menu/pengantar" replace />} />
             <Route path="/petunjuk" element={<Navigate to="/menu/petunjuk" replace />} />
-            <Route path="/leaderboard" element={<Navigate to="/menu/leaderboard" replace />} />
-            <Route path="/peringkat" element={<Navigate to="/menu/leaderboard" replace />} />
+            <Route path="/leaderboard" element={<Navigate to="/menu/kuis" replace />} />
+            <Route path="/peringkat" element={<Navigate to="/menu/kuis" replace />} />
             <Route path="/materi" element={<Navigate to="/menu/materi" replace />} />
             <Route path="/proses" element={<Navigate to="/menu/materi/proses" replace />} />
             <Route path="/materi/proses" element={<Navigate to="/menu/materi/proses" replace />} />

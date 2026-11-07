@@ -1,17 +1,19 @@
 /**
  * DIGESTA - Admin & Teacher Management Service
  * 
- * Mengelola autentikasi sesi Guru/Admin (PIN), pengambilan rekap data kuis,
- * penghitungan statistik kelas (KKM), penghapusan data, dan ekspor CSV/Excel.
+ * Mengelola autentikasi sesi Guru/Admin (PIN), rekapitulasi evaluasi Pre-Test & Post-Test,
+ * perbandingan peningkatan hasil belajar (Gain), penghapusan data, dan ekspor CSV/Excel.
  */
 
 import { supabase } from './supabaseClient';
+import type { TestType } from './quizService';
 
-export interface QuizScoreRow {
+export interface RawQuizScoreRow {
   id: string;
   studentId?: string;
   studentName: string;
   attendanceNumber: number;
+  testType: TestType;
   score: number;
   correctCount: number;
   totalQuestions: number;
@@ -19,15 +21,32 @@ export interface QuizScoreRow {
   createdAt: string;
 }
 
+export interface StudentEvaluationRow {
+  studentKey: string;
+  studentName: string;
+  attendanceNumber: number;
+  preTestId?: string;
+  preTestScore: number | null;
+  preTestDuration: number | null;
+  preTestDate?: string;
+  postTestId?: string;
+  postTestScore: number | null;
+  postTestDuration: number | null;
+  postTestDate?: string;
+  gain: number | null; // Nilai Post-Test - Pre-Test
+  lastDate: string;
+}
+
 export interface ClassStatistics {
-  totalAttempts: number;
   totalStudents: number;
-  averageScore: number;
+  avgPreScore: number;
+  avgPostScore: number;
+  avgGain: number;
   highestScore: number;
   lowestScore: number;
   passedCount: number;
   failedCount: number;
-  passingRate: number; // Persentase 0-100%
+  passingRate: number; // Persentase kelulusan KKM Post-Test (0-100%)
 }
 
 const ADMIN_SESSION_KEY = 'digesta_admin_authenticated';
@@ -70,9 +89,9 @@ export const adminService = {
   },
 
   /**
-   * Mengambil seluruh rekaman nilai kuis siswa dari Supabase (atau fallback lokal)
+   * Mengambil seluruh rekaman mentah nilai kuis dari Supabase (atau fallback lokal)
    */
-  async getAllScores(): Promise<QuizScoreRow[]> {
+  async getRawScores(): Promise<RawQuizScoreRow[]> {
     if (supabase) {
       try {
         const { data, error } = await supabase
@@ -86,6 +105,7 @@ export const adminService = {
             studentId: item.student_id,
             studentName: item.student_name,
             attendanceNumber: Number(item.attendance_number),
+            testType: (item.test_type as TestType) || 'post_test',
             score: Number(item.score),
             correctCount: Number(item.correct_count),
             totalQuestions: Number(item.total_questions),
@@ -102,7 +122,7 @@ export const adminService = {
     try {
       const localStr = localStorage.getItem(LOCAL_SCORES_KEY);
       if (localStr) {
-        const parsed: QuizScoreRow[] = JSON.parse(localStr);
+        const parsed: RawQuizScoreRow[] = JSON.parse(localStr);
         return parsed.sort(
           (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
@@ -115,15 +135,75 @@ export const adminService = {
   },
 
   /**
-   * Menghapus 1 baris rekaman nilai kuis berdasarkan ID
+   * Menggabungkan rekaman nilai siswa menjadi 1 Baris per Siswa
+   * bersanding antara Pre-Test dan Post-Test dengan kalkulasi Peningkatan Nilai (Gain).
    */
-  async deleteScore(id: string): Promise<{ success: boolean; error: string | null }> {
+  async getStudentEvaluations(): Promise<StudentEvaluationRow[]> {
+    const rawList = await this.getRawScores();
+    const studentMap = new Map<string, StudentEvaluationRow>();
+
+    for (const item of rawList) {
+      const studentKey = `${item.studentName.toUpperCase()}_${item.attendanceNumber}`;
+      let row = studentMap.get(studentKey);
+
+      if (!row) {
+        row = {
+          studentKey,
+          studentName: item.studentName,
+          attendanceNumber: item.attendanceNumber,
+          preTestScore: null,
+          preTestDuration: null,
+          postTestScore: null,
+          postTestDuration: null,
+          gain: null,
+          lastDate: item.createdAt,
+        };
+        studentMap.set(studentKey, row);
+      }
+
+      if (item.testType === 'pre_test') {
+        row.preTestId = item.id;
+        row.preTestScore = item.score;
+        row.preTestDuration = item.durationSeconds;
+        row.preTestDate = item.createdAt;
+      } else {
+        row.postTestId = item.id;
+        row.postTestScore = item.score;
+        row.postTestDuration = item.durationSeconds;
+        row.postTestDate = item.createdAt;
+      }
+
+      // Hitung selisih peningkatan nilai jika keduanya ada
+      if (row.postTestScore !== null && row.preTestScore !== null) {
+        row.gain = row.postTestScore - row.preTestScore;
+      }
+
+      // Update tanggal terbaru
+      if (new Date(item.createdAt) > new Date(row.lastDate)) {
+        row.lastDate = item.createdAt;
+      }
+    }
+
+    // Urutkan berdasarkan nomor absen siswa (1, 2, 3...)
+    return Array.from(studentMap.values()).sort(
+      (a, b) => a.attendanceNumber - b.attendanceNumber
+    );
+  },
+
+  /**
+   * Menghapus seluruh rekaman nilai (Pre-Test & Post-Test) seorang siswa
+   */
+  async deleteStudentScores(studentName: string, attendanceNumber: number): Promise<{ success: boolean; error: string | null }> {
+    const cleanName = studentName.trim().toUpperCase();
+
     // Hapus dari localStorage
     try {
       const localStr = localStorage.getItem(LOCAL_SCORES_KEY);
       if (localStr) {
-        const parsed: QuizScoreRow[] = JSON.parse(localStr);
-        const filtered = parsed.filter((item) => item.id !== id);
+        const parsed: RawQuizScoreRow[] = JSON.parse(localStr);
+        const filtered = parsed.filter(
+          (item) => !(item.studentName.toUpperCase() === cleanName && item.attendanceNumber === attendanceNumber)
+        );
         localStorage.setItem(LOCAL_SCORES_KEY, JSON.stringify(filtered));
       }
     } catch {
@@ -133,7 +213,12 @@ export const adminService = {
     // Hapus dari Supabase jika terhubung
     if (supabase) {
       try {
-        const { error } = await supabase.from('quiz_scores').delete().eq('id', id);
+        const { error } = await supabase
+          .from('quiz_scores')
+          .delete()
+          .eq('student_name', cleanName)
+          .eq('attendance_number', attendanceNumber);
+
         if (error) {
           return { success: false, error: error.message };
         }
@@ -177,14 +262,15 @@ export const adminService = {
   },
 
   /**
-   * Menghitung ringkasan statistik kelas (KKM 75 standar)
+   * Menghitung ringkasan statistik kelas evaluasi belajar
    */
-  computeStatistics(scores: QuizScoreRow[], kkm = 75): ClassStatistics {
-    if (scores.length === 0) {
+  computeStatistics(rows: StudentEvaluationRow[], kkm = 75): ClassStatistics {
+    if (rows.length === 0) {
       return {
-        totalAttempts: 0,
         totalStudents: 0,
-        averageScore: 0,
+        avgPreScore: 0,
+        avgPostScore: 0,
+        avgGain: 0,
         highestScore: 0,
         lowestScore: 0,
         passedCount: 0,
@@ -193,79 +279,94 @@ export const adminService = {
       };
     }
 
-    const uniqueStudents = new Set(
-      scores.map((s) => `${s.studentName.toLowerCase()}_${s.attendanceNumber}`)
-    );
-    const scoreValues = scores.map((s) => s.score);
-    const sumScore = scoreValues.reduce((a, b) => a + b, 0);
-    const avg = Math.round(sumScore / scores.length);
-    const max = Math.max(...scoreValues);
-    const min = Math.min(...scoreValues);
+    const preScores = rows.map((r) => r.preTestScore).filter((s): s is number => s !== null);
+    const postScores = rows.map((r) => r.postTestScore).filter((s): s is number => s !== null);
+    const gains = rows.map((r) => r.gain).filter((g): g is number => g !== null);
 
-    const passed = scores.filter((s) => s.score >= kkm).length;
-    const failed = scores.length - passed;
-    const rate = Math.round((passed / scores.length) * 100);
+    const avgPre = preScores.length > 0 ? Math.round(preScores.reduce((a, b) => a + b, 0) / preScores.length) : 0;
+    const avgPost = postScores.length > 0 ? Math.round(postScores.reduce((a, b) => a + b, 0) / postScores.length) : 0;
+    const avgGain = gains.length > 0 ? Math.round((gains.reduce((a, b) => a + b, 0) / gains.length) * 10) / 10 : 0;
+
+    const allScores = [...preScores, ...postScores];
+    const maxScore = allScores.length > 0 ? Math.max(...allScores) : 0;
+    const minScore = allScores.length > 0 ? Math.min(...allScores) : 0;
+
+    // Kelulusan dihitung berdasarkan Post-Test
+    const passed = postScores.filter((s) => s >= kkm).length;
+    const failed = postScores.length - passed;
+    const passingRate = postScores.length > 0 ? Math.round((passed / postScores.length) * 100) : 0;
 
     return {
-      totalAttempts: scores.length,
-      totalStudents: uniqueStudents.size,
-      averageScore: avg,
-      highestScore: max,
-      lowestScore: min,
+      totalStudents: rows.length,
+      avgPreScore: avgPre,
+      avgPostScore: avgPost,
+      avgGain,
+      highestScore: maxScore,
+      lowestScore: minScore,
       passedCount: passed,
       failedCount: failed,
-      passingRate: rate,
+      passingRate,
     };
   },
 
   /**
    * Mengekspor rekaman nilai siswa ke berkas CSV yang kompatibel langsung dengan Microsoft Excel
    */
-  exportScoresToCsv(scores: QuizScoreRow[], kkm = 75): void {
-    if (scores.length === 0) return;
+  exportScoresToCsv(rows: StudentEvaluationRow[], kkm = 75): void {
+    if (rows.length === 0) return;
 
     // Header CSV
     const headers = [
       'No',
-      'Nama Siswa',
       'Nomor Absen',
-      'Nilai Akhir',
-      'Jumlah Benar',
-      'Total Soal',
-      'Durasi Pengerjaan',
-      'Status KKM (>= ' + kkm + ')',
-      'Tanggal & Waktu',
+      'Nama Siswa',
+      'Nilai Pre-Test',
+      'Durasi Pre-Test',
+      'Nilai Post-Test',
+      'Durasi Post-Test',
+      'Peningkatan Nilai (Gain)',
+      'Status KKM Post-Test (>= ' + kkm + ')',
+      'Tanggal Terakhir',
     ];
 
-    const rows = scores.map((row, index) => {
-      const isPassed = row.score >= kkm ? 'Tuntas' : 'Belum Tuntas';
-      const durationStr = this.formatDuration(row.durationSeconds);
-      const dateStr = new Date(row.createdAt).toLocaleString('id-ID', {
+    const csvRows = rows.map((row, index) => {
+      const preStr = row.preTestScore !== null ? `${row.preTestScore}` : '-';
+      const preDurStr = row.preTestDuration !== null ? this.formatDuration(row.preTestDuration) : '-';
+      const postStr = row.postTestScore !== null ? `${row.postTestScore}` : '-';
+      const postDurStr = row.postTestDuration !== null ? this.formatDuration(row.postTestDuration) : '-';
+      const gainStr = row.gain !== null ? (row.gain > 0 ? `+${row.gain}` : `${row.gain}`) : '-';
+      const isPassed = row.postTestScore !== null
+        ? row.postTestScore >= kkm
+          ? 'Tuntas'
+          : 'Belum Tuntas'
+        : 'Belum Mengerjakan';
+      const dateStr = new Date(row.lastDate).toLocaleString('id-ID', {
         dateStyle: 'medium',
         timeStyle: 'short',
       });
 
       return [
         (index + 1).toString(),
-        `"${row.studentName.replace(/"/g, '""')}"`,
         row.attendanceNumber.toString(),
-        row.score.toString(),
-        row.correctCount.toString(),
-        row.totalQuestions.toString(),
-        `"${durationStr}"`,
+        `"${row.studentName.replace(/"/g, '""')}"`,
+        `"${preStr}"`,
+        `"${preDurStr}"`,
+        `"${postStr}"`,
+        `"${postDurStr}"`,
+        `"${gainStr}"`,
         `"${isPassed}"`,
         `"${dateStr}"`,
-      ].join(';'); // Gunakan semicolon ';' agar otomatis terbaca kolom rapi di Excel regional Indonesia
+      ].join(';');
     });
 
-    // Tambahkan UTF-8 BOM (\uFEFF) agar Microsoft Excel mengenali aksen & teks dengan benar
-    const csvContent = '\uFEFF' + [headers.join(';'), ...rows].join('\r\n');
+    // Tambahkan UTF-8 BOM (\uFEFF)
+    const csvContent = '\uFEFF' + [headers.join(';'), ...csvRows].join('\r\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     const timestamp = new Date().toISOString().split('T')[0];
-    a.download = `DIGESTA_Rekap_Nilai_Kuis_${timestamp}.csv`;
+    a.download = `DIGESTA_Rekapitulasi_Pre_Post_Test_${timestamp}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

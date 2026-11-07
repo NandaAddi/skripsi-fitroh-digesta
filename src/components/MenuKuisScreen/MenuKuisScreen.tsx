@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { quizService } from '../../services/quizService';
+import { quizService, type TestType } from '../../services/quizService';
 import bgImg from '../../assets/kuis-screen/bg-kuis-screen.webp';
 import btnRight from '../../assets/kuis-screen/button-right.webp';
 import btnHome from '../../assets/menu-materi-gangguan-pencernaan-screen/button-home.webp';
@@ -655,6 +655,8 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
 
 export const MenuKuisScreen: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const testType: TestType = (searchParams.get('type') as TestType) === 'post_test' ? 'post_test' : 'pre_test';
   const { user } = useAuth();
   const [soundEnabled] = useState(() => isSoundEnabled());
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -675,6 +677,40 @@ export const MenuKuisScreen: React.FC = () => {
   useEffect(() => {
     quizStartTimeRef.current = Date.now();
   }, []);
+
+  // Proteksi Akses: Pastikan kuis dibuka guru dan belum pernah diselesaikan siswa (soal tidak bisa diulang)
+  useEffect(() => {
+    let isMounted = true;
+    const checkAccess = async () => {
+      try {
+        const [settings, status] = await Promise.all([
+          quizService.getQuizSettings(),
+          quizService.getStudentQuizStatus(user?.fullName || '', user?.attendanceNumber),
+        ]);
+
+        if (!isMounted) return;
+
+        if (testType === 'pre_test') {
+          if (!settings.preTestOpen || status.preTestCompleted) {
+            navigate('/menu/kuis', { replace: true });
+            return;
+          }
+        } else {
+          if (!settings.postTestOpen || status.postTestCompleted) {
+            navigate('/menu/kuis', { replace: true });
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('[DIGESTA Quiz] Gagal memeriksa status akses kuis:', err);
+      }
+    };
+
+    checkAccess();
+    return () => {
+      isMounted = false;
+    };
+  }, [navigate, testType, user]);
 
   const currentQ = QUIZ_QUESTIONS[currentIndex];
   const currentSelectedAnswer = selectedAnswers[currentIndex] ?? null;
@@ -855,6 +891,7 @@ export const MenuKuisScreen: React.FC = () => {
           studentId: user?.id,
           studentName: user?.fullName || 'Siswa DIGESTA',
           attendanceNumber: user?.attendanceNumber,
+          testType,
           score: finalScore,
           correctCount: finalCorrectCount,
           totalQuestions: QUIZ_QUESTIONS.length,
@@ -868,28 +905,13 @@ export const MenuKuisScreen: React.FC = () => {
     }
   };
 
-  const handleRetryQuiz = () => {
-    playSound('pop');
-    if (videoRef.current) {
-      videoRef.current.pause();
-    }
-    stopVoiceAudio();
-    setShowFinalModal(false);
-    setShowResultModal(false);
-    setCurrentIndex(0);
-    setSelectedAnswers({});
-    setSubmittedAnswers({});
-    setQuizDurationSeconds(0);
-    quizStartTimeRef.current = Date.now();
-  };
-
   const handleGoHome = () => {
     playSound('pop');
     if (videoRef.current) {
       videoRef.current.pause();
     }
     stopVoiceAudio();
-    navigate('/menu');
+    navigate('/menu/kuis');
   };
 
   // Navigasi keyboard interaktif (A, B, C, D, 1, 2, 3, 4, Enter, Escape)
@@ -984,33 +1006,10 @@ export const MenuKuisScreen: React.FC = () => {
           <img src={btnHome} alt="Beranda" className="kuis-ctrl-img" draggable={false} />
         </button>
 
-        {/* Tombol Papan Peringkat / Trophy di Header */}
-        <button
-          type="button"
-          className="kuis-btn-trophy"
-          onClick={() => {
-            playSound('chime');
-            navigate('/menu/leaderboard');
-          }}
-          title="Buka Halaman Papan Peringkat Kuis"
-          aria-label="Buka Papan Peringkat"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            className="kuis-btn-trophy-svg"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-            <path d="M4 22h16" />
-            <path d="M10 14.66V17c0 .55-.45 1-1 1H8c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1h-1c-.55 0-1-.45-1-1v-2.34" />
-            <path d="M6 4h12a2 2 0 0 1 2 2v3a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V6a2 2 0 0 1 2-2Z" />
-          </svg>
-        </button>
+        {/* Badge Tipe Kuis di Header (PRE-TEST / POST-TEST) */}
+        <div className={`kuis-test-type-badge ${testType === 'pre_test' ? 'badge-pretest' : 'badge-posttest'}`}>
+          <span>{testType === 'pre_test' ? 'PRE-TEST' : 'POST-TEST'}</span>
+        </div>
 
         {/* Badge Progres Soal Kuis (Pojok Kanan Atas) */}
         <div
@@ -1278,7 +1277,7 @@ export const MenuKuisScreen: React.FC = () => {
             >
               {/* Badge Plat Judul Timbul */}
               <div className="kuis-plate-badge">
-                <span>HASIL AKHIR KUIS</span>
+                <span>{testType === 'pre_test' ? 'HASIL EVALUASI PRE-TEST' : 'HASIL EVALUASI POST-TEST'}</span>
               </div>
 
               {/* Ikon Piala Emas Game */}
@@ -1326,33 +1325,20 @@ export const MenuKuisScreen: React.FC = () => {
               {/* Ulasan Hasil */}
               <p className="kuis-result-explanation">{finalFeedback}</p>
 
-              {/* Tombol Aksi 3D */}
+              {/* Tombol Aksi 3D (Soal Terkunci & Tidak Bisa Diulang) */}
               <div className="kuis-modal-actions final-actions">
-                <button
-                  type="button"
-                  className="kuis-action-btn kuis-btn-leaderboard-action"
-                  onClick={() => {
-                    playSound('chime');
-                    navigate('/menu/leaderboard');
-                  }}
-                >
-                  Peringkat
-                </button>
-                <button
-                  type="button"
-                  className="kuis-action-btn kuis-btn-retry"
-                  onClick={handleRetryQuiz}
-                >
-                  Coba Lagi
-                </button>
                 <button
                   type="button"
                   className="kuis-action-btn kuis-btn-menu"
                   onClick={handleGoHome}
                 >
-                  Menu Utama
+                  Kembali ke Menu Kuis
                 </button>
               </div>
+
+              <p className="kuis-locked-notice">
+                Jawaban dan nilai telah tersimpan. Soal evaluasi ini telah terkunci dan tidak dapat diulang.
+              </p>
             </div>
           </div>
         )}

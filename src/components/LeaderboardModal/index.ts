@@ -1,1 +1,0 @@
-export { LeaderboardModal } from './LeaderboardModal';

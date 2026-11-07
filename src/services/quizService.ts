@@ -1,117 +1,162 @@
 /**
- * Quiz & Leaderboard Service - Supabase Realtime Architecture
+ * Quiz & Evaluation Service - DIGESTA Pre-Test & Post-Test Architecture
  * 
- * Mengelola penyimpanan percobaan kuis, kalkulasi durasi pengerjaan,
- * serta sinkronisasi papan peringkat (leaderboard) secara real-time via Supabase.
- * Dilengkapi fallback lokal otomatis saat offline / backend belum terhubung.
+ * Mengelola penyimpanan percobaan kuis Pre-Test dan Post-Test siswa,
+ * pencegahan pengulangan kuis (kuis terkunci), pengaturan buka/kunci guru,
+ * serta kalkulasi durasi pengerjaan dengan integrasi Supabase dan fallback lokal.
  */
 
 import { supabase } from './supabaseClient';
+
+export type TestType = 'pre_test' | 'post_test';
 
 export interface QuizScoreSubmission {
   studentId?: string;
   studentName: string;
   attendanceNumber?: number | null;
+  testType: TestType;
   score: number;
   correctCount: number;
   totalQuestions: number;
   durationSeconds: number;
 }
 
-export interface LeaderboardEntry {
+export interface QuizScoreRecord {
   id: string;
   studentId?: string;
   studentName: string;
   attendanceNumber: number;
+  testType: TestType;
   score: number;
   correctCount: number;
   totalQuestions: number;
   durationSeconds: number;
   createdAt: string;
-  rank?: number;
+}
+
+export interface QuizSettings {
+  preTestOpen: boolean;
+  postTestOpen: boolean;
+}
+
+export interface StudentQuizStatus {
+  preTestCompleted: boolean;
+  preTestScore: number | null;
+  preTestDuration: number | null;
+  postTestCompleted: boolean;
+  postTestScore: number | null;
+  postTestDuration: number | null;
 }
 
 const LOCAL_SCORES_KEY = 'digesta_quiz_scores_local';
+const LOCAL_SETTINGS_KEY = 'digesta_quiz_settings';
 
-// Data simulasi default bertema edukasi jika database Supabase masih baru/kosong
-const DEFAULT_LEADERBOARD_MOCK: LeaderboardEntry[] = [
-  {
-    id: 'mock-1',
-    studentName: 'Aisyah Putri Maharani',
-    attendanceNumber: 3,
-    score: 100,
-    correctCount: 20,
-    totalQuestions: 20,
-    durationSeconds: 124,
-    createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-    rank: 1,
-  },
-  {
-    id: 'mock-2',
-    studentName: 'Bagas Aditya Pratama',
-    attendanceNumber: 7,
-    score: 95,
-    correctCount: 19,
-    totalQuestions: 20,
-    durationSeconds: 148,
-    createdAt: new Date(Date.now() - 3600000 * 5).toISOString(),
-    rank: 2,
-  },
-  {
-    id: 'mock-3',
-    studentName: 'Citra Dewi Kirana',
-    attendanceNumber: 11,
-    score: 90,
-    correctCount: 18,
-    totalQuestions: 20,
-    durationSeconds: 165,
-    createdAt: new Date(Date.now() - 3600000 * 8).toISOString(),
-    rank: 3,
-  },
-  {
-    id: 'mock-4',
-    studentName: 'Dimas Fajar Nugroho',
-    attendanceNumber: 14,
-    score: 85,
-    correctCount: 17,
-    totalQuestions: 20,
-    durationSeconds: 190,
-    createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
-    rank: 4,
-  },
-  {
-    id: 'mock-5',
-    studentName: 'Elvira Nurhaliza',
-    attendanceNumber: 18,
-    score: 80,
-    correctCount: 16,
-    totalQuestions: 20,
-    durationSeconds: 210,
-    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-    rank: 5,
-  },
-];
+const DEFAULT_SETTINGS: QuizSettings = {
+  preTestOpen: true,
+  postTestOpen: false,
+};
 
 export const quizService = {
   /**
-   * Menyimpan skor hasil kuis siswa ke Supabase (dan fallback localStorage).
-   * Selalu menimpa (upsert / overwrite) rekaman kuis sebelumnya dengan percobaan kuis terbaru.
+   * Mengambil status pengaturan buka/kunci Pre-Test & Post-Test dari Supabase (atau fallback localStorage)
+   */
+  async getQuizSettings(): Promise<QuizSettings> {
+    if (supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('quiz_settings')
+          .select('pre_test_open, post_test_open')
+          .eq('id', 'default')
+          .maybeSingle();
+
+        if (!error && data) {
+          const settings: QuizSettings = {
+            preTestOpen: Boolean(data.pre_test_open),
+            postTestOpen: Boolean(data.post_test_open),
+          };
+          // Sinkronkan ke cache lokal
+          try {
+            localStorage.setItem(LOCAL_SETTINGS_KEY, JSON.stringify(settings));
+          } catch {
+            // Abaikan error localStorage
+          }
+          return settings;
+        }
+      } catch (err) {
+        console.warn('[DIGESTA Quiz] Gagal mengambil quiz_settings dari Supabase:', err);
+      }
+    }
+
+    // Fallback ke localStorage
+    try {
+      const cached = localStorage.getItem(LOCAL_SETTINGS_KEY);
+      if (cached) {
+        return JSON.parse(cached) as QuizSettings;
+      }
+    } catch {
+      // Abaikan error
+    }
+
+    return DEFAULT_SETTINGS;
+  },
+
+  /**
+   * Memperbarui status buka/kunci Pre-Test & Post-Test dari Admin Dashboard
+   */
+  async updateQuizSettings(settings: QuizSettings): Promise<{ success: boolean; error: string | null }> {
+    // Simpan di cache lokal
+    try {
+      localStorage.setItem(LOCAL_SETTINGS_KEY, JSON.stringify(settings));
+    } catch {
+      // Abaikan
+    }
+
+    if (supabase) {
+      try {
+        const { error } = await supabase
+          .from('quiz_settings')
+          .upsert({
+            id: 'default',
+            pre_test_open: settings.preTestOpen,
+            post_test_open: settings.postTestOpen,
+            updated_at: new Date().toISOString(),
+          });
+
+        if (error) {
+          console.warn('[DIGESTA Quiz] Gagal memperbarui quiz_settings di Supabase:', error.message);
+          return { success: false, error: error.message };
+        }
+        return { success: true, error: null };
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Koneksi database gagal';
+        return { success: false, error: msg };
+      }
+    }
+
+    return { success: true, error: null };
+  },
+
+  /**
+   * Menyimpan skor hasil kuis (Pre-Test atau Post-Test) siswa ke Supabase & localStorage.
+   * Setiap siswa hanya memiliki 1 catatan per tipe tes (Pre-Test / Post-Test).
    */
   async submitQuizScore(submission: QuizScoreSubmission): Promise<{ success: boolean; error: string | null }> {
     const studentName = (submission.studentName?.trim() || 'SISWA DIGESTA').toUpperCase();
     const attendanceNumber = submission.attendanceNumber && submission.attendanceNumber > 0
       ? submission.attendanceNumber
       : 1;
+    const testType = submission.testType || 'pre_test';
 
-    // Simpan di fallback lokal (menimpa rekaman lama jika sudah ada)
+    // 1. Simpan di fallback lokal
     try {
       const existingStr = localStorage.getItem(LOCAL_SCORES_KEY);
-      const existing: LeaderboardEntry[] = existingStr ? JSON.parse(existingStr) : [];
-      const newEntry: LeaderboardEntry = {
+      const existing: QuizScoreRecord[] = existingStr ? JSON.parse(existingStr) : [];
+      const newEntry: QuizScoreRecord = {
         id: 'local-' + Date.now(),
         studentId: submission.studentId,
         studentName,
         attendanceNumber,
+        testType,
         score: submission.score,
         correctCount: submission.correctCount,
         totalQuestions: submission.totalQuestions,
@@ -120,8 +165,12 @@ export const quizService = {
       };
 
       const existingIdx = existing.findIndex(
-        (item) => item.studentName.toUpperCase() === studentName && item.attendanceNumber === attendanceNumber
+        (item) =>
+          item.studentName.toUpperCase() === studentName &&
+          item.attendanceNumber === attendanceNumber &&
+          item.testType === testType
       );
+
       if (existingIdx !== -1) {
         existing[existingIdx] = newEntry;
       } else {
@@ -132,16 +181,16 @@ export const quizService = {
       // Abaikan error localStorage
     }
 
-    // Kirim ke Supabase dengan pola UPSERT (menimpa data jika nama & nomor absen sama)
+    // 2. Kirim ke Supabase dengan UPSERT berbasis (student_name, attendance_number, test_type)
     if (supabase) {
       try {
-        // Cek apakah studentId merupakan UUID valid Supabase
         const isUuid = submission.studentId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(submission.studentId);
         
         const payload = {
           student_id: isUuid ? submission.studentId : null,
           student_name: studentName,
           attendance_number: attendanceNumber,
+          test_type: testType,
           score: submission.score,
           correct_count: submission.correctCount,
           total_questions: submission.totalQuestions,
@@ -151,10 +200,10 @@ export const quizService = {
 
         const { error } = await supabase
           .from('quiz_scores')
-          .upsert(payload, { onConflict: 'student_name,attendance_number' });
+          .upsert(payload, { onConflict: 'student_name,attendance_number,test_type' });
 
         if (error) {
-          console.warn('[DIGESTA Supabase Quiz] Gagal menimpa nilai ke Supabase:', error.message);
+          console.warn('[DIGESTA Supabase Quiz] Gagal menyimpan nilai kuis:', error.message);
           return { success: false, error: error.message };
         }
         return { success: true, error: null };
@@ -169,74 +218,92 @@ export const quizService = {
   },
 
   /**
-   * Mengambil data papan peringkat dari tabel view `v_leaderboard` Supabase.
-   * Mengurutkan berdasarkan skor tertinggi, kemudian durasi tercepat.
+   * Memeriksa status penyelesaian kuis Pre-Test dan Post-Test untuk siswa tertentu
    */
-  async getLeaderboard(): Promise<LeaderboardEntry[]> {
-    if (supabase) {
-      try {
-        const { data, error } = await supabase
-          .from('v_leaderboard')
-          .select('*')
-          .limit(20);
+  async getStudentQuizStatus(studentName: string, attendanceNumber?: number | null): Promise<StudentQuizStatus> {
+    const cleanName = (studentName?.trim() || '').toUpperCase();
+    const cleanAttendance = attendanceNumber && attendanceNumber > 0 ? attendanceNumber : null;
 
-        if (!error && data && data.length > 0) {
-          return data.map((item, index) => ({
-            id: item.id || `rank-${index + 1}`,
-            studentId: item.student_id,
-            studentName: item.student_name,
-            attendanceNumber: item.attendance_number,
-            score: Number(item.score),
-            correctCount: Number(item.correct_count),
-            totalQuestions: Number(item.total_questions),
-            durationSeconds: Number(item.duration_seconds),
-            createdAt: item.created_at,
-            rank: index + 1,
-          }));
+    let preScore: number | null = null;
+    let preDuration: number | null = null;
+    let postScore: number | null = null;
+    let postDuration: number | null = null;
+
+    // Coba ambil dari Supabase
+    if (supabase && cleanName) {
+      try {
+        let query = supabase
+          .from('quiz_scores')
+          .select('test_type, score, duration_seconds')
+          .eq('student_name', cleanName);
+
+        if (cleanAttendance !== null) {
+          query = query.eq('attendance_number', cleanAttendance);
+        }
+
+        const { data, error } = await query;
+        if (!error && data) {
+          for (const item of data) {
+            if (item.test_type === 'pre_test') {
+              preScore = Number(item.score);
+              preDuration = Number(item.duration_seconds);
+            } else if (item.test_type === 'post_test') {
+              postScore = Number(item.score);
+              postDuration = Number(item.duration_seconds);
+            }
+          }
+
+          if (preScore !== null || postScore !== null) {
+            return {
+              preTestCompleted: preScore !== null,
+              preTestScore: preScore,
+              preTestDuration: preDuration,
+              postTestCompleted: postScore !== null,
+              postTestScore: postScore,
+              postTestDuration: postDuration,
+            };
+          }
         }
       } catch (err) {
-        console.warn('[DIGESTA Supabase Leaderboard] Gagal mengambil leaderboard Supabase:', err);
+        console.warn('[DIGESTA Quiz] Gagal cek status siswa di Supabase:', err);
       }
     }
 
-    // Fallback: Gabungkan data lokal dengan mock
+    // Fallback cek di localStorage
     try {
       const localStr = localStorage.getItem(LOCAL_SCORES_KEY);
-      const localEntries: LeaderboardEntry[] = localStr ? JSON.parse(localStr) : [];
-
-      const combined = [...localEntries, ...DEFAULT_LEADERBOARD_MOCK];
-
-      // Ambil skor terbaik per siswa unik (studentName + attendanceNumber)
-      const bestMap = new Map<string, LeaderboardEntry>();
-      for (const entry of combined) {
-        const key = `${entry.studentName.toLowerCase()}_${entry.attendanceNumber}`;
-        const existing = bestMap.get(key);
-        if (!existing) {
-          bestMap.set(key, entry);
-        } else if (
-          entry.score > existing.score ||
-          (entry.score === existing.score && entry.durationSeconds < existing.durationSeconds)
-        ) {
-          bestMap.set(key, entry);
+      if (localStr) {
+        const records: QuizScoreRecord[] = JSON.parse(localStr);
+        for (const item of records) {
+          const matchName = item.studentName.toUpperCase() === cleanName;
+          const matchAttendance = cleanAttendance === null || item.attendanceNumber === cleanAttendance;
+          if (matchName && matchAttendance) {
+            if (item.testType === 'pre_test') {
+              preScore = item.score;
+              preDuration = item.durationSeconds;
+            } else if (item.testType === 'post_test') {
+              postScore = item.score;
+              postDuration = item.durationSeconds;
+            }
+          }
         }
       }
-
-      const sorted = Array.from(bestMap.values()).sort((a, b) => {
-        if (b.score !== a.score) return b.score - a.score;
-        return a.durationSeconds - b.durationSeconds;
-      });
-
-      return sorted.slice(0, 15).map((item, index) => ({
-        ...item,
-        rank: index + 1,
-      }));
     } catch {
-      return DEFAULT_LEADERBOARD_MOCK;
+      // Abaikan error
     }
+
+    return {
+      preTestCompleted: preScore !== null,
+      preTestScore: preScore,
+      preTestDuration: preDuration,
+      postTestCompleted: postScore !== null,
+      postTestScore: postScore,
+      postTestDuration: postDuration,
+    };
   },
 
   /**
-   * Format durasi detik menjadi tampilan MM:SS (misal 85 detik -> "01:25")
+   * Format durasi detik menjadi format waktu MM:SS (misal 85 detik -> "01:25")
    */
   formatDuration(seconds: number): string {
     const mins = Math.floor(seconds / 60);

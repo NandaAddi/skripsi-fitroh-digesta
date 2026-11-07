@@ -1,0 +1,521 @@
+/* ==========================================================================
+   DIGESTA - MenuPilihanKuisScreen.css
+   Layar Pemilihan Pre-Test & Post-Test (16:9 Aspect Ratio Locked Stage)
+   Game Cartoon Aesthetic - Tactile 3D Cards & Buttons
+   ========================================================================== */
+
+.pilihan-kuis-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f172a;
+  overflow: hidden;
+  user-select: none;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+}
+
+.pilihan-kuis-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  width: min(100dvw, calc(100dvh * 16 / 9));
+  height: min(100dvh, calc(100dvw * 9 / 16));
+  max-width: 100vw;
+  max-height: 100vh;
+  max-width: 100dvw;
+  max-height: 100dvh;
+  overflow: hidden;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45);
+  background-color: #2b394a;
+  container-type: inline-size;
+}
+
+/* Background Ruang Kelas */
+.pilihan-kuis-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Tombol Home di Pojok Kiri Atas */
+.pilihan-kuis-btn-home {
+  position: absolute;
+  top: 3.2%;
+  left: 2.5%;
+  width: 7%;
+  aspect-ratio: 1;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 20;
+  border-radius: 50%;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+}
+
+.pilihan-kuis-btn-home:hover {
+  transform: scale(1.09);
+  filter: drop-shadow(0 6px 16px rgba(56, 189, 248, 0.4));
+}
+
+.pilihan-kuis-btn-home:active {
+  transform: scale(0.94);
+}
+
+.pilihan-kuis-btn-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* Wadah Papan Tulis Utama */
+.pilihan-kuis-board {
+  position: absolute;
+  top: 9%;
+  bottom: 8%;
+  left: 12%;
+  right: 12%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Header Papan Tulis */
+.pilihan-kuis-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pilihan-kuis-plate-badge {
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+  border: clamp(2.5px, 0.26cqw, 3.5px) solid #fef08a;
+  box-shadow: 0 clamp(3px, 0.35cqw, 5px) 0 #b45309, 0 4px 12px rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
+  padding: clamp(3px, 0.35cqw, 6px) clamp(16px, 1.8cqw, 32px);
+  margin-bottom: clamp(4px, 0.5cqw, 8px);
+}
+
+.pilihan-kuis-plate-badge span {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(11px, 1.15cqw, 16px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: 0 1.5px 0 #78350f;
+}
+
+.pilihan-kuis-title {
+  margin: 0;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(20px, 2.3cqw, 34px);
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 14px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.pilihan-kuis-subtitle {
+  margin: clamp(2px, 0.25cqw, 5px) 0 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(11px, 1.1cqw, 16px);
+  color: #bae6fd;
+  font-weight: 600;
+  text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Toast Alert Notifikasi */
+.pilihan-kuis-toast-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #fee2e2;
+  border: 2px solid #ef4444;
+  color: #991b1b;
+  border-radius: 12px;
+  padding: 6px 14px;
+  font-size: clamp(11px, 1.05cqw, 14px);
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-top: 4px;
+  animation: pilihan-slide-down 0.2s ease;
+}
+
+@keyframes pilihan-slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pilihan-kuis-toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #991b1b;
+  font-size: 14px;
+  font-weight: 900;
+  padding: 0 4px;
+}
+
+/* Grid 2 Kartu Game 3D */
+.pilihan-kuis-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 1.8cqw, 32px);
+  width: 100%;
+  flex: 1;
+  align-items: center;
+  margin-top: clamp(8px, 1cqw, 16px);
+}
+
+/* Kartu Game Item */
+.pilihan-card-item {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: clamp(18px, 2cqw, 28px);
+  padding: clamp(12px, 1.4cqw, 24px) clamp(16px, 1.8cqw, 28px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+  position: relative;
+}
+
+.pilihan-card-pretest {
+  border: clamp(3px, 0.32cqw, 4.5px) solid #38bdf8;
+  box-shadow: 0 clamp(5px, 0.55cqw, 9px) 0 #0284c7, 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.pilihan-card-posttest {
+  border: clamp(3px, 0.32cqw, 4.5px) solid #fbbf24;
+  box-shadow: 0 clamp(5px, 0.55cqw, 9px) 0 #d97706, 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.pilihan-card-item.is-ready:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.03);
+}
+
+.pilihan-card-item.is-locked {
+  opacity: 0.85;
+  background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+  border-color: #94a3b8;
+  box-shadow: 0 clamp(4px, 0.45cqw, 7px) 0 #64748b, 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.pilihan-card-item.is-completed {
+  background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #4ade80;
+  box-shadow: 0 clamp(4px, 0.45cqw, 7px) 0 #16a34a, 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Header Badge Kartu */
+.pilihan-card-badge-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: clamp(6px, 0.8cqw, 12px);
+}
+
+.pilihan-type-tag {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(10px, 0.95cqw, 13px);
+  font-weight: 900;
+  padding: 2px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+
+.tag-pretest {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1.5px solid #7dd3fc;
+}
+
+.tag-posttest {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1.5px solid #fcd34d;
+}
+
+.pilihan-status-pill {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(9.5px, 0.9cqw, 12px);
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+}
+
+.status-ready {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1.5px solid #86efac;
+}
+
+.status-locked {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1.5px solid #cbd5e1;
+}
+
+.status-done {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1.5px solid #86efac;
+}
+
+/* Icon Box */
+.pilihan-card-icon-box {
+  width: clamp(40px, 4.2cqw, 64px);
+  height: clamp(40px, 4.2cqw, 64px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: clamp(6px, 0.7cqw, 10px);
+}
+
+.pilihan-card-pretest .pilihan-card-icon-box {
+  background: #e0f2fe;
+  color: #0284c7;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.pilihan-card-posttest .pilihan-card-icon-box {
+  background: #fef3c7;
+  color: #d97706;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.is-completed .pilihan-card-icon-box {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.pilihan-card-svg {
+  width: 55%;
+  height: 55%;
+}
+
+/* Judul & Deskripsi Kartu */
+.pilihan-card-title {
+  margin: 0;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(15px, 1.6cqw, 24px);
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.pilihan-card-desc {
+  margin: clamp(4px, 0.4cqw, 8px) 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(10.5px, 1.05cqw, 14px);
+  color: #475569;
+  line-height: 1.35;
+  flex: 1;
+}
+
+/* Kotak Meta / Skor */
+.pilihan-card-meta-box {
+  margin: clamp(4px, 0.6cqw, 10px) 0 clamp(8px, 1cqw, 14px);
+  width: 100%;
+}
+
+.pilihan-info-badge {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: clamp(10px, 0.95cqw, 12.5px);
+  font-weight: 700;
+  color: #64748b;
+}
+
+.pilihan-score-badge {
+  background: #ecfdf5;
+  border: 2px solid #86efac;
+  border-radius: 8px;
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pilihan-score-val {
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-size: clamp(16px, 1.6cqw, 22px);
+  font-weight: 900;
+  color: #056632;
+}
+
+.pilihan-score-unit {
+  font-size: clamp(10px, 0.95cqw, 13px);
+  font-weight: 800;
+  color: #16a34a;
+}
+
+/* Tombol Aksi 3D */
+.pilihan-btn-action {
+  width: 100%;
+  padding: clamp(8px, 0.9cqw, 14px) clamp(14px, 1.6cqw, 24px);
+  border-radius: 999px;
+  font-family: 'Fredoka', 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(13px, 1.35cqw, 18px);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+  letter-spacing: 0.3px;
+}
+
+.btn-pretest {
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+  color: #ffffff;
+  border: 3.5px solid #bae6fd;
+  box-shadow: 0 clamp(4px, 0.45cqw, 6px) 0 #0369a1, 0 8px 18px rgba(2, 132, 199, 0.35);
+}
+
+.btn-pretest:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+.btn-pretest:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #0369a1;
+}
+
+.btn-posttest {
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  border: 3.5px solid #fef08a;
+  box-shadow: 0 clamp(4px, 0.45cqw, 6px) 0 #b45309, 0 8px 18px rgba(217, 119, 6, 0.35);
+}
+
+.btn-posttest:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+.btn-posttest:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #b45309;
+}
+
+.btn-disabled {
+  background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
+  color: #f1f5f9;
+  border: 3px solid #cbd5e1;
+  box-shadow: 0 clamp(3px, 0.35cqw, 5px) 0 #475569;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.btn-done {
+  background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+  color: #ffffff;
+  border: 3px solid #86efac;
+  box-shadow: 0 clamp(3px, 0.35cqw, 5px) 0 #15803d;
+  cursor: default;
+}
+
+/* ==========================================================================
+   Adaptasi Responsif Khusus Layar Mobile Lanskap
+   ========================================================================== */
+
+@media (max-height: 560px) {
+  .pilihan-kuis-board {
+    top: 7%;
+    bottom: 6%;
+    left: 10%;
+    right: 10%;
+  }
+
+  .pilihan-kuis-plate-badge {
+    padding: 2px 14px;
+    margin-bottom: 2px;
+  }
+
+  .pilihan-kuis-plate-badge span {
+    font-size: clamp(9px, 2vh, 12px);
+  }
+
+  .pilihan-kuis-title {
+    font-size: clamp(15px, 3.4vh, 22px);
+  }
+
+  .pilihan-kuis-subtitle {
+    font-size: clamp(9.5px, 2vh, 12px);
+    margin-top: 1px;
+  }
+
+  .pilihan-kuis-cards-grid {
+    gap: clamp(10px, 2vw, 18px);
+    margin-top: 6px;
+  }
+
+  .pilihan-card-item {
+    padding: clamp(8px, 1.5vh, 12px) clamp(10px, 1.8vw, 16px);
+    border-radius: 16px;
+  }
+
+  .pilihan-card-icon-box {
+    width: clamp(28px, 6vh, 38px);
+    height: clamp(28px, 6vh, 38px);
+    margin-bottom: 4px;
+  }
+
+  .pilihan-card-title {
+    font-size: clamp(12px, 2.6vh, 16px);
+  }
+
+  .pilihan-card-desc {
+    font-size: clamp(9px, 1.9vh, 11.5px);
+    line-height: 1.22;
+    margin: 2px 0;
+  }
+
+  .pilihan-card-meta-box {
+    margin: 3px 0 6px;
+  }
+
+  .pilihan-score-val {
+    font-size: clamp(14px, 2.8vh, 18px);
+  }
+
+  .pilihan-score-unit {
+    font-size: clamp(9px, 1.8vh, 11px);
+  }
+
+  .pilihan-btn-action {
+    padding: clamp(5px, 1.2vh, 8px) 14px;
+    font-size: clamp(11.5px, 2.4vh, 14px);
+  }
+}
