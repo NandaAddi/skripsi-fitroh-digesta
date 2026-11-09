@@ -1,5 +1,5 @@
 // DIGESTA Progressive Web App Service Worker
-const CACHE_NAME = 'digesta-v1.0.0';
+const CACHE_NAME = 'digesta-v1.0.1';
 
 // Core shell assets to pre-cache on install
 const PRECACHE_ASSETS = [
@@ -68,8 +68,16 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         })
-        .catch(() => {
-          return caches.match('/index.html') || caches.match(request);
+        .catch(async () => {
+          const cached = (await caches.match('/index.html')) || (await caches.match(request));
+          return (
+            cached ||
+            new Response('Offline - DIGESTA', {
+              status: 503,
+              statusText: 'Service Unavailable',
+              headers: { 'Content-Type': 'text/plain' },
+            })
+          );
         })
     );
     return;

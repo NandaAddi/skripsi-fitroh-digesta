@@ -65,6 +65,7 @@ export const Menu3DScreen: React.FC = () => {
 
   const [soundEnabled] = useState(true);
   const [isLoadingIframe, setIsLoadingIframe] = useState(true);
+  const [hasIframeError, setHasIframeError] = useState(false);
 
   // Cari organ aktif dari parameter URL, fallback ke 'mulut'
   const activeOrgan =
@@ -82,6 +83,7 @@ export const Menu3DScreen: React.FC = () => {
   const handleSelectOrgan = (newOrganId: string) => {
     if (newOrganId === activeOrgan.id) return;
     playSound('chime');
+    setHasIframeError(false);
     setIsLoadingIframe(true);
     navigate(`/menu/3d/${newOrganId}`);
   };
@@ -91,8 +93,8 @@ export const Menu3DScreen: React.FC = () => {
     navigate('/menu');
   };
 
-  // URL embed Sketchfab resmi dengan parameter optimal (termasuk ui_infos=0)
-  const embedUrl = `https://sketchfab.com/models/${activeOrgan.modelId}/embed?autostart=1&preload=1&ui_theme=dark&ui_infos=0&ui_watermark=0&ui_hint=2`;
+  // URL embed Sketchfab resmi dengan parameter optimal (dnt=1 untuk matikan tracking/sentry, preload=0 untuk efisiensi memori mobile)
+  const embedUrl = `https://sketchfab.com/models/${activeOrgan.modelId}/embed?autostart=1&preload=0&dnt=1&ui_theme=dark&ui_infos=0&ui_watermark=0&ui_hint=2`;
 
   return (
     <div className="menu-3d-viewport">
@@ -208,10 +210,29 @@ export const Menu3DScreen: React.FC = () => {
 
             {/* Area Embed Iframe Sketchfab */}
             <div className="menu-3d-viewer-wrapper">
-              {isLoadingIframe && (
+              {isLoadingIframe && !hasIframeError && (
                 <div className="menu-3d-loading-overlay">
                   <div className="menu-3d-loading-spinner" />
                   <div className="menu-3d-loading-text">Memuat Model 3D {activeOrgan.name}...</div>
+                </div>
+              )}
+
+              {hasIframeError && (
+                <div className="menu-3d-error-overlay">
+                  <p className="menu-3d-error-title">Gagal Memuat Model 3D</p>
+                  <p className="menu-3d-error-desc">
+                    Koneksi terputus atau peramban perangkat membatasi akselerasi grafis WebGL. Silakan periksa jaringan internet atau tekan tombol di bawah untuk mencoba kembali.
+                  </p>
+                  <button
+                    type="button"
+                    className="menu-3d-retry-btn"
+                    onClick={() => {
+                      setHasIframeError(false);
+                      setIsLoadingIframe(true);
+                    }}
+                  >
+                    Muat Ulang Model 3D
+                  </button>
                 </div>
               )}
 
@@ -221,7 +242,15 @@ export const Menu3DScreen: React.FC = () => {
                 className="menu-3d-iframe"
                 src={embedUrl}
                 allow="autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope; magnetometer"
-                onLoad={() => setIsLoadingIframe(false)}
+                loading="lazy"
+                onLoad={() => {
+                  setIsLoadingIframe(false);
+                  setHasIframeError(false);
+                }}
+                onError={() => {
+                  setIsLoadingIframe(false);
+                  setHasIframeError(true);
+                }}
               />
             </div>
           </div>

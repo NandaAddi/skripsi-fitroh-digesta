@@ -8,6 +8,8 @@ export function registerServiceWorker(): void {
       navigator.serviceWorker
         .register('/sw.js')
         .then((registration) => {
+          // Segera periksa dan terapkan pembaruan Service Worker
+          registration.update().catch(() => {});
           registration.onupdatefound = () => {
             const installingWorker = registration.installing;
             if (installingWorker) {
