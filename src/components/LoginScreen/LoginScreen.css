@@ -152,10 +152,10 @@
 .loginscreen-card-wrapper {
   position: absolute;
   left: 50%;
-  top: 43%;
+  top: 42.5%;
   transform: translateX(-50%);
-  width: min(94%, clamp(540px, 64cqw, 820px));
-  max-height: calc(100% - 20px);
+  width: min(88%, 480px);
+  max-height: calc(100% - 16px);
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -169,13 +169,13 @@
 
 .loginscreen-card {
   background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-  border-radius: clamp(26px, 2.8cqw, 40px);
-  border: clamp(4px, 0.35cqw, 5.5px) solid #38bdf8;
+  border-radius: clamp(20px, 2.4cqw, 32px);
+  border: clamp(3.5px, 0.35cqw, 5px) solid #38bdf8;
   box-shadow: 
-    0 10px 0 #0284c7,
-    0 22px 52px rgba(0, 0, 0, 0.24),
+    0 8px 0 #0284c7,
+    0 18px 45px rgba(0, 0, 0, 0.22),
     inset 0 2px 0 rgba(255, 255, 255, 0.9);
-  padding: clamp(22px, 2.8cqh, 34px) clamp(28px, 3cqw, 48px);
+  padding: clamp(16px, 2.4cqh, 24px) clamp(22px, 2.6cqw, 36px);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -197,7 +197,7 @@
 /* Header Judul Kartu Siswa */
 .loginscreen-card-header {
   text-align: center;
-  margin-bottom: clamp(14px, 1.8cqh, 20px);
+  margin-bottom: clamp(10px, 1.4cqh, 16px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -207,7 +207,7 @@
 .loginscreen-title {
   margin: 0;
   font-family: 'Fredoka', 'Outfit', sans-serif;
-  font-size: clamp(28px, 2.8cqw, 38px);
+  font-size: clamp(24px, 2.4cqw, 32px);
   font-weight: 900;
   color: #0f172a;
   letter-spacing: -0.3px;
@@ -243,7 +243,7 @@
 .loginscreen-form {
   display: flex;
   flex-direction: column;
-  gap: clamp(14px, 1.8cqh, 20px);
+  gap: clamp(10px, 1.4cqh, 16px);
   width: 100%;
   box-sizing: border-box;
 }
@@ -258,7 +258,7 @@
 
 .loginscreen-input-icon {
   position: absolute;
-  left: clamp(18px, 1.6cqw, 24px);
+  left: clamp(16px, 1.5cqw, 20px);
   color: #0284c7;
   pointer-events: none;
   display: flex;
@@ -267,19 +267,19 @@
 }
 
 .loginscreen-input-icon svg {
-  width: clamp(24px, 1.8cqw, 28px);
-  height: clamp(24px, 1.8cqw, 28px);
+  width: clamp(22px, 1.6cqw, 26px);
+  height: clamp(22px, 1.6cqw, 26px);
 }
 
 .loginscreen-input {
   width: 100%;
   font-family: 'Fredoka', 'Outfit', sans-serif;
-  font-size: clamp(18px, 1.7cqw, 23px);
+  font-size: clamp(17px, 1.6cqw, 21px);
   font-weight: 600;
-  padding: clamp(14px, 1.8cqh, 20px) clamp(20px, 1.8cqw, 28px);
-  padding-left: clamp(56px, 4.4cqw, 70px);
-  border-radius: clamp(14px, 1.4cqw, 18px);
-  border: clamp(3px, 0.28cqw, 4px) solid #cbd5e1;
+  padding: clamp(12px, 1.5cqh, 17px) clamp(18px, 1.6cqw, 24px);
+  padding-left: clamp(50px, 4.2cqw, 62px);
+  border-radius: clamp(12px, 1.2cqw, 16px);
+  border: clamp(2.5px, 0.25cqw, 3.5px) solid #cbd5e1;
   background: #ffffff;
   color: #0f172a;
   outline: none;
@@ -339,12 +339,12 @@
 .loginscreen-submit-btn {
   background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
   color: #ffffff;
-  border: clamp(3.5px, 0.32cqw, 4.5px) solid #0369a1;
-  box-shadow: 0 7px 0 #075985, 0 10px 22px rgba(2, 132, 199, 0.38);
+  border: clamp(3px, 0.28cqw, 4px) solid #0369a1;
+  box-shadow: 0 6px 0 #075985, 0 10px 20px rgba(2, 132, 199, 0.35);
   font-family: 'Fredoka', 'Outfit', sans-serif;
   font-weight: 900;
-  font-size: clamp(20px, 1.9cqw, 26px);
-  padding: clamp(15px, 1.9cqh, 22px) 0;
+  font-size: clamp(18.5px, 1.7cqw, 23px);
+  padding: clamp(13px, 1.7cqh, 18px) 0;
   border-radius: 999px;
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
@@ -358,14 +358,14 @@
 }
 
 .loginscreen-submit-btn svg {
-  width: clamp(22px, 1.8cqw, 26px);
-  height: clamp(22px, 1.8cqw, 26px);
+  width: clamp(20px, 1.6cqw, 24px);
+  height: clamp(20px, 1.6cqw, 24px);
 }
 
 .loginscreen-submit-btn:hover:not(:disabled) {
   filter: brightness(1.06);
   transform: translateY(-2px);
-  box-shadow: 0 9px 0 #075985, 0 14px 24px rgba(2, 132, 199, 0.45);
+  box-shadow: 0 8px 0 #075985, 0 12px 22px rgba(2, 132, 199, 0.45);
 }
 
 .loginscreen-submit-btn:active:not(:disabled) {
@@ -379,19 +379,19 @@
 }
 
 .loginscreen-admin-link {
-  margin-top: clamp(10px, 1.3cqh, 16px);
+  margin-top: clamp(8px, 1cqh, 14px);
   background: transparent;
   border: none;
   color: #64748b;
   font-family: 'Fredoka', 'Outfit', sans-serif;
-  font-size: clamp(14px, 1.25cqw, 16px);
+  font-size: clamp(13px, 1.15cqw, 15px);
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 6px;
   cursor: pointer;
-  padding: 7px 14px;
+  padding: 6px 12px;
   border-radius: 8px;
   transition: color 0.12s ease, background 0.12s ease;
   user-select: none;
@@ -418,75 +418,120 @@
    Responsive Adaptations for Compact Stages & Mobile Viewports
    ========================================================================== */
 
-/* Compact Stage Heights (Laptops / Small Screens / Tablets) */
-@container loginstage (max-height: 560px) {
+/* Compact Stage Heights (Mobile Phones in Landscape: max-height: 500px) */
+@container loginstage (max-height: 500px) {
   .loginscreen-illustration {
-    transform: scale(0.84) translateY(-2%);
+    transform: scale(0.9) translateY(-2%);
     transform-origin: top center;
     animation: loginscreen-float-compact 4.5s ease-in-out infinite;
+  }
+
+  .loginscreen-topbar {
+    top: 2%;
+    left: 2%;
+    right: 2%;
+  }
+
+  .loginscreen-btn-round {
+    height: 38px;
+    padding: 0 14px;
+    font-size: 13.5px;
+    border-width: 2.5px;
+    box-shadow: 0 3px 0 #94a3b8;
+  }
+
+  .loginscreen-icon-btn {
+    width: 38px;
+    height: 38px;
+    border-width: 2.5px;
+    box-shadow: 0 3px 0 #94a3b8;
   }
 
   .loginscreen-card-wrapper {
     top: 39%;
     bottom: auto;
     transform: translateX(-50%);
-    width: min(94%, clamp(480px, 66cqw, 660px));
+    width: min(92%, 460px);
   }
 
   .loginscreen-card {
-    padding: clamp(16px, 2.5cqh, 24px) clamp(24px, 2.8cqw, 38px);
-    border-radius: 24px;
-    border-width: 4px;
-    box-shadow: 0 8px 0 #0284c7, 0 16px 36px rgba(0, 0, 0, 0.22);
+    padding: 12px clamp(18px, 2.6cqw, 28px);
+    border-radius: 18px;
+    border-width: 3px;
+    box-shadow: 0 6px 0 #0284c7, 0 12px 24px rgba(0, 0, 0, 0.2);
   }
 
   .loginscreen-card-header {
-    margin-bottom: 12px;
+    margin-bottom: 6px;
   }
 
   .loginscreen-title {
-    font-size: clamp(24px, 2.4cqw, 30px);
+    font-size: 22px;
+  }
+
+  .loginscreen-alert {
+    padding: 6px 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
   }
 
   .loginscreen-form {
-    gap: clamp(11px, 1.5cqh, 16px);
+    gap: 8px;
   }
 
   .loginscreen-input {
-    padding: clamp(12px, 1.6cqh, 16px) 18px;
-    padding-left: clamp(50px, 4.2cqw, 60px);
-    font-size: clamp(17px, 1.6cqw, 21px);
-    border-radius: 14px;
-    border-width: 3px;
+    padding: 9.5px 14px;
+    padding-left: 44px;
+    font-size: 16px;
+    border-radius: 11px;
+    border-width: 2.5px;
+  }
+
+  .loginscreen-input-icon {
+    left: 14px;
   }
 
   .loginscreen-input-icon svg {
-    width: 22px;
-    height: 22px;
+    width: 19px;
+    height: 19px;
   }
 
   .loginscreen-submit-btn {
-    padding: clamp(13px, 1.7cqh, 18px) 0;
-    font-size: clamp(18.5px, 1.7cqw, 23px);
-    box-shadow: 0 6px 0 #075985, 0 8px 18px rgba(2, 132, 199, 0.35);
+    padding: 11px 0;
+    font-size: 17.5px;
+    border-radius: 999px;
+    border-width: 3px;
+    box-shadow: 0 4.5px 0 #075985, 0 6px 14px rgba(2, 132, 199, 0.3);
+    margin-top: 2px;
+  }
+
+  .loginscreen-submit-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .loginscreen-admin-link {
+    margin-top: 4px;
+    font-size: 12px;
+    padding: 3px 8px;
   }
 }
 
 @keyframes loginscreen-float-compact {
   0%, 100% {
-    transform: scale(0.84) translateY(-2%);
+    transform: scale(0.9) translateY(-2%);
   }
   50% {
-    transform: scale(0.84) translateY(-1.2%);
+    transform: scale(0.9) translateY(-1.2%);
   }
 }
 
-/* Ultra Compact Stage Heights (Mobile Phones in Landscape: 360px - 440px) */
-@container loginstage (max-height: 440px) {
+/* Media Query Fallbacks for Mobile / Small Viewports Without Container Queries */
+@media (max-height: 500px) and (min-aspect-ratio: 1/1) {
   .loginscreen-illustration {
-    transform: scale(0.76) translateY(-3%);
+    transform: scale(0.9) translateY(-2%);
     transform-origin: top center;
-    animation: loginscreen-float-tiny 4.5s ease-in-out infinite;
+    animation: loginscreen-float-compact 4.5s ease-in-out infinite;
   }
 
   .loginscreen-topbar {
@@ -508,189 +553,28 @@
     height: 38px;
     border-width: 2.5px;
     box-shadow: 0 3px 0 #94a3b8;
-  }
-
-  .loginscreen-card-wrapper {
-    top: 34%;
-    bottom: auto;
-    transform: translateX(-50%);
-    width: min(94%, clamp(440px, 72cqw, 620px));
-  }
-
-  .loginscreen-card {
-    padding: 13px clamp(18px, 2.8cqw, 28px);
-    border-radius: 20px;
-    border-width: 3.5px;
-    box-shadow: 0 6px 0 #0284c7, 0 14px 28px rgba(0, 0, 0, 0.2);
-  }
-
-  .loginscreen-card-header {
-    margin-bottom: 8px;
-  }
-
-  .loginscreen-title {
-    font-size: 22.5px;
-  }
-
-  .loginscreen-alert {
-    padding: 6px 12px;
-    margin-bottom: 8px;
-    font-size: 13px;
-  }
-
-  .loginscreen-form {
-    gap: 9px;
-  }
-
-  .loginscreen-input {
-    padding: 10.5px 16px;
-    padding-left: 46px;
-    font-size: 16.5px;
-    border-radius: 12px;
-    border-width: 2.5px;
-  }
-
-  .loginscreen-input-icon {
-    left: 15px;
-  }
-
-  .loginscreen-input-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .loginscreen-submit-btn {
-    padding: 12px 0;
-    font-size: 18px;
-    border-radius: 999px;
-    border-width: 3px;
-    box-shadow: 0 5px 0 #075985, 0 8px 16px rgba(2, 132, 199, 0.3);
-    margin-top: 3px;
-  }
-
-  .loginscreen-submit-btn svg {
-    width: 19px;
-    height: 19px;
-  }
-
-  .loginscreen-admin-link {
-    margin-top: 5px;
-    font-size: 12.5px;
-    padding: 4px 10px;
-  }
-}
-
-@keyframes loginscreen-float-tiny {
-  0%, 100% {
-    transform: scale(0.76) translateY(-3%);
-  }
-  50% {
-    transform: scale(0.76) translateY(-1.2%);
-  }
-}
-
-/* Media Query Fallbacks for Mobile / Small Viewports */
-@media (max-height: 560px) and (min-aspect-ratio: 1/1) {
-  .loginscreen-illustration {
-    transform: scale(0.84) translateY(-2%);
-    transform-origin: top center;
-    animation: loginscreen-float-compact 4.5s ease-in-out infinite;
   }
 
   .loginscreen-card-wrapper {
     top: 39%;
     bottom: auto;
     transform: translateX(-50%);
-    width: min(94%, clamp(480px, 66cqw, 660px));
+    width: min(92%, 460px);
   }
 
   .loginscreen-card {
-    padding: clamp(16px, 2.5cqh, 24px) clamp(24px, 2.8cqw, 38px);
-    border-radius: 24px;
-    border-width: 4px;
-    box-shadow: 0 8px 0 #0284c7, 0 16px 36px rgba(0, 0, 0, 0.22);
-  }
-
-  .loginscreen-card-header {
-    margin-bottom: 12px;
-  }
-
-  .loginscreen-title {
-    font-size: clamp(24px, 2.4cqw, 30px);
-  }
-
-  .loginscreen-form {
-    gap: clamp(11px, 1.5cqh, 16px);
-  }
-
-  .loginscreen-input {
-    padding: clamp(12px, 1.6cqh, 16px) 18px;
-    padding-left: clamp(50px, 4.2cqw, 60px);
-    font-size: clamp(17px, 1.6cqw, 21px);
-    border-radius: 14px;
+    padding: 12px clamp(18px, 2.6cqw, 28px);
+    border-radius: 18px;
     border-width: 3px;
-  }
-
-  .loginscreen-input-icon svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .loginscreen-submit-btn {
-    padding: clamp(13px, 1.7cqh, 18px) 0;
-    font-size: clamp(18.5px, 1.7cqw, 23px);
-    box-shadow: 0 6px 0 #075985, 0 8px 18px rgba(2, 132, 199, 0.35);
-  }
-}
-
-@media (max-height: 440px) and (min-aspect-ratio: 1/1) {
-  .loginscreen-illustration {
-    transform: scale(0.76) translateY(-3%);
-    transform-origin: top center;
-    animation: loginscreen-float-tiny 4.5s ease-in-out infinite;
-  }
-
-  .loginscreen-topbar {
-    top: 2%;
-    left: 2%;
-    right: 2%;
-  }
-
-  .loginscreen-btn-round {
-    height: 38px;
-    padding: 0 14px;
-    font-size: 13.5px;
-    border-width: 2.5px;
-    box-shadow: 0 3px 0 #94a3b8;
-  }
-
-  .loginscreen-icon-btn {
-    width: 38px;
-    height: 38px;
-    border-width: 2.5px;
-    box-shadow: 0 3px 0 #94a3b8;
-  }
-
-  .loginscreen-card-wrapper {
-    top: 34%;
-    bottom: auto;
-    transform: translateX(-50%);
-    width: min(94%, clamp(440px, 72cqw, 620px));
-  }
-
-  .loginscreen-card {
-    padding: 13px clamp(18px, 2.8cqw, 28px);
-    border-radius: 20px;
-    border-width: 3.5px;
-    box-shadow: 0 6px 0 #0284c7, 0 14px 28px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 0 #0284c7, 0 12px 24px rgba(0, 0, 0, 0.2);
   }
 
   .loginscreen-card-header {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .loginscreen-title {
-    font-size: 22.5px;
+    font-size: 22px;
   }
 
   .loginscreen-alert {
@@ -700,44 +584,44 @@
   }
 
   .loginscreen-form {
-    gap: 9px;
+    gap: 8px;
   }
 
   .loginscreen-input {
-    padding: 10.5px 16px;
-    padding-left: 46px;
-    font-size: 16.5px;
-    border-radius: 12px;
+    padding: 9.5px 14px;
+    padding-left: 44px;
+    font-size: 16px;
+    border-radius: 11px;
     border-width: 2.5px;
   }
 
   .loginscreen-input-icon {
-    left: 15px;
+    left: 14px;
   }
 
   .loginscreen-input-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .loginscreen-submit-btn {
-    padding: 12px 0;
-    font-size: 18px;
-    border-radius: 999px;
-    border-width: 3px;
-    box-shadow: 0 5px 0 #075985, 0 8px 16px rgba(2, 132, 199, 0.3);
-    margin-top: 3px;
-  }
-
-  .loginscreen-submit-btn svg {
     width: 19px;
     height: 19px;
   }
 
+  .loginscreen-submit-btn {
+    padding: 11px 0;
+    font-size: 17.5px;
+    border-radius: 999px;
+    border-width: 3px;
+    box-shadow: 0 4.5px 0 #075985, 0 6px 14px rgba(2, 132, 199, 0.3);
+    margin-top: 2px;
+  }
+
+  .loginscreen-submit-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
   .loginscreen-admin-link {
-    margin-top: 5px;
-    font-size: 12.5px;
-    padding: 4px 10px;
+    margin-top: 4px;
+    font-size: 12px;
+    padding: 3px 8px;
   }
 }
 
