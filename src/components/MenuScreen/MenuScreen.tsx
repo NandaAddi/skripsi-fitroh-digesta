@@ -289,57 +289,55 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
               </div>
 
               <p className="menuscreen-modal-desc">
-                Apakah kamu ingin keluar dari menu pembelajaran atau berganti akun?
+                Apakah kamu ingin keluar dari menu pembelajaran atau berganti akun siswa?
               </p>
 
               <div className="menuscreen-exit-actions">
-                <div className="menuscreen-exit-options">
-                  <button
-                    type="button"
-                    className="menuscreen-game-btn menuscreen-btn-primary menuscreen-exit-btn"
-                    onClick={() => {
-                      playSound('pop');
-                      setActiveModal(null);
-                      if (onBackToStart) {
-                        onBackToStart();
-                      } else {
-                        navigate('/');
-                      }
-                    }}
-                  >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                    <span>Kembali ke Start</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="menuscreen-game-btn menuscreen-btn-danger menuscreen-exit-btn"
-                    onClick={async () => {
-                      playSound('pop');
-                      setActiveModal(null);
-                      if (onLogout) {
-                        onLogout();
-                      } else {
-                        await logout();
-                        navigate('/login');
-                      }
-                    }}
-                  >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                      <polyline points="16 17 21 12 16 7"></polyline>
-                      <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                    <span>Ganti Akun / Logout</span>
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className="menuscreen-game-btn menuscreen-btn-primary menuscreen-exit-btn"
+                  onClick={() => {
+                    playSound('pop');
+                    setActiveModal(null);
+                    if (onBackToStart) {
+                      onBackToStart();
+                    } else {
+                      navigate('/');
+                    }
+                  }}
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                  <span>Kembali ke Start Screen</span>
+                </button>
 
                 <button
                   type="button"
-                  className="menuscreen-game-btn menuscreen-btn-neutral menuscreen-btn-cancel-exit"
+                  className="menuscreen-game-btn menuscreen-btn-danger menuscreen-exit-btn"
+                  onClick={async () => {
+                    playSound('pop');
+                    setActiveModal(null);
+                    if (onLogout) {
+                      onLogout();
+                    } else {
+                      await logout();
+                      navigate('/login');
+                    }
+                  }}
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  <span>Ganti Akun / Logout</span>
+                </button>
+
+                <button
+                  type="button"
+                  className="menuscreen-game-btn menuscreen-btn-neutral menuscreen-exit-btn"
                   onClick={() => {
                     playSound('soft');
                     setActiveModal(null);
