@@ -220,7 +220,7 @@ export const Menu3DScreen: React.FC = () => {
                 title={`Model 3D ${activeOrgan.name}`}
                 className="menu-3d-iframe"
                 src={embedUrl}
-                allow="autoplay; fullscreen; xr-spatial-tracking"
+                allow="autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope; magnetometer"
                 onLoad={() => setIsLoadingIframe(false)}
               />
             </div>

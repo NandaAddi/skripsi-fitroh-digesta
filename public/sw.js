@@ -51,8 +51,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Never cache external Supabase auth calls
-  if (url.hostname.includes('supabase.co')) {
+  // Only intercept same-origin requests.
+  // Let the browser handle third-party endpoints directly (Cloudflare Insights, Sentry, Supabase API, etc.)
+  if (url.origin !== self.location.origin) {
     return;
   }
 
@@ -98,7 +99,7 @@ self.addEventListener('fetch', (event) => {
           })
           .catch((err) => {
             console.warn('[DIGESTA PWA] Fetch failed for asset:', url.pathname, err);
-            return cachedResponse;
+            return cachedResponse || Response.error();
           });
       })
     );
@@ -116,7 +117,7 @@ self.addEventListener('fetch', (event) => {
           }
           return networkResponse;
         })
-        .catch(() => cachedResponse);
+        .catch(() => cachedResponse || Response.error());
 
       return cachedResponse || fetchPromise;
     })
