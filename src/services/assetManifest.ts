@@ -6,7 +6,6 @@
 
 // Start Screen Assets
 import startBg from '../assets/start-screen/bg-startscreen.webp';
-import startAsset from '../assets/start-screen/asset-startscreen.webp';
 import startBtn from '../assets/start-screen/button-startscreen.webp';
 import teacherMotion from '../assets/teacher-motion/teacher-motion.webp';
 
@@ -189,7 +188,6 @@ export const ASSETS_TO_PRELOAD: PreloadItem[] = [
   // Prioritas 1: Aset Pembuka & Animasi Guru (Aset Terbesar)
   { url: teacherMotion, label: 'Karakter Animasi Guru HD' },
   { url: startBg, label: 'Latar Belakang Panggung' },
-  { url: startAsset, label: 'Papan Judul & Karakter Utama' },
   { url: startBtn, label: 'Tombol Start Interaktif' },
 
   // Prioritas 2: Menu Utama & Navigasi

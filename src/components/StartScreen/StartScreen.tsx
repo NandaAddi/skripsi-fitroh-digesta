@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import bgImg from '../../assets/start-screen/bg-startscreen.webp';
-import assetImg from '../../assets/start-screen/asset-startscreen.webp';
 import btnImg from '../../assets/start-screen/button-startscreen.webp';
 import teacherMotionImg from '../../assets/teacher-motion/teacher-motion.webp';
 import { playSound } from '../../services/soundService';
@@ -55,23 +54,15 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
         {/* Semantic H1 for SEO & Accessibility */}
         <h1 className="sr-only">DIGESTA - Edukasi Sistem Pencernaan Manusia Interaktif</h1>
 
-        {/* Layer 1: Background Brick Wall */}
+        {/* Layer 1: Background Layout 16:9 HD */}
         <img
           src={bgImg}
-          alt="Latar Belakang Dinding Bata"
+          alt="Latar Belakang DIGESTA"
           className="startscreen-bg"
           draggable={false}
         />
 
-        {/* Layer 2: Character & Maroon Board with Logo */}
-        <img
-          src={assetImg}
-          alt="DIGESTA - Digital Interactive Gastrointestinal Education System"
-          className="startscreen-illustration"
-          draggable={false}
-        />
-
-        {/* Layer 2.5: Animated Teacher Character Motion */}
+        {/* Layer 2: Animated Teacher Character Motion */}
         <img
           src={teacherMotionImg}
           alt="Karakter Animasi Guru"
