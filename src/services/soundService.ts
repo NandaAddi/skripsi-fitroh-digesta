@@ -47,34 +47,36 @@ function ensureAudioContext(): AudioContext | null {
       sharedAudioCtx = new AudioContextClass();
     }
 
-    if (sharedAudioCtx.state === 'suspended' && userGestureOccurred) {
-      sharedAudioCtx.resume().catch(() => {});
-    }
-
     return sharedAudioCtx;
   } catch {
     return null;
   }
 }
 
-// Buka kunci AudioContext secara otomatis begitu pengguna berinteraksi pertama kali (click, touch, pointerdown, keydown)
+// Buka kunci AudioContext secara otomatis begitu pengguna berinteraksi pertama kali (click, touchend, keydown)
 if (typeof window !== 'undefined') {
+  const gestureEvents: (keyof WindowEventMap)[] = ['click', 'touchend', 'keydown'];
+
+  const cleanUpListeners = () => {
+    gestureEvents.forEach((ev) => {
+      window.removeEventListener(ev, onUserGesture, { capture: true });
+    });
+  };
+
   const onUserGesture = () => {
     userGestureOccurred = true;
-    try {
-      const ctx = ensureAudioContext();
-      if (ctx && ctx.state === 'suspended') {
-        ctx.resume().catch(() => {});
-      }
-    } catch {
-      // fallback
+    if (sharedAudioCtx && sharedAudioCtx.state === 'suspended') {
+      sharedAudioCtx.resume().then(() => {
+        cleanUpListeners();
+      }).catch(() => {});
+    } else {
+      cleanUpListeners();
     }
   };
 
-  window.addEventListener('click', onUserGesture, { capture: true, passive: true });
-  window.addEventListener('keydown', onUserGesture, { capture: true, passive: true });
-  window.addEventListener('touchstart', onUserGesture, { capture: true, passive: true });
-  window.addEventListener('pointerdown', onUserGesture, { capture: true, passive: true });
+  gestureEvents.forEach((ev) => {
+    window.addEventListener(ev, onUserGesture, { capture: true, passive: true });
+  });
 }
 
 /**
@@ -266,6 +268,27 @@ function synthesizeSoft(ctx: AudioContext, now: number): void {
   osc.stop(now + 0.05);
 }
 
+function triggerSynthesis(ctx: AudioContext, type: SoundType): void {
+  const now = ctx.currentTime;
+  switch (type) {
+    case 'pop':
+      synthesizePop(ctx, now);
+      break;
+    case 'chime':
+      synthesizeChime(ctx, now);
+      break;
+    case 'soft':
+      synthesizeSoft(ctx, now);
+      break;
+    case 'success':
+      synthesizeSuccess(ctx, now);
+      break;
+    case 'error':
+      synthesizeError(ctx, now);
+      break;
+  }
+}
+
 /**
  * Memainkan efek suara sintetis prosedural akustik secara aman
  */
@@ -278,8 +301,8 @@ export function playSound(type: SoundType, enabled = isSoundEnabled()): void {
     return;
   }
 
-  // Jika belum ada gesture dan belum ada AudioContext, jangan buat pada event non-gesture
-  if (!userGestureOccurred && !sharedAudioCtx) {
+  // Jika belum ada gesture pengguna, jangan pemicu AudioContext sama sekali
+  if (!userGestureOccurred) {
     return;
   }
 
@@ -288,35 +311,16 @@ export function playSound(type: SoundType, enabled = isSoundEnabled()): void {
     if (!ctx) return;
 
     if (ctx.state === 'suspended') {
-      if (userGestureOccurred) {
-        ctx.resume().catch(() => {});
-      } else {
-        return;
-      }
-    }
-
-    if (ctx.state !== 'running') {
+      ctx.resume().then(() => {
+        if (ctx.state === 'running') {
+          triggerSynthesis(ctx, type);
+        }
+      }).catch(() => {});
       return;
     }
 
-    const now = ctx.currentTime;
-
-    switch (type) {
-      case 'pop':
-        synthesizePop(ctx, now);
-        break;
-      case 'chime':
-        synthesizeChime(ctx, now);
-        break;
-      case 'soft':
-        synthesizeSoft(ctx, now);
-        break;
-      case 'success':
-        synthesizeSuccess(ctx, now);
-        break;
-      case 'error':
-        synthesizeError(ctx, now);
-        break;
+    if (ctx.state === 'running') {
+      triggerSynthesis(ctx, type);
     }
   } catch {
     // Fallback jika audio device disconnect / error renderer

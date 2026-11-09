@@ -637,17 +637,17 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       'Soal 20: Urutan perjalanan makanan yang benar adalah....',
     cardVariant: 'stack',
     options: [
-      { key: 'A', label: 'Pilihan A', img: jawabA20, organName: 'Mulut - kerongkongan - usus besar - lambung - usus halus' },
-      { key: 'B', label: 'Pilihan B', img: jawabB20, organName: 'Mulut - lambung - kerongkongan - usus halus - usus besar' },
-      { key: 'C', label: 'Pilihan C', img: jawabC20, organName: 'Mulut - kerongkongan - lambung - usus halus - usus besar' },
-      { key: 'D', label: 'Pilihan D', img: jawabD20, organName: 'Mulut - usus halus - lambung - usus besar - kerongkongan' },
+      { key: 'A', label: 'Pilihan A', img: jawabA20, organName: 'Mulut - kerongkongan - usus besar - Anus - lambung - usus halus' },
+      { key: 'B', label: 'Pilihan B', img: jawabB20, organName: 'Mulut - Anus - lambung - kerongkongan - usus halus - usus besar' },
+      { key: 'C', label: 'Pilihan C', img: jawabC20, organName: 'Mulut - kerongkongan - lambung - usus halus - usus besar - Anus' },
+      { key: 'D', label: 'Pilihan D', img: jawabD20, organName: 'Mulut - usus halus - lambung - usus besar - kerongkongan - Anus' },
     ],
     correctAnswer: 'C',
     explanation: {
       correct:
-        'Luar biasa, sempurna! Urutan perjalanan makanan dalam saluran pencernaan manusia yang benar dari awal sampai akhir adalah Mulut – Kerongkongan – Lambung – Usus Halus – Usus Besar (Pilihan C).',
+        'Luar biasa, sempurna! Urutan perjalanan makanan dalam saluran pencernaan manusia yang benar dari awal sampai akhir adalah Mulut – Kerongkongan – Lambung – Usus Halus – Usus Besar – Anus (Pilihan C).',
       wrong:
-        'Pilihan yang kamu pilih belum tepat. Urutan saluran pencernaan manusia yang benar adalah Mulut – Kerongkongan – Lambung – Usus Halus – Usus Besar (Pilihan C).',
+        'Pilihan yang kamu pilih belum tepat. Urutan saluran pencernaan manusia yang benar adalah Mulut – Kerongkongan – Lambung – Usus Halus – Usus Besar – Anus (Pilihan C).',
     },
   },
 ];
