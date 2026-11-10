@@ -5,6 +5,7 @@ import bgImg from '../../assets/start-screen/bg-startscreen.webp';
 import btnImg from '../../assets/start-screen/button-startscreen.webp';
 import teacherMotionImg from '../../assets/teacher-motion/teacher-motion.webp';
 import { playSound } from '../../services/soundService';
+import { useFullscreen } from '../../hooks/useFullscreen';
 import './StartScreen.css';
 
 export interface StartScreenProps {
@@ -16,7 +17,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [showDemoModal, setShowDemoModal] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const { isFullscreen, toggleFullscreen: toggleFs } = useFullscreen();
   const [soundEnabled, setSoundEnabled] = useState(true);
   const stageRef = useRef<HTMLDivElement>(null);
 
@@ -38,13 +39,8 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
   };
 
   const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
+    playSound('pop', soundEnabled);
+    toggleFs();
   };
 
   return (

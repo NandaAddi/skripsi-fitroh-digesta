@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { playSound as playSoundEffect } from '../../services/soundService';
+import { useFullscreen } from '../../hooks/useFullscreen';
 
 // Background & Tombol Navigasi WebP
 import bgOrganPencernaan from '../../assets/menu-materi-organ-pencernaan/bg-materi-organ-pencernaan.webp';
@@ -36,7 +37,7 @@ export const MenuMateriOrganScreen: React.FC = () => {
   const { user } = useAuth();
 
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const { isFullscreen, toggleFullscreen: toggleFs } = useFullscreen();
   const stageRef = useRef<HTMLDivElement>(null);
 
   // Sintesis audio interaktif Web Audio API terpusat & aman
@@ -64,13 +65,7 @@ export const MenuMateriOrganScreen: React.FC = () => {
 
   const toggleFullscreen = () => {
     playSound('pop');
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
+    toggleFs();
   };
 
   // Navigasi Keyboard
@@ -141,7 +136,18 @@ export const MenuMateriOrganScreen: React.FC = () => {
               title={soundEnabled ? 'Matikan Suara' : 'Nyalakan Suara'}
               aria-label="Toggle Suara"
             >
-              {soundEnabled ? '🔊' : '🔇'}
+              {soundEnabled ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              )}
             </button>
 
             <button
@@ -151,7 +157,15 @@ export const MenuMateriOrganScreen: React.FC = () => {
               title={isFullscreen ? 'Keluar Layar Penuh' : 'Mode Layar Penuh'}
               aria-label="Toggle Fullscreen"
             >
-              {isFullscreen ? '✕' : '⛶'}
+              {isFullscreen ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                </svg>
+              )}
             </button>
 
             <button

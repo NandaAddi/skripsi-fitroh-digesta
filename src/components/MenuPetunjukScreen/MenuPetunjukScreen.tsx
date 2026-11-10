@@ -9,6 +9,7 @@ import btnExit from '../../assets/menu-screen/button-exit.webp';
 import slide1 from '../../assets/petunjuk-penggunaan-screen/konten-slide-1.webp';
 import { useAuth } from '../../context/AuthContext';
 import { playSound as playSoundEffect } from '../../services/soundService';
+import { useFullscreen } from '../../hooks/useFullscreen';
 import './MenuPetunjukScreen.css';
 
 interface PetunjukSlide {
@@ -28,7 +29,7 @@ export const MenuPetunjukScreen: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const { isFullscreen, toggleFullscreen: toggleFs } = useFullscreen();
   const stageRef = useRef<HTMLDivElement>(null);
 
   // Efek suara interaktif terpusat Web Audio API
@@ -53,13 +54,7 @@ export const MenuPetunjukScreen: React.FC = () => {
 
   const toggleFullscreen = () => {
     playSound('pop');
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
+    toggleFs();
   };
 
   // Navigasi keyboard tombol panah kiri/kanan & ESC

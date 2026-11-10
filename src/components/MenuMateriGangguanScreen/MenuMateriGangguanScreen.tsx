@@ -16,6 +16,7 @@ import {
   isSoundEnabled,
   setSoundEnabled as saveSoundPref,
 } from '../../services/soundService';
+import { useFullscreen } from '../../hooks/useFullscreen';
 import './MenuMateriGangguanScreen.css';
 
 export type GangguanKey = 'maag' | 'gastritis' | 'diare' | 'sembelit' | 'apendisitis';
@@ -170,7 +171,7 @@ export const MenuMateriGangguanScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<GangguanKey>('maag');
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => isSoundEnabled());
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const { isFullscreen, toggleFullscreen: toggleFs } = useFullscreen();
   const stageRef = useRef<HTMLDivElement>(null);
 
   // Efek suara ceria menggunakan centralized soundService
@@ -197,13 +198,7 @@ export const MenuMateriGangguanScreen: React.FC = () => {
 
   const toggleFullscreen = () => {
     playSound('soft');
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
+    toggleFs();
   };
 
   const currentData = GANGGUAN_DATA[activeTab];

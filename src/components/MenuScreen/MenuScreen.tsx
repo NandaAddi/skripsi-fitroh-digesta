@@ -12,6 +12,7 @@ import {
   isSoundEnabled,
   setSoundEnabled as saveSoundPref,
 } from '../../services/soundService';
+import { useFullscreen } from '../../hooks/useFullscreen';
 import './MenuScreen.css';
 
 export interface MenuScreenProps {
@@ -33,7 +34,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
 
   const [activeModal, setActiveModal] = useState<'settings' | 'exit' | null>(null);
   const [soundEnabled, setSoundEnabled] = useState(() => isSoundEnabled());
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const { isFullscreen, toggleFullscreen: toggleFs } = useFullscreen();
   const stageRef = useRef<HTMLDivElement>(null);
 
   // Efek suara interaktif terpusat
@@ -82,13 +83,7 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
 
   const toggleFullscreen = () => {
     playSound('pop');
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
+    toggleFs();
   };
 
   return (

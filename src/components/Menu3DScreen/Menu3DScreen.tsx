@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { playSound as playSoundEffect } from '../../services/soundService';
+import { useFullscreen } from '../../hooks/useFullscreen';
 import bgClassroom from '../../assets/menu-materi-organ-pencernaan/isi/bg-isi-materi-organ-pencernaan.webp';
 import btnHome from '../../assets/menu-materi-organ-pencernaan/button-home.webp';
 import './Menu3DScreen.css';
@@ -62,6 +63,7 @@ export const Menu3DScreen: React.FC = () => {
   const navigate = useNavigate();
   const { organId } = useParams<{ organId?: string }>();
   const stageRef = useRef<HTMLDivElement>(null);
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
 
   const [soundEnabled] = useState(true);
   const [isLoadingIframe, setIsLoadingIframe] = useState(true);
@@ -196,6 +198,45 @@ export const Menu3DScreen: React.FC = () => {
                   <span>Geser</span>
                 </div>
               </div>
+
+              <button
+                type="button"
+                className="menu-3d-util-btn"
+                onClick={() => {
+                  playSound('pop');
+                  toggleFullscreen();
+                }}
+                title={isFullscreen ? 'Keluar Layar Penuh' : 'Mode Layar Penuh'}
+                aria-label="Toggle Fullscreen"
+              >
+                {isFullscreen ? (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                  </svg>
+                ) : (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                  </svg>
+                )}
+              </button>
 
               <button
                 type="button"

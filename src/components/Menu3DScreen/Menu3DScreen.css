@@ -159,6 +159,46 @@
   pointer-events: auto;
 }
 
+/* Tombol Utilitas Fullscreen 3D */
+.menu-3d-util-btn {
+  background: rgba(15, 23, 42, 0.82);
+  border: clamp(2px, 0.22cqw, 3.5px) solid rgba(56, 189, 248, 0.55);
+  border-radius: 50%;
+  width: clamp(38px, 4.2cqw, 62px);
+  height: clamp(38px, 4.2cqw, 62px);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  cursor: pointer;
+  box-shadow: 0 clamp(3px, 0.35cqw, 5px) 0 rgba(2, 132, 199, 0.5), 0 6px 16px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+  outline: none;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.menu-3d-util-btn svg {
+  width: 52%;
+  height: 52%;
+}
+
+.menu-3d-util-btn:hover {
+  transform: translateY(-2px) scale(1.08);
+  background: rgba(30, 41, 59, 0.95);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 clamp(4px, 0.45cqw, 7px) 0 rgba(2, 132, 199, 0.7), 0 8px 20px rgba(56, 189, 248, 0.35);
+}
+
+.menu-3d-util-btn:active {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 0 1px 0 rgba(2, 132, 199, 0.5);
+}
+
 /* Tombol Sudut Beranda */
 .menu-3d-corner-btn {
   background: transparent;

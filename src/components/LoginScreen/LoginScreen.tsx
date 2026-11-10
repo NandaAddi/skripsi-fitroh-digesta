@@ -5,6 +5,7 @@ import logoImg from '../../assets/login-screen/assets-loginscreen.webp';
 import { useAuth } from '../../context/AuthContext';
 import type { User } from '../../services/auth';
 import { playSound as playSoundEffect } from '../../services/soundService';
+import { useFullscreen } from '../../hooks/useFullscreen';
 import './LoginScreen.css';
 
 export interface LoginScreenProps {
@@ -29,7 +30,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const { isFullscreen, toggleFullscreen: toggleFs } = useFullscreen();
   const stageRef = useRef<HTMLDivElement>(null);
 
   // Otomatis redirect ke tujuan jika pengguna sudah terautentikasi
@@ -92,13 +93,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 
   const toggleFullscreen = () => {
     playSound('pop');
-    if (!document.fullscreenElement) {
-      stageRef.current?.requestFullscreen?.().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.().catch(() => {});
-      setIsFullscreen(false);
-    }
+    toggleFs();
   };
 
   return (
